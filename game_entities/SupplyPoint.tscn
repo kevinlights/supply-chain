@@ -1,0 +1,124 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game_entities/SupplyPoint.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[node name="SupplyPoint" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -960.0
+margin_bottom = 6.10352e-05
+rect_min_size = Vector2( 0, 720 )
+size_flags_horizontal = 0
+size_flags_vertical = 3
+custom_constants/separation = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightLane" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 40, 0 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+
+[node name="Origin" type="Node2D" parent="RightLane"]
+position = Vector2( 20.2518, -27.2352 )
+
+[node name="Destination" type="Node2D" parent="RightLane"]
+position = Vector2( 20.2518, 753.349 )
+
+[node name="SupplyPointVisual" type="ColorRect" parent="."]
+margin_left = 40.0
+margin_right = 280.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 240, 0 )
+color = Color( 0.258824, 0.32549, 0.266667, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SupplyPointVisual"]
+margin_right = 240.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 240, 720 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="SupplyPointVisual/VBoxContainer"]
+margin_right = 240.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Title" type="Label" parent="SupplyPointVisual/VBoxContainer"]
+margin_top = 24.0
+margin_right = 240.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+text = "Supply Point"
+align = 1
+
+[node name="Stock" type="Label" parent="SupplyPointVisual/VBoxContainer"]
+margin_top = 42.0
+margin_right = 240.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+text = "Stock: "
+align = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="SupplyPointVisual/VBoxContainer"]
+margin_top = 60.0
+margin_right = 240.0
+margin_bottom = 652.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="SupplyPointVisual/VBoxContainer"]
+margin_top = 656.0
+margin_right = 240.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/panel = SubResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SupplyPointVisual/VBoxContainer/Panel"]
+margin_right = 240.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 240, 64 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DemandLabel" type="Label" parent="SupplyPointVisual/VBoxContainer/Panel/VBoxContainer"]
+margin_top = 6.0
+margin_right = 240.0
+margin_bottom = 20.0
+text = "Resupply Frequency"
+align = 1
+
+[node name="Demand" type="HSlider" parent="SupplyPointVisual/VBoxContainer/Panel/VBoxContainer"]
+margin_top = 24.0
+margin_right = 240.0
+margin_bottom = 40.0
+
+[node name="DemandValue" type="Label" parent="SupplyPointVisual/VBoxContainer/Panel/VBoxContainer"]
+margin_top = 44.0
+margin_right = 240.0
+margin_bottom = 58.0
+text = "100%"
+align = 1
+
+[node name="LeftLane" type="ColorRect" parent="."]
+margin_left = 280.0
+margin_right = 320.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 40, 0 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+
+[node name="Origin" type="Node2D" parent="LeftLane"]
+position = Vector2( 20.2518, -27.2352 )
+
+[node name="Destination" type="Node2D" parent="LeftLane"]
+position = Vector2( 20.2518, 753.349 )
