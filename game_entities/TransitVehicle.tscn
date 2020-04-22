@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://game_entities/TransitVehicle.gd" type="Script" id=1]
+
+[node name="TransitVehicle" type="VBoxContainer"]
+margin_right = 30.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 30, 60 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )

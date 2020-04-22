@@ -39,7 +39,7 @@ func consume_stock(amount: int) -> void:
 
 # Constructor for SupplyPoint. Default supply points start without stock and
 # demand 50 units of toilet paper. Default constraints are [0, 100]
-func _init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, new_demand := 50,
+func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, new_demand := 50,
 	new_max_demand := 100, new_min_demand := 0):
 	max_stock_level = new_max_level
 	stock_level = new_level

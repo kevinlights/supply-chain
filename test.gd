@@ -6,7 +6,7 @@ extends Node
 # max_stock_level: Maximum storage for toilet paper
 # demand level: The amount of a toilet paper this supply point currently wants
 # min_demand, max_demand: Constraints on values demand can take
-class SupplyPoint:
+class SupplyPoint2:
 	var name : String
 	var stock_level : int
 	var max_stock_level : int
@@ -17,8 +17,8 @@ class SupplyPoint:
 	var counter : float
 	var is_producing : bool
 	var is_consuming : bool
-	var upstream : SupplyPoint
-	var downstream : SupplyPoint
+	var upstream : SupplyPoint2
+	var downstream : SupplyPoint2
 
 	# Temporary
 	var transit_list = []
@@ -29,9 +29,9 @@ class SupplyPoint:
 	func request_stock(amount : int):
 		var vehicle
 		if transit_size == -1:
-			vehicle = TransitVehicle.new()
+			vehicle = TransitVehicle2.new()
 		else:
-			vehicle = TransitVehicle.new(transit_size)
+			vehicle = TransitVehicle2.new(transit_size)
 		transit_list.push_back(vehicle)
 		# Vehicle checks for how much is needed then collects and delivers
 		vehicle.order(min(amount, max_stock_level - stock_level), upstream)
@@ -76,7 +76,7 @@ class SupplyPoint:
 	func set_is_producing(value : bool) -> void:
 		is_producing = value
 
-	func set_downstream(value : SupplyPoint):
+	func set_downstream(value : SupplyPoint2):
 		downstream = value
 		value.upstream = self
 
@@ -97,19 +97,19 @@ class SupplyPoint:
 
 
 # Transit vehicles have a carrying capacity and current value of cargo
-class TransitVehicle:
+class TransitVehicle2:
 	var cargo_limit : int
 	var cargo : int
 	var has_picked_up : bool
 	var desired_cargo : int
-	var destination : SupplyPoint
+	var destination : SupplyPoint2
 	var speed : float
 	var trip_duration : float
 
 	# Vehicle collects the given amount of toilet paper, limited by the amount
 	# available at the given supply point and its carrying capacity, and reduces
 	# the supply point's stock
-	func order(amount : int, sp : SupplyPoint) -> void:
+	func order(amount : int, sp : SupplyPoint2) -> void:
 		destination = sp
 		desired_cargo = int(min(amount, cargo_limit))
 
@@ -157,16 +157,16 @@ var counter:= 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Instantiate the manufacturer, warehouse and home
-	sp_list.push_back(SupplyPoint.new("Manufacturer"))
+	sp_list.push_back(SupplyPoint2.new("Manufacturer"))
 	sp_list.back().set_is_producing(true)
 
-	sp_list.push_back(SupplyPoint.new("Warehouse"))
+	sp_list.push_back(SupplyPoint2.new("Warehouse"))
 	sp_list.back().set_transit_size(100)
 
-	sp_list.push_back(SupplyPoint.new("Store"))
+	sp_list.push_back(SupplyPoint2.new("Store"))
 	sp_list.back().set_transit_size(100)
 
-	sp_list.push_back(SupplyPoint.new("Home", 100, 0, 40))
+	sp_list.push_back(SupplyPoint2.new("Home", 100, 0, 40))
 	sp_list.back().set_is_consuming(true)
 	sp_list.back().set_demand_factor(0.5)
 
