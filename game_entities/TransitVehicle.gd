@@ -1,20 +1,19 @@
 extends VBoxContainer
 
 # Transit vehicles have a carrying capacity and current value of cargo
-class_name TransitVehicle
 
 var cargo_limit : int
 var cargo : int
 var has_picked_up : bool
 var desired_cargo : int
-var destination : SupplyPoint
+var destination : Node
 var speed : float
 var trip_duration : float
 
 # Vehicle collects the given amount of toilet paper, limited by the amount
 # available at the given supply point and its carrying capacity, and reduces
 # the supply point's stock
-func order(amount : int, sp : SupplyPoint) -> void:
+func order(amount : int, sp : Node) -> void:
 	destination = sp
 	desired_cargo = int(min(amount, cargo_limit))
 
@@ -42,13 +41,14 @@ func _ready():
 	has_picked_up = false
 
 func _process(delta):
-	trip_duration += delta
-	if trip_duration >= speed:
-		if !has_picked_up:
-			pick_up()
-		else:
-			deliver()
-		trip_duration = 0
+	if is_instance_valid(destination):
+		trip_duration += delta
+		if trip_duration >= speed:
+			if !has_picked_up:
+				pick_up()
+			else:
+				deliver()
+			trip_duration = 0
 
 func set_cargo_limit(new_limit: int) -> void:
 	cargo_limit = new_limit
@@ -62,4 +62,6 @@ func set_cargo_limit(new_limit: int) -> void:
 		var thing = ColorRect.new()
 		thing.set_custom_minimum_size(Vector2(30, 30))
 		add_child(thing)
+		thing = ColorRect.new()
+		thing.set_custom_minimum_size(Vector2(30, 30))
 		add_child(thing)

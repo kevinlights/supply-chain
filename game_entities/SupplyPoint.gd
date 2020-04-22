@@ -1,7 +1,5 @@
 extends HBoxContainer
 
-class_name SupplyPoint
-
 var transit_vehicle_scene = preload("res://game_entities/TransitVehicle.tscn")
 
 var sp_name : String
@@ -14,8 +12,8 @@ var tick_rate : float
 var counter : float
 var is_producing : bool
 var is_consuming : bool
-var upstream : SupplyPoint
-var downstream : SupplyPoint
+var upstream : Node
+var downstream : Node
 
 # Temporary
 var demand_factor : float
@@ -69,7 +67,7 @@ func set_is_consuming(value : bool) -> void:
 func set_is_producing(value : bool) -> void:
 	is_producing = value
 
-func set_downstream(value : SupplyPoint):
+func set_downstream(value : Node):
 	downstream = value
 	value.upstream = self
 

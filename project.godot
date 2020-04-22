@@ -8,20 +8,9 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "HBoxContainer",
-"class": "SupplyPoint",
-"language": "GDScript",
-"path": "res://game_entities/SupplyPoint.gd"
-}, {
-"base": "VBoxContainer",
-"class": "TransitVehicle",
-"language": "GDScript",
-"path": "res://game_entities/TransitVehicle.gd"
-} ]
+_global_script_classes=[  ]
 _global_script_class_icons={
-"SupplyPoint": "",
-"TransitVehicle": ""
+
 }
 
 [application]
@@ -29,11 +18,6 @@ _global_script_class_icons={
 config/name="Supply Chain"
 run/main_scene="res://gui/menu.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-SupplyPoint="res://game_entities/SupplyPoint.gd"
-TransitVehicle="res://game_entities/TransitVehicle.gd"
 
 [display]
 
