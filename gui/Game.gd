@@ -2,6 +2,8 @@ extends HBoxContainer
 
 var supply_point_scene = preload("res://game_entities/SupplyPoint.tscn")
 
+var menu_node : CenterContainer
+
 # Simulation requires a manufacturer, a warehouse, and a consumer which are
 # defined as supply points
 var sp_list := []
@@ -9,6 +11,14 @@ var sp_list := []
 # Counter ensures a certain amount of time passes before checking to see if
 # SupplyPoints will try to restock
 var counter:= 0.0
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey && event.scancode == KEY_ESCAPE:
+		if is_instance_valid(menu_node):
+			menu_node.show_menu()
+		else:
+			printerr("Unable to show menu")
+			get_tree().quit()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

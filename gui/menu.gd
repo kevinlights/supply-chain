@@ -1,25 +1,53 @@
 extends CenterContainer
 
+var game_scene = preload("res://gui/Game.tscn")
+
 var new_button : Button
 var settings_button : Button
 var quit_button : Button
+var resume_button : Button
+var game_node : HBoxContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	resume_button = get_node("VBoxContainer/Resume")
 	new_button = get_node("VBoxContainer/New")
 	settings_button = get_node("VBoxContainer/Settings")
 	quit_button = get_node("VBoxContainer/Quit")
 
 	if new_button.connect("pressed", self, "new_game") != OK:
 		printerr("Error while connecting signal to new game button")
+	if resume_button.connect("pressed", self, "resume_game") != OK:
+		printerr("Error while connecting signal to new game button")
 	if settings_button.connect("pressed", self, "show_settings") != OK:
 		printerr("Error while connecting signal to settings button")
 	if quit_button.connect("pressed", self, "quit_game") != OK:
 		printerr("Error while connecting signal to quit game button")
 
+func show_menu():
+	self.visible = true
+	self.set_process(true)
+
+	resume_button.visible = true
+	game_node.visible = false
+	game_node.set_process(false)
+
+func hide_menu():
+	self.visible = false
+	self.set_process(false)
+
+func resume_game():
+	hide_menu()
+	game_node.visible = true
+	game_node.set_process(true)
 
 func new_game():
-	print("New game stub")
+	if is_instance_valid(game_node):
+		game_node.queue_free()
+	game_node = game_scene.instance()
+	game_node.menu_node = self
+	get_parent().add_child(game_node)
+	hide_menu()
 
 func show_settings():
 	print("Show settings stub")
