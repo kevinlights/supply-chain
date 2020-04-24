@@ -25,10 +25,10 @@ rect_min_size = Vector2( 40, 0 )
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
 [node name="Origin" type="Node2D" parent="RightLane"]
-position = Vector2( 20.2518, -27.2352 )
+position = Vector2( 20.2518, -158.601 )
 
 [node name="Destination" type="Node2D" parent="RightLane"]
-position = Vector2( 20.2518, 753.349 )
+position = Vector2( 20.2518, 859.983 )
 
 [node name="SupplyPointVisual" type="ColorRect" parent="."]
 margin_left = 40.0
@@ -117,8 +117,8 @@ margin_bottom = 720.0
 rect_min_size = Vector2( 40, 0 )
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
-[node name="Origin" type="Node2D" parent="LeftLane"]
-position = Vector2( 20.2518, -27.2352 )
-
 [node name="Destination" type="Node2D" parent="LeftLane"]
-position = Vector2( 20.2518, 753.349 )
+position = Vector2( 20.2518, -158.601 )
+
+[node name="Origin" type="Node2D" parent="LeftLane"]
+position = Vector2( 20.2518, 859.983 )

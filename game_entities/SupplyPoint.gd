@@ -22,6 +22,7 @@ var transit_size : int
 # Can the supply point receive the amount of toilet paper?
 func request_stock(amount : int):
 	var vehicle = transit_vehicle_scene.instance()
+
 	if transit_size != -1:
 		vehicle.set_cargo_limit(transit_size)
 	# Vehicle checks for how much is needed then collects and delivers
@@ -51,6 +52,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	demand_factor = 1.0
 	transit_size = -1
 	name = new_name
+	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(name)
 
 func set_demand_factor(value : float) -> void:
 	demand_factor = value

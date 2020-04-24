@@ -19,6 +19,10 @@ config/name="Supply Chain"
 run/main_scene="res://gui/menu.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/warnings/return_value_discarded=false
+
 [display]
 
 window/size/width=1280

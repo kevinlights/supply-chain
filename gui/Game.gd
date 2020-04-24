@@ -33,7 +33,7 @@ func _ready():
 
 	sp_list.push_back(supply_point_scene.instance())
 	sp_list.back().init("Store")
-	sp_list.back().set_transit_size(100)
+	sp_list.back().set_transit_size(39)
 
 	sp_list.push_back(supply_point_scene.instance())
 	sp_list.back().init("Home", 100, 0, 40)
