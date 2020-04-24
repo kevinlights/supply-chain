@@ -53,6 +53,8 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	transit_size = -1
 	name = new_name
 	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(name)
+	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
+	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
 
 func set_demand_factor(value : float) -> void:
 	demand_factor = value
@@ -84,3 +86,5 @@ func _process(delta):
 
 		if stock_level < demand_level:
 			request_stock(int(demand_level * demand_factor))
+			
+	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))

@@ -8,10 +8,6 @@ var menu_node : CenterContainer
 # defined as supply points
 var sp_list := []
 
-# Counter ensures a certain amount of time passes before checking to see if
-# SupplyPoints will try to restock
-var counter:= 0.0
-
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey && event.scancode == KEY_ESCAPE:
 		if is_instance_valid(menu_node):
@@ -52,18 +48,3 @@ func setup_downstreams(list : Array) -> void:
 func add_supply_points(list: Array) -> void:
 	for sp in list:
 		add_child(sp)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-
-	for sp in sp_list:
-		sp._process(delta)
-
-	# Make sure at least 1 second has passed before we print
-	counter += delta
-	if counter > 1:
-		counter -= 1
-		# Print the current stock and demand for each SupplyPoint for debugging
-		for sp in sp_list:
-			print(sp.name, " stock: ", sp.stock_level, 
-				", demand: ", sp.demand_level)
