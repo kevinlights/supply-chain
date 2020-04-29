@@ -17,11 +17,12 @@ var travelTween : Tween
 func order(amount : int, sp : Node) -> void:
 	destination = sp
 	desired_cargo = int(min(amount, cargo_limit))
+	sp.downstream.adjust_pending_stock(desired_cargo)
 	start_travel(destination.get_node("LeftLane"))
 
 func pick_up():
 	cargo = int(min(desired_cargo, destination.stock_level))
-	destination.stock_level -= cargo
+	destination.adjust_stock(-cargo)
 	has_picked_up = true
 	destination = destination.downstream
 	start_travel(destination.get_node("RightLane"))
@@ -29,9 +30,8 @@ func pick_up():
 # Vehicle delivers its cargo to the given supply point. Any surplus to the
 # supply point's capacity is thrown away
 func deliver() -> void:
-	var quantity : int = int(min(destination.max_stock_level, destination.stock_level + cargo))
-	destination.stock_level = quantity
-	destination.add_pending_stock(quantity * -1) # Removing pending stock is adding negative stock
+	destination.adjust_stock(cargo)
+	destination.adjust_pending_stock(-desired_cargo) # Removing pending stock is adding negative stock
 	# cargo does not get set to 0 since the vehicle is destroyed after
 	queue_free()
 

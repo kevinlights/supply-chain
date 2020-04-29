@@ -29,12 +29,12 @@ func _ready():
 
 	sp_list.push_back(supply_point_scene.instance())
 	sp_list.back().init("Store")
-	sp_list.back().set_transit_size(39)
+	sp_list.back().set_transit_size(40)
 
 	sp_list.push_back(supply_point_scene.instance())
 	sp_list.back().init("Home", 100, 0, 40)
 	sp_list.back().set_is_consuming(true)
-	sp_list.back().set_demand_factor(0.5)
+	# sp_list.back().set_demand_factor(0.5)
 
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)

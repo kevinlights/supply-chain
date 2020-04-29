@@ -15,6 +15,7 @@ var is_producing : bool
 var is_consuming : bool
 var upstream : Node
 var downstream : Node
+var demand_slider : HSlider
 
 # Temporary
 var demand_factor : float
@@ -22,22 +23,26 @@ var transit_size : int
 
 # Can the supply point receive the amount of toilet paper?
 func request_stock(amount : int):
-	var vehicle = transit_vehicle_scene.instance()
+	if !is_instance_valid(upstream):
+		print("Something terrible has happened!")
+		return
+		
+	if upstream.stock_level - pending_stock <= 0:
+		return
 
+	var vehicle = transit_vehicle_scene.instance()
 	if transit_size != -1:
 		vehicle.set_cargo_limit(transit_size)
 	# Vehicle checks for how much is needed then collects and delivers
-	var quantity : int = int(min(amount, max_stock_level - stock_level))
-	add_pending_stock(quantity)
-	vehicle.order(quantity, upstream)
+	vehicle.order(int(min(amount, max_stock_level - stock_level)), upstream)
 
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
-	stock_level = int(min(max_stock_level, stock_level + amount))
+	adjust_stock(amount)
 
 # Draw from the existing stockpile (no toilet paper debt yet)
 func consume_stock(amount: int) -> void:
-	stock_level = int(max(0, stock_level - amount))
+	adjust_stock(-amount)
 
 # Constructor for SupplyPoint. Default supply points start without stock and
 # demand 50 units of toilet paper. Default constraints are [0, 100]
@@ -55,10 +60,11 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	is_consuming = false
 	demand_factor = 1.0
 	transit_size = -1
-	name = new_name
-	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(name)
+	sp_name = new_name
+	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(sp_name)
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
+	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand").set_value(demand_level)
 
 func set_demand_factor(value : float) -> void:
 	demand_factor = value
@@ -80,22 +86,30 @@ func set_downstream(value : Node):
 	value.upstream = self
 
 # add_pending_stock always adds to pending stock. Negative values on delivery
-func add_pending_stock(value : int) -> void:
+func adjust_pending_stock(value : int) -> void:
 	pending_stock += value
 
 # adjust_stock is a helper function to centralize all stock adjustments
-func adjust_stock() -> void:
-	if is_producing:
-		produce_stock(demand_level)
-	if is_consuming:
-		consume_stock(demand_level)
-	if stock_level < demand_level:
-		request_stock(int(demand_level * demand_factor))
+func adjust_stock(value : int) -> void:
+	stock_level = int(clamp(stock_level + value, 0, max_stock_level))
+	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
+	
+func update_demand(value : float) -> void:
+	demand_level = int(value)
+	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
 
 func _process(delta):
 	counter += delta
 	if counter >= tick_rate:
 		counter -= tick_rate
-		if(is_producing or is_consuming or (stock_level < demand_level)):
-			adjust_stock()
-	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
+		if is_producing:
+			produce_stock(demand_level)
+		else:
+			if is_consuming:
+				consume_stock(demand_level)
+			if stock_level + pending_stock < demand_level:
+				request_stock(int(demand_level * demand_factor))
+
+func _ready() -> void:
+	demand_slider = get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand")
+	demand_slider.connect("value_changed", self, "update_demand")

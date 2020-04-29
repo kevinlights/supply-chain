@@ -18,7 +18,12 @@ rect_min_size = Vector2( 30, 30 )
 
 [node name="Cargo" type="Label" parent="ColorRect"]
 margin_bottom = 14.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
