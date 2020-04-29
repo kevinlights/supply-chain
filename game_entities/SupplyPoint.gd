@@ -8,6 +8,7 @@ var max_stock_level : int
 var demand_level : int
 var min_demand : int
 var max_demand : int
+var pending_stock: int
 var tick_rate : float
 var counter : float
 var is_producing : bool
@@ -26,7 +27,9 @@ func request_stock(amount : int):
 	if transit_size != -1:
 		vehicle.set_cargo_limit(transit_size)
 	# Vehicle checks for how much is needed then collects and delivers
-	vehicle.order(min(amount, max_stock_level - stock_level), upstream)
+	var quantity : int = min(amount, max_stock_level - stock_level)
+	add_pending_stock(quantity)
+	vehicle.order(quantity, upstream)
 
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
@@ -45,6 +48,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	demand_level = new_demand
 	min_demand = new_min_demand
 	max_demand = new_max_demand
+	pending_stock = 0
 	tick_rate = 1.0
 	counter = 0.0
 	is_producing = false
@@ -75,16 +79,23 @@ func set_downstream(value : Node):
 	downstream = value
 	value.upstream = self
 
+# add_pending_stock always adds to pending stock. Negative values on delivery
+func add_pending_stock(value : int) -> void:
+	pending_stock += value
+
+# adjust_stock is a helper function to centralize all stock adjustments
+func adjust_stock() -> void:
+	if is_producing:
+		produce_stock(demand_level)
+	if is_consuming:
+		consume_stock(demand_level)
+	if stock_level < demand_level:
+		request_stock(int(demand_level * demand_factor))
+
 func _process(delta):
 	counter += delta
 	if counter >= tick_rate:
 		counter -= tick_rate
-		if is_producing:
-			produce_stock(demand_level)
-		if is_consuming:
-			consume_stock(demand_level)
-
-		if stock_level < demand_level:
-			request_stock(int(demand_level * demand_factor))
-			
+		if(is_producing or is_consuming or (stock_level < demand_level)):
+			adjust_stock()
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))

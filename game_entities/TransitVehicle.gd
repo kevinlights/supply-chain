@@ -29,7 +29,9 @@ func pick_up():
 # Vehicle delivers its cargo to the given supply point. Any surplus to the
 # supply point's capacity is thrown away
 func deliver() -> void:
-	destination.stock_level = int(min(destination.max_stock_level, destination.stock_level + cargo))
+	var quantity : int = int(min(destination.max_stock_level, destination.stock_level + cargo))
+	destination.stock_level = quantity
+	destination.add_pending_stock(quantity * -1) # Removing pending stock is adding negative stock
 	# cargo does not get set to 0 since the vehicle is destroyed after
 	queue_free()
 
@@ -69,6 +71,7 @@ func _process(delta):
 			else:
 				deliver()
 			trip_duration = 0
+	get_node("ColorRect/Cargo").set_text(str(cargo))
 
 func set_cargo_limit(new_limit: int) -> void:
 	cargo_limit = new_limit
