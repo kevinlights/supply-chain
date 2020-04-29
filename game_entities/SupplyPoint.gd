@@ -27,7 +27,7 @@ func request_stock(amount : int):
 	if transit_size != -1:
 		vehicle.set_cargo_limit(transit_size)
 	# Vehicle checks for how much is needed then collects and delivers
-	var quantity : int = min(amount, max_stock_level - stock_level)
+	var quantity : int = int(min(amount, max_stock_level - stock_level))
 	add_pending_stock(quantity)
 	vehicle.order(quantity, upstream)
 
