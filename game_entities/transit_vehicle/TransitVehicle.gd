@@ -36,13 +36,14 @@ func deliver() -> void:
 	queue_free()
 
 func start_travel(lane: Node):
-	var startPosition = lane.get_node("Origin").get_position() + Vector2(-15, 0)
-	var endPosition = lane.get_node("Destination").get_position() + Vector2(-15, 0)
-	set_position(startPosition)
-
 	if is_instance_valid(get_parent()):
 		get_parent().remove_child(self)
 	lane.add_child(self)
+
+	var startPosition = lane.get_node("Origin").get_position()
+	var endPosition = lane.get_node("Destination").get_position()
+	var offset = Vector2(int(get_size().x / 2), get_size().y)
+	set_position(startPosition)
 
 	if is_instance_valid(travelTween):
 		travelTween.remove_all()
@@ -50,6 +51,16 @@ func start_travel(lane: Node):
 
 	travelTween = Tween.new()
 	add_child(travelTween)
+
+	if startPosition.y > endPosition.y:
+		set_rotation(0.0)
+		startPosition += offset * Vector2(-1, 0.25)
+		endPosition += offset * Vector2(-1, -1.25)
+	else:
+		set_rotation(PI)
+		startPosition += offset * Vector2(1, -1.25)
+		endPosition += offset * Vector2(1, 1.25)
+
 	travelTween.interpolate_method(self, "set_position", startPosition, endPosition, speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	travelTween.start()
 
@@ -73,18 +84,20 @@ func _process(delta):
 			trip_duration = 0
 	get_node("ColorRect/Cargo").set_text(str(cargo))
 
-func set_cargo_limit(new_limit: int) -> void:
+func set_cargo_limit(new_limit: int = cargo_limit) -> void:
 	cargo_limit = new_limit
-	if cargo_limit < 20:
-		pass
-	elif cargo_limit < 40:
-		var thing = ColorRect.new()
-		thing.set_custom_minimum_size(Vector2(30, 30))
-		add_child(thing)
+	if cargo_limit <= 20:
+		get_node("ColorRect").set_texture(preload("res://game_entities/transit_vehicle/car.png"))
 	else:
-		var thing = ColorRect.new()
-		thing.set_custom_minimum_size(Vector2(30, 30))
-		add_child(thing)
-		thing = ColorRect.new()
-		thing.set_custom_minimum_size(Vector2(30, 30))
-		add_child(thing)
+		get_node("ColorRect").set_texture(preload("res://game_entities/transit_vehicle/truck_cab.png"))
+		if cargo_limit <= 40:
+			var thing = TextureRect.new()
+			thing.set_texture(preload("res://game_entities/transit_vehicle/truck_trailer.png"))
+			add_child(thing)
+		else:
+			var thing = TextureRect.new()
+			thing.set_texture(preload("res://game_entities/transit_vehicle/truck_trailer.png"))
+			add_child(thing)
+			thing = TextureRect.new()
+			thing.set_texture(preload("res://game_entities/transit_vehicle/truck_trailer.png"))
+			add_child(thing)

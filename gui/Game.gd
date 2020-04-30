@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-var supply_point_scene = preload("res://game_entities/SupplyPoint.tscn")
+var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.tscn")
 
 var menu_node : CenterContainer
 

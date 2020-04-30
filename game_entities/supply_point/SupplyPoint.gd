@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-var transit_vehicle_scene = preload("res://game_entities/TransitVehicle.tscn")
+var transit_vehicle_scene = preload("res://game_entities/transit_vehicle/TransitVehicle.tscn")
 
 var sp_name : String
 var stock_level : int
@@ -33,6 +33,8 @@ func request_stock(amount : int):
 	var vehicle = transit_vehicle_scene.instance()
 	if transit_size != -1:
 		vehicle.set_cargo_limit(transit_size)
+	else:
+		vehicle.set_cargo_limit()
 	# Vehicle checks for how much is needed then collects and delivers
 	vehicle.order(int(min(amount, max_stock_level - stock_level)), upstream)
 

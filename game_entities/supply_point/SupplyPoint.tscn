@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://game_entities/SupplyPoint.gd" type="Script" id=1]
+[ext_resource path="res://game_entities/supply_point/SupplyPoint.gd" type="Script" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -25,10 +25,10 @@ rect_min_size = Vector2( 40, 0 )
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
 [node name="Origin" type="Node2D" parent="RightLane"]
-position = Vector2( 20.2518, -158.601 )
+position = Vector2( 20, 0 )
 
 [node name="Destination" type="Node2D" parent="RightLane"]
-position = Vector2( 20.2518, 859.983 )
+position = Vector2( 20, 720 )
 
 [node name="SupplyPointVisual" type="ColorRect" parent="."]
 margin_left = 40.0
@@ -83,9 +83,10 @@ rect_min_size = Vector2( 0, 64 )
 custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SupplyPointVisual/VBoxContainer/Panel"]
-margin_right = 240.0
+margin_left = 10.0
+margin_right = 230.0
 margin_bottom = 64.0
-rect_min_size = Vector2( 240, 64 )
+rect_min_size = Vector2( 220, 64 )
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -93,19 +94,19 @@ __meta__ = {
 
 [node name="DemandLabel" type="Label" parent="SupplyPointVisual/VBoxContainer/Panel/VBoxContainer"]
 margin_top = 6.0
-margin_right = 240.0
+margin_right = 220.0
 margin_bottom = 20.0
 text = "Resupply Frequency"
 align = 1
 
 [node name="Demand" type="HSlider" parent="SupplyPointVisual/VBoxContainer/Panel/VBoxContainer"]
 margin_top = 24.0
-margin_right = 240.0
+margin_right = 220.0
 margin_bottom = 40.0
 
 [node name="DemandValue" type="Label" parent="SupplyPointVisual/VBoxContainer/Panel/VBoxContainer"]
 margin_top = 44.0
-margin_right = 240.0
+margin_right = 220.0
 margin_bottom = 58.0
 text = "100%"
 align = 1
@@ -118,7 +119,7 @@ rect_min_size = Vector2( 40, 0 )
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
 [node name="Destination" type="Node2D" parent="LeftLane"]
-position = Vector2( 20.2518, -158.601 )
+position = Vector2( 20, 0 )
 
 [node name="Origin" type="Node2D" parent="LeftLane"]
-position = Vector2( 20.2518, 859.983 )
+position = Vector2( 20, 720 )
