@@ -40,9 +40,9 @@ func start_travel(lane: Node):
 		get_parent().remove_child(self)
 	lane.add_child(self)
 
-	var startPosition = lane.get_node("Origin").get_position()
-	var endPosition = lane.get_node("Destination").get_position()
-	var offset = Vector2(int(get_size().x / 2), get_size().y)
+	var startPosition : Vector2 = lane.get_node("Origin").get_position()
+	var endPosition : Vector2 = lane.get_node("Destination").get_position()
+	var offset : Vector2 = Vector2(int(get_size().x / 2), get_size().y)
 	set_position(startPosition)
 
 	if is_instance_valid(travelTween):
