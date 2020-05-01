@@ -18,21 +18,266 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RightLane" type="ColorRect" parent="."]
-margin_right = 40.0
+[node name="LeftLines" type="VBoxContainer" parent="."]
+margin_right = 3.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 40, 0 )
+rect_min_size = Vector2( 2, 0 )
+size_flags_horizontal = 3
+
+[node name="Dark" type="ColorRect" parent="LeftLines"]
+margin_right = 3.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light" type="ColorRect" parent="LeftLines"]
+margin_top = 28.0
+margin_right = 3.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark2" type="ColorRect" parent="LeftLines"]
+margin_top = 56.0
+margin_right = 3.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light2" type="ColorRect" parent="LeftLines"]
+margin_top = 84.0
+margin_right = 3.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark3" type="ColorRect" parent="LeftLines"]
+margin_top = 112.0
+margin_right = 3.0
+margin_bottom = 136.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light3" type="ColorRect" parent="LeftLines"]
+margin_top = 140.0
+margin_right = 3.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark4" type="ColorRect" parent="LeftLines"]
+margin_top = 168.0
+margin_right = 3.0
+margin_bottom = 192.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light4" type="ColorRect" parent="LeftLines"]
+margin_top = 196.0
+margin_right = 3.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark5" type="ColorRect" parent="LeftLines"]
+margin_top = 224.0
+margin_right = 3.0
+margin_bottom = 248.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light5" type="ColorRect" parent="LeftLines"]
+margin_top = 252.0
+margin_right = 3.0
+margin_bottom = 276.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark6" type="ColorRect" parent="LeftLines"]
+margin_top = 280.0
+margin_right = 3.0
+margin_bottom = 304.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light6" type="ColorRect" parent="LeftLines"]
+margin_top = 308.0
+margin_right = 3.0
+margin_bottom = 332.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark7" type="ColorRect" parent="LeftLines"]
+margin_top = 336.0
+margin_right = 3.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light7" type="ColorRect" parent="LeftLines"]
+margin_top = 364.0
+margin_right = 3.0
+margin_bottom = 388.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark8" type="ColorRect" parent="LeftLines"]
+margin_top = 392.0
+margin_right = 3.0
+margin_bottom = 416.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light8" type="ColorRect" parent="LeftLines"]
+margin_top = 420.0
+margin_right = 3.0
+margin_bottom = 444.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark9" type="ColorRect" parent="LeftLines"]
+margin_top = 448.0
+margin_right = 3.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light9" type="ColorRect" parent="LeftLines"]
+margin_top = 476.0
+margin_right = 3.0
+margin_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark10" type="ColorRect" parent="LeftLines"]
+margin_top = 504.0
+margin_right = 3.0
+margin_bottom = 528.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light10" type="ColorRect" parent="LeftLines"]
+margin_top = 532.0
+margin_right = 3.0
+margin_bottom = 556.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark11" type="ColorRect" parent="LeftLines"]
+margin_top = 560.0
+margin_right = 3.0
+margin_bottom = 584.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light11" type="ColorRect" parent="LeftLines"]
+margin_top = 588.0
+margin_right = 3.0
+margin_bottom = 612.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark12" type="ColorRect" parent="LeftLines"]
+margin_top = 616.0
+margin_right = 3.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light12" type="ColorRect" parent="LeftLines"]
+margin_top = 644.0
+margin_right = 3.0
+margin_bottom = 668.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark13" type="ColorRect" parent="LeftLines"]
+margin_top = 672.0
+margin_right = 3.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightLane" type="ColorRect" parent="."]
+margin_left = 3.0
+margin_right = 41.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 38, 720 )
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
 [node name="Origin" type="Node2D" parent="RightLane"]
-position = Vector2( 20, 0 )
+position = Vector2( 19, 0 )
 
 [node name="Destination" type="Node2D" parent="RightLane"]
-position = Vector2( 20, 720 )
+position = Vector2( 19, 720 )
 
 [node name="SupplyPointVisual" type="ColorRect" parent="."]
-margin_left = 40.0
-margin_right = 280.0
+margin_left = 41.0
+margin_right = 281.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 240, 0 )
 color = Color( 0.258824, 0.32549, 0.266667, 1 )
@@ -112,14 +357,259 @@ text = "100%"
 align = 1
 
 [node name="LeftLane" type="ColorRect" parent="."]
-margin_left = 280.0
-margin_right = 320.0
+margin_left = 281.0
+margin_right = 319.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 40, 0 )
+rect_min_size = Vector2( 38, 720 )
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
 [node name="Destination" type="Node2D" parent="LeftLane"]
-position = Vector2( 20, 0 )
+position = Vector2( 19, 0 )
 
 [node name="Origin" type="Node2D" parent="LeftLane"]
-position = Vector2( 20, 720 )
+position = Vector2( 19, 720 )
+
+[node name="RightLines" type="VBoxContainer" parent="."]
+margin_left = 319.0
+margin_right = 322.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 2, 0 )
+size_flags_horizontal = 3
+
+[node name="Dark" type="ColorRect" parent="RightLines"]
+margin_right = 3.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light" type="ColorRect" parent="RightLines"]
+margin_top = 28.0
+margin_right = 3.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark2" type="ColorRect" parent="RightLines"]
+margin_top = 56.0
+margin_right = 3.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light2" type="ColorRect" parent="RightLines"]
+margin_top = 84.0
+margin_right = 3.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark3" type="ColorRect" parent="RightLines"]
+margin_top = 112.0
+margin_right = 3.0
+margin_bottom = 136.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light3" type="ColorRect" parent="RightLines"]
+margin_top = 140.0
+margin_right = 3.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark4" type="ColorRect" parent="RightLines"]
+margin_top = 168.0
+margin_right = 3.0
+margin_bottom = 192.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light4" type="ColorRect" parent="RightLines"]
+margin_top = 196.0
+margin_right = 3.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark5" type="ColorRect" parent="RightLines"]
+margin_top = 224.0
+margin_right = 3.0
+margin_bottom = 248.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light5" type="ColorRect" parent="RightLines"]
+margin_top = 252.0
+margin_right = 3.0
+margin_bottom = 276.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark6" type="ColorRect" parent="RightLines"]
+margin_top = 280.0
+margin_right = 3.0
+margin_bottom = 304.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light6" type="ColorRect" parent="RightLines"]
+margin_top = 308.0
+margin_right = 3.0
+margin_bottom = 332.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark7" type="ColorRect" parent="RightLines"]
+margin_top = 336.0
+margin_right = 3.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light7" type="ColorRect" parent="RightLines"]
+margin_top = 364.0
+margin_right = 3.0
+margin_bottom = 388.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark8" type="ColorRect" parent="RightLines"]
+margin_top = 392.0
+margin_right = 3.0
+margin_bottom = 416.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light8" type="ColorRect" parent="RightLines"]
+margin_top = 420.0
+margin_right = 3.0
+margin_bottom = 444.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark9" type="ColorRect" parent="RightLines"]
+margin_top = 448.0
+margin_right = 3.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light9" type="ColorRect" parent="RightLines"]
+margin_top = 476.0
+margin_right = 3.0
+margin_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark10" type="ColorRect" parent="RightLines"]
+margin_top = 504.0
+margin_right = 3.0
+margin_bottom = 528.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light10" type="ColorRect" parent="RightLines"]
+margin_top = 532.0
+margin_right = 3.0
+margin_bottom = 556.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark11" type="ColorRect" parent="RightLines"]
+margin_top = 560.0
+margin_right = 3.0
+margin_bottom = 584.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light11" type="ColorRect" parent="RightLines"]
+margin_top = 588.0
+margin_right = 3.0
+margin_bottom = 612.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark12" type="ColorRect" parent="RightLines"]
+margin_top = 616.0
+margin_right = 3.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light12" type="ColorRect" parent="RightLines"]
+margin_top = 644.0
+margin_right = 3.0
+margin_bottom = 668.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Dark13" type="ColorRect" parent="RightLines"]
+margin_top = 672.0
+margin_right = 3.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
