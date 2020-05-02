@@ -8,6 +8,7 @@ var menu_node : CenterContainer
 # defined as supply points
 var sp_list := []
 
+# Bring up menu if player hits ESC
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey && event.scancode == KEY_ESCAPE:
 		if is_instance_valid(menu_node):
@@ -39,12 +40,14 @@ func _ready():
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)
 
+# Iterates over each supply point and connects it to the destination for its cargo
 func setup_downstreams(list : Array) -> void:
 	for i in range(0, list.size()):
 		if i == list.size() -1:
 			break
 		list[i].set_downstream(list[i + 1])
 
+# Adds supply points to game
 func add_supply_points(list: Array) -> void:
 	for sp in list:
 		add_child(sp)

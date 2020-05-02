@@ -24,6 +24,7 @@ func _ready():
 	if quit_button.connect("pressed", self, "quit_game") != OK:
 		printerr("Error while connecting signal to quit game button")
 
+# Pauses game and makes menus visible
 func show_menu():
 	self.visible = true
 	self.set_process(true)
@@ -32,15 +33,18 @@ func show_menu():
 	game_node.visible = false
 	game_node.set_process(false)
 
+# Hides menu and pauses game
 func hide_menu():
 	self.visible = false
 	self.set_process(false)
 
+# Hides the menu and resumes the game
 func resume_game():
 	hide_menu()
 	game_node.visible = true
 	game_node.set_process(true)
 
+# Creates a new game with SupplyPoints back to default values
 func new_game():
 	if is_instance_valid(game_node):
 		game_node.queue_free()
@@ -52,5 +56,6 @@ func new_game():
 func show_settings():
 	print("Show settings stub")
 
+# Exit the game
 func quit_game():
 	get_tree().quit()

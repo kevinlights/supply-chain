@@ -20,6 +20,7 @@ func order(amount : int, sp : Node) -> void:
 	sp.downstream.adjust_pending_stock(desired_cargo)
 	start_travel(destination.get_node("LeftLane"))
 
+# Vehicle moves cargo from supply point to cargo, sets destination to home and switches lanes
 func pick_up():
 	cargo = int(min(desired_cargo, destination.stock_level))
 	destination.adjust_stock(-cargo)
@@ -35,7 +36,9 @@ func deliver() -> void:
 	# cargo does not get set to 0 since the vehicle is destroyed after
 	queue_free()
 
+# Move to destination for the given lane (animation)
 func start_travel(lane: Node):
+	# Add vehicle to lane
 	if is_instance_valid(get_parent()):
 		get_parent().remove_child(self)
 	lane.add_child(self)
@@ -52,6 +55,7 @@ func start_travel(lane: Node):
 	travelTween = Tween.new()
 	add_child(travelTween)
 
+	# Sets direction the car is facing
 	if startPosition.y > endPosition.y:
 		set_rotation(0.0)
 		startPosition += offset * Vector2(-1, 0.25)
@@ -61,11 +65,11 @@ func start_travel(lane: Node):
 		startPosition += offset * Vector2(1, -1.25)
 		endPosition += offset * Vector2(1, 1.25)
 
+	# Move from start to end
 	travelTween.interpolate_method(self, "set_position", startPosition, endPosition, speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	travelTween.start()
 
-# Constructor for TransitVehicle. Default vehicle starts empty with space
-# for 10 units
+# Constructor for TransitVehicle. Default vehicle starts empty with space for 10 units
 func _ready():
 	cargo_limit = 10
 	cargo = 0
@@ -73,6 +77,7 @@ func _ready():
 	trip_duration = 0.0
 	has_picked_up = false
 
+# Check to see if the vehicle has arrived and pick up or deliver
 func _process(delta):
 	if is_instance_valid(destination):
 		trip_duration += delta
@@ -82,8 +87,9 @@ func _process(delta):
 			else:
 				deliver()
 			trip_duration = 0
-	get_node("ColorRect/Cargo").set_text(str(cargo))
+	get_node("ColorRect/Cargo").set_text(str(cargo)) # Helper to display cargo when debugging. Not always visible
 
+# Sets cargo limits and corresponding vehicle displays (Cars for < 20, Trucks for 21-40, articulated trucks for more)
 func set_cargo_limit(new_limit: int = cargo_limit) -> void:
 	cargo_limit = new_limit
 	if cargo_limit <= 20:

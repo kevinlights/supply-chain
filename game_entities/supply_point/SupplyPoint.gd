@@ -95,11 +95,13 @@ func adjust_pending_stock(value : int) -> void:
 func adjust_stock(value : int) -> void:
 	stock_level = int(clamp(stock_level + value, 0, max_stock_level))
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
-	
+
+# Sets the demand_level to the given value and updates the text for the level
 func update_demand(value : float) -> void:
 	demand_level = int(value)
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
 
+# If enough time has passed, a supply point will produce/consume/request stock
 func _process(delta):
 	counter += delta
 	if counter >= tick_rate:
@@ -112,6 +114,7 @@ func _process(delta):
 			if stock_level + pending_stock < demand_level:
 				request_stock(int(demand_level * demand_factor))
 
+# Initialize values for sliders
 func _ready() -> void:
 	demand_slider = get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand")
 	demand_slider.connect("value_changed", self, "update_demand")
