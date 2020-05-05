@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://game_entities/supply_point/SupplyPoint.gd" type="Script" id=1]
+[ext_resource path="res://game_entities/supply_point/HomeAnchors.tscn" type="PackedScene" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -264,6 +265,8 @@ margin_right = 281.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 242, 0 )
 color = Color( 0.258824, 0.32549, 0.266667, 1 )
+
+[node name="AnchorBackground" parent="SupplyPointVisual" instance=ExtResource( 2 )]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SupplyPointVisual"]
 margin_right = 240.0

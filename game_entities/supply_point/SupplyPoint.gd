@@ -16,6 +16,10 @@ var is_consuming : bool
 var upstream : Node
 var downstream : Node
 var demand_slider : HSlider
+var should_update_indicators : bool
+var stock_indicator_count : int
+var stock_indicator_anchor : TextureRect
+var stock_indicator_value : float
 
 # Temporary
 var demand_factor : float
@@ -63,10 +67,31 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	demand_factor = 1.0
 	transit_size = -1
 	sp_name = new_name
+	stock_indicator_count = 0
+	stock_indicator_value = 1.0
+	should_update_indicators = false
 	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(sp_name)
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand").set_value(demand_level)
+	configure_stock_indicators()
+
+func configure_stock_indicators():
+	if has_node("SupplyPointVisual/AnchorBackground"):
+		stock_indicator_anchor = get_node("SupplyPointVisual/AnchorBackground")
+		stock_indicator_count = stock_indicator_anchor.get_child_count()
+		stock_indicator_value = 1.0 / (float(stock_indicator_count) / max_stock_level)
+		for indicator in stock_indicator_anchor.get_children():
+			indicator.visible = false
+
+func update_stock_indicators():
+	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
+	for i in range(0, stock_indicator_count):
+		if i < stock_level / stock_indicator_value:
+			stock_indicator_anchor.get_child(i).visible = true
+			#TODO: Set texture from pool of images
+		else:
+			stock_indicator_anchor.get_child(i).visible = false
 
 func set_demand_factor(value : float) -> void:
 	demand_factor = value
@@ -94,7 +119,7 @@ func adjust_pending_stock(value : int) -> void:
 # adjust_stock is a helper function to centralize all stock adjustments
 func adjust_stock(value : int) -> void:
 	stock_level = int(clamp(stock_level + value, 0, max_stock_level))
-	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
+	should_update_indicators = true
 
 # Sets the demand_level to the given value and updates the text for the level
 func update_demand(value : float) -> void:
@@ -103,6 +128,8 @@ func update_demand(value : float) -> void:
 
 # If enough time has passed, a supply point will produce/consume/request stock
 func _process(delta):
+	if should_update_indicators:
+		update_stock_indicators()
 	counter += delta
 	if counter >= tick_rate:
 		counter -= tick_rate
