@@ -17,6 +17,7 @@ _global_script_class_icons={
 
 config/name="Supply Chain"
 run/main_scene="res://gui/menu.tscn"
+boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
 config/icon="res://icon.png"
 
 [debug]
@@ -27,8 +28,10 @@ gdscript/warnings/return_value_discarded=false
 
 window/size/width=1280
 window/size/height=720
+window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
 [rendering]
 
+environment/default_clear_color=Color( 0.0862745, 0.0862745, 0.101961, 1 )
 environment/default_environment="res://default_env.tres"

@@ -11,7 +11,7 @@ margin_right = -960.0
 margin_bottom = 6.10352e-05
 rect_min_size = Vector2( 0, 720 )
 size_flags_horizontal = 0
-size_flags_vertical = 3
+size_flags_vertical = 0
 custom_constants/separation = 0
 script = ExtResource( 1 )
 __meta__ = {
@@ -19,14 +19,15 @@ __meta__ = {
 }
 
 [node name="LeftLines" type="VBoxContainer" parent="."]
-margin_right = 3.0
+margin_right = 1.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 2, 0 )
+rect_min_size = Vector2( 1, 0 )
 size_flags_horizontal = 3
+custom_constants/separation = 0
 
 [node name="Dark" type="ColorRect" parent="LeftLines"]
-margin_right = 3.0
-margin_bottom = 24.0
+margin_right = 1.0
+margin_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -35,17 +36,17 @@ __meta__ = {
 }
 
 [node name="Light" type="ColorRect" parent="LeftLines"]
-margin_top = 28.0
-margin_right = 3.0
-margin_bottom = 52.0
+margin_top = 31.0
+margin_right = 1.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark2" type="ColorRect" parent="LeftLines"]
-margin_top = 56.0
-margin_right = 3.0
-margin_bottom = 80.0
+margin_top = 62.0
+margin_right = 1.0
+margin_bottom = 93.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -54,17 +55,17 @@ __meta__ = {
 }
 
 [node name="Light2" type="ColorRect" parent="LeftLines"]
-margin_top = 84.0
-margin_right = 3.0
-margin_bottom = 108.0
+margin_top = 93.0
+margin_right = 1.0
+margin_bottom = 124.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark3" type="ColorRect" parent="LeftLines"]
-margin_top = 112.0
-margin_right = 3.0
-margin_bottom = 136.0
+margin_top = 124.0
+margin_right = 1.0
+margin_bottom = 155.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -73,17 +74,17 @@ __meta__ = {
 }
 
 [node name="Light3" type="ColorRect" parent="LeftLines"]
-margin_top = 140.0
-margin_right = 3.0
-margin_bottom = 164.0
+margin_top = 155.0
+margin_right = 1.0
+margin_bottom = 186.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark4" type="ColorRect" parent="LeftLines"]
-margin_top = 168.0
-margin_right = 3.0
-margin_bottom = 192.0
+margin_top = 186.0
+margin_right = 1.0
+margin_bottom = 217.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -92,17 +93,17 @@ __meta__ = {
 }
 
 [node name="Light4" type="ColorRect" parent="LeftLines"]
-margin_top = 196.0
-margin_right = 3.0
-margin_bottom = 220.0
+margin_top = 217.0
+margin_right = 1.0
+margin_bottom = 248.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark5" type="ColorRect" parent="LeftLines"]
-margin_top = 224.0
-margin_right = 3.0
-margin_bottom = 248.0
+margin_top = 248.0
+margin_right = 1.0
+margin_bottom = 279.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -111,17 +112,17 @@ __meta__ = {
 }
 
 [node name="Light5" type="ColorRect" parent="LeftLines"]
-margin_top = 252.0
-margin_right = 3.0
-margin_bottom = 276.0
+margin_top = 279.0
+margin_right = 1.0
+margin_bottom = 310.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark6" type="ColorRect" parent="LeftLines"]
-margin_top = 280.0
-margin_right = 3.0
-margin_bottom = 304.0
+margin_top = 310.0
+margin_right = 1.0
+margin_bottom = 341.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -130,17 +131,17 @@ __meta__ = {
 }
 
 [node name="Light6" type="ColorRect" parent="LeftLines"]
-margin_top = 308.0
-margin_right = 3.0
-margin_bottom = 332.0
+margin_top = 341.0
+margin_right = 1.0
+margin_bottom = 372.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark7" type="ColorRect" parent="LeftLines"]
-margin_top = 336.0
-margin_right = 3.0
-margin_bottom = 360.0
+margin_top = 372.0
+margin_right = 1.0
+margin_bottom = 403.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -149,17 +150,17 @@ __meta__ = {
 }
 
 [node name="Light7" type="ColorRect" parent="LeftLines"]
-margin_top = 364.0
-margin_right = 3.0
-margin_bottom = 388.0
+margin_top = 403.0
+margin_right = 1.0
+margin_bottom = 434.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark8" type="ColorRect" parent="LeftLines"]
-margin_top = 392.0
-margin_right = 3.0
-margin_bottom = 416.0
+margin_top = 434.0
+margin_right = 1.0
+margin_bottom = 465.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -168,17 +169,17 @@ __meta__ = {
 }
 
 [node name="Light8" type="ColorRect" parent="LeftLines"]
-margin_top = 420.0
-margin_right = 3.0
-margin_bottom = 444.0
+margin_top = 465.0
+margin_right = 1.0
+margin_bottom = 496.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark9" type="ColorRect" parent="LeftLines"]
-margin_top = 448.0
-margin_right = 3.0
-margin_bottom = 472.0
+margin_top = 496.0
+margin_right = 1.0
+margin_bottom = 527.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -187,17 +188,17 @@ __meta__ = {
 }
 
 [node name="Light9" type="ColorRect" parent="LeftLines"]
-margin_top = 476.0
-margin_right = 3.0
-margin_bottom = 500.0
+margin_top = 527.0
+margin_right = 1.0
+margin_bottom = 558.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark10" type="ColorRect" parent="LeftLines"]
-margin_top = 504.0
-margin_right = 3.0
-margin_bottom = 528.0
+margin_top = 558.0
+margin_right = 1.0
+margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -206,17 +207,17 @@ __meta__ = {
 }
 
 [node name="Light10" type="ColorRect" parent="LeftLines"]
-margin_top = 532.0
-margin_right = 3.0
-margin_bottom = 556.0
+margin_top = 589.0
+margin_right = 1.0
+margin_bottom = 620.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark11" type="ColorRect" parent="LeftLines"]
-margin_top = 560.0
-margin_right = 3.0
-margin_bottom = 584.0
+margin_top = 620.0
+margin_right = 1.0
+margin_bottom = 651.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -225,35 +226,16 @@ __meta__ = {
 }
 
 [node name="Light11" type="ColorRect" parent="LeftLines"]
-margin_top = 588.0
-margin_right = 3.0
-margin_bottom = 612.0
+margin_top = 651.0
+margin_right = 1.0
+margin_bottom = 682.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark12" type="ColorRect" parent="LeftLines"]
-margin_top = 616.0
-margin_right = 3.0
-margin_bottom = 640.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Light12" type="ColorRect" parent="LeftLines"]
-margin_top = 644.0
-margin_right = 3.0
-margin_bottom = 668.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.6, 0.6, 0.6, 1 )
-
-[node name="Dark13" type="ColorRect" parent="LeftLines"]
-margin_top = 672.0
-margin_right = 3.0
+margin_top = 682.0
+margin_right = 1.0
 margin_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -263,10 +245,11 @@ __meta__ = {
 }
 
 [node name="RightLane" type="ColorRect" parent="."]
-margin_left = 3.0
-margin_right = 41.0
+margin_left = 1.0
+margin_right = 39.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 38, 720 )
+rect_clip_content = true
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
 [node name="Origin" type="Node2D" parent="RightLane"]
@@ -276,16 +259,16 @@ position = Vector2( 19, 0 )
 position = Vector2( 19, 720 )
 
 [node name="SupplyPointVisual" type="ColorRect" parent="."]
-margin_left = 41.0
+margin_left = 39.0
 margin_right = 281.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 240, 0 )
+rect_min_size = Vector2( 242, 0 )
 color = Color( 0.258824, 0.32549, 0.266667, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SupplyPointVisual"]
 margin_right = 240.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 240, 720 )
+rect_min_size = Vector2( 242, 720 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -293,13 +276,13 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="SupplyPointVisual/VBoxContainer"]
-margin_right = 240.0
+margin_right = 242.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="Title" type="Label" parent="SupplyPointVisual/VBoxContainer"]
 margin_top = 24.0
-margin_right = 240.0
+margin_right = 242.0
 margin_bottom = 38.0
 size_flags_horizontal = 3
 text = "Supply Point"
@@ -307,7 +290,7 @@ align = 1
 
 [node name="Stock" type="Label" parent="SupplyPointVisual/VBoxContainer"]
 margin_top = 42.0
-margin_right = 240.0
+margin_right = 242.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 text = "Stock: "
@@ -315,16 +298,17 @@ align = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="SupplyPointVisual/VBoxContainer"]
 margin_top = 60.0
-margin_right = 240.0
+margin_right = 242.0
 margin_bottom = 652.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="SupplyPointVisual/VBoxContainer"]
 margin_top = 656.0
-margin_right = 240.0
+margin_right = 242.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 0, 64 )
+size_flags_horizontal = 3
 custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SupplyPointVisual/VBoxContainer/Panel"]
@@ -361,6 +345,7 @@ margin_left = 281.0
 margin_right = 319.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 38, 720 )
+rect_clip_content = true
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
 [node name="Destination" type="Node2D" parent="LeftLane"]
@@ -371,14 +356,15 @@ position = Vector2( 19, 720 )
 
 [node name="RightLines" type="VBoxContainer" parent="."]
 margin_left = 319.0
-margin_right = 322.0
+margin_right = 320.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 2, 0 )
+rect_min_size = Vector2( 1, 0 )
 size_flags_horizontal = 3
+custom_constants/separation = 0
 
 [node name="Dark" type="ColorRect" parent="RightLines"]
-margin_right = 3.0
-margin_bottom = 24.0
+margin_right = 1.0
+margin_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -387,17 +373,17 @@ __meta__ = {
 }
 
 [node name="Light" type="ColorRect" parent="RightLines"]
-margin_top = 28.0
-margin_right = 3.0
-margin_bottom = 52.0
+margin_top = 31.0
+margin_right = 1.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark2" type="ColorRect" parent="RightLines"]
-margin_top = 56.0
-margin_right = 3.0
-margin_bottom = 80.0
+margin_top = 62.0
+margin_right = 1.0
+margin_bottom = 93.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -406,17 +392,17 @@ __meta__ = {
 }
 
 [node name="Light2" type="ColorRect" parent="RightLines"]
-margin_top = 84.0
-margin_right = 3.0
-margin_bottom = 108.0
+margin_top = 93.0
+margin_right = 1.0
+margin_bottom = 124.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark3" type="ColorRect" parent="RightLines"]
-margin_top = 112.0
-margin_right = 3.0
-margin_bottom = 136.0
+margin_top = 124.0
+margin_right = 1.0
+margin_bottom = 155.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -425,17 +411,17 @@ __meta__ = {
 }
 
 [node name="Light3" type="ColorRect" parent="RightLines"]
-margin_top = 140.0
-margin_right = 3.0
-margin_bottom = 164.0
+margin_top = 155.0
+margin_right = 1.0
+margin_bottom = 186.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark4" type="ColorRect" parent="RightLines"]
-margin_top = 168.0
-margin_right = 3.0
-margin_bottom = 192.0
+margin_top = 186.0
+margin_right = 1.0
+margin_bottom = 217.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -444,17 +430,17 @@ __meta__ = {
 }
 
 [node name="Light4" type="ColorRect" parent="RightLines"]
-margin_top = 196.0
-margin_right = 3.0
-margin_bottom = 220.0
+margin_top = 217.0
+margin_right = 1.0
+margin_bottom = 248.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark5" type="ColorRect" parent="RightLines"]
-margin_top = 224.0
-margin_right = 3.0
-margin_bottom = 248.0
+margin_top = 248.0
+margin_right = 1.0
+margin_bottom = 279.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -463,17 +449,17 @@ __meta__ = {
 }
 
 [node name="Light5" type="ColorRect" parent="RightLines"]
-margin_top = 252.0
-margin_right = 3.0
-margin_bottom = 276.0
+margin_top = 279.0
+margin_right = 1.0
+margin_bottom = 310.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark6" type="ColorRect" parent="RightLines"]
-margin_top = 280.0
-margin_right = 3.0
-margin_bottom = 304.0
+margin_top = 310.0
+margin_right = 1.0
+margin_bottom = 341.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -482,17 +468,17 @@ __meta__ = {
 }
 
 [node name="Light6" type="ColorRect" parent="RightLines"]
-margin_top = 308.0
-margin_right = 3.0
-margin_bottom = 332.0
+margin_top = 341.0
+margin_right = 1.0
+margin_bottom = 372.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark7" type="ColorRect" parent="RightLines"]
-margin_top = 336.0
-margin_right = 3.0
-margin_bottom = 360.0
+margin_top = 372.0
+margin_right = 1.0
+margin_bottom = 403.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -501,17 +487,17 @@ __meta__ = {
 }
 
 [node name="Light7" type="ColorRect" parent="RightLines"]
-margin_top = 364.0
-margin_right = 3.0
-margin_bottom = 388.0
+margin_top = 403.0
+margin_right = 1.0
+margin_bottom = 434.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark8" type="ColorRect" parent="RightLines"]
-margin_top = 392.0
-margin_right = 3.0
-margin_bottom = 416.0
+margin_top = 434.0
+margin_right = 1.0
+margin_bottom = 465.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -520,17 +506,17 @@ __meta__ = {
 }
 
 [node name="Light8" type="ColorRect" parent="RightLines"]
-margin_top = 420.0
-margin_right = 3.0
-margin_bottom = 444.0
+margin_top = 465.0
+margin_right = 1.0
+margin_bottom = 496.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark9" type="ColorRect" parent="RightLines"]
-margin_top = 448.0
-margin_right = 3.0
-margin_bottom = 472.0
+margin_top = 496.0
+margin_right = 1.0
+margin_bottom = 527.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -539,17 +525,17 @@ __meta__ = {
 }
 
 [node name="Light9" type="ColorRect" parent="RightLines"]
-margin_top = 476.0
-margin_right = 3.0
-margin_bottom = 500.0
+margin_top = 527.0
+margin_right = 1.0
+margin_bottom = 558.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark10" type="ColorRect" parent="RightLines"]
-margin_top = 504.0
-margin_right = 3.0
-margin_bottom = 528.0
+margin_top = 558.0
+margin_right = 1.0
+margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -558,17 +544,17 @@ __meta__ = {
 }
 
 [node name="Light10" type="ColorRect" parent="RightLines"]
-margin_top = 532.0
-margin_right = 3.0
-margin_bottom = 556.0
+margin_top = 589.0
+margin_right = 1.0
+margin_bottom = 620.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark11" type="ColorRect" parent="RightLines"]
-margin_top = 560.0
-margin_right = 3.0
-margin_bottom = 584.0
+margin_top = 620.0
+margin_right = 1.0
+margin_bottom = 651.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -577,35 +563,16 @@ __meta__ = {
 }
 
 [node name="Light11" type="ColorRect" parent="RightLines"]
-margin_top = 588.0
-margin_right = 3.0
-margin_bottom = 612.0
+margin_top = 651.0
+margin_right = 1.0
+margin_bottom = 682.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
 [node name="Dark12" type="ColorRect" parent="RightLines"]
-margin_top = 616.0
-margin_right = 3.0
-margin_bottom = 640.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Light12" type="ColorRect" parent="RightLines"]
-margin_top = 644.0
-margin_right = 3.0
-margin_bottom = 668.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.6, 0.6, 0.6, 1 )
-
-[node name="Dark13" type="ColorRect" parent="RightLines"]
-margin_top = 672.0
-margin_right = 3.0
+margin_top = 682.0
+margin_right = 1.0
 margin_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
