@@ -20,6 +20,7 @@ var should_update_indicators : bool
 var stock_indicator_count : int
 var stock_indicator_anchor : TextureRect
 var stock_indicator_value : float
+var stock_indicator_pool : Array
 
 # Temporary
 var demand_factor : float
@@ -83,12 +84,17 @@ func configure_stock_indicators():
 		stock_indicator_value = 1.0 / (float(stock_indicator_count) / max_stock_level)
 		for indicator in stock_indicator_anchor.get_children():
 			indicator.visible = false
+	for i in range(0, 20):
+		stock_indicator_pool.append(load("res://game_entities/supply_point/home_visuals/stock_item_%02d.png" % i))
+
 
 func update_stock_indicators():
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
 	for i in range(0, stock_indicator_count):
 		if i < stock_level / stock_indicator_value:
-			stock_indicator_anchor.get_child(i).visible = true
+			if stock_indicator_anchor.get_child(i).visible == false:
+				stock_indicator_anchor.get_child(i).texture = stock_indicator_pool[randi() % stock_indicator_pool.size() - 1]
+				stock_indicator_anchor.get_child(i).visible = true
 			#TODO: Set texture from pool of images
 		else:
 			stock_indicator_anchor.get_child(i).visible = false
@@ -130,6 +136,7 @@ func update_demand(value : float) -> void:
 func _process(delta):
 	if should_update_indicators:
 		update_stock_indicators()
+		should_update_indicators = false
 	counter += delta
 	if counter >= tick_rate:
 		counter -= tick_rate
