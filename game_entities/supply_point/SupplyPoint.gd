@@ -11,6 +11,7 @@ var max_demand : int
 var pending_stock: int
 var tick_rate : float
 var counter : float
+var consume_counter: float
 var is_producing : bool
 var is_consuming : bool
 var upstream : Node
@@ -21,6 +22,9 @@ var stock_indicator_count : int
 var stock_indicator_anchor : TextureRect
 var stock_indicator_value : float
 var stock_indicator_pool : Array
+var consumption_rate : int
+var production_rate : int
+var consume_produce_rate : float
 
 # Temporary
 var demand_factor : float
@@ -62,7 +66,11 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	max_demand = new_max_demand
 	pending_stock = 0
 	tick_rate = 1.0
+	consume_produce_rate = 0.50
+	production_rate = 5
+	consumption_rate = 1
 	counter = 0.0
+	consume_counter = 0.0
 	is_producing = false
 	is_consuming = false
 	demand_factor = 1.0
@@ -138,13 +146,18 @@ func _process(delta):
 		update_stock_indicators()
 		should_update_indicators = false
 	counter += delta
+	consume_counter += delta
+	if consume_counter >= consume_produce_rate:
+		consume_counter -= consume_produce_rate
+		if is_producing:
+			produce_stock(production_rate)
+		if is_consuming:
+			consume_stock(consumption_rate)
 	if counter >= tick_rate:
 		counter -= tick_rate
-		if is_producing:
-			produce_stock(demand_level)
+		if (is_producing):
+			pass
 		else:
-			if is_consuming:
-				consume_stock(demand_level)
 			if stock_level + pending_stock < demand_level:
 				request_stock(int(demand_level * demand_factor))
 
