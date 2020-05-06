@@ -71,7 +71,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	stock_indicator_count = 0
 	stock_indicator_value = 1.0
 	should_update_indicators = false
-	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(sp_name)
+	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(sp_name.to_upper())
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand").set_value(demand_level)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://game_entities/supply_point/SupplyPoint.gd" type="Script" id=1]
 [ext_resource path="res://game_entities/supply_point/home_visuals/HomeAnchors.tscn" type="PackedScene" id=2]
+[ext_resource path="res://fonts/heading.tres" type="DynamicFont" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -286,21 +287,22 @@ rect_min_size = Vector2( 0, 20 )
 [node name="Title" type="Label" parent="SupplyPointVisual/VBoxContainer"]
 margin_top = 24.0
 margin_right = 242.0
-margin_bottom = 38.0
+margin_bottom = 55.0
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
 text = "Supply Point"
 align = 1
 
 [node name="Stock" type="Label" parent="SupplyPointVisual/VBoxContainer"]
-margin_top = 42.0
+margin_top = 59.0
 margin_right = 242.0
-margin_bottom = 56.0
+margin_bottom = 73.0
 size_flags_horizontal = 3
 text = "Stock: "
 align = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="SupplyPointVisual/VBoxContainer"]
-margin_top = 60.0
+margin_top = 77.0
 margin_right = 242.0
 margin_bottom = 652.0
 rect_min_size = Vector2( 0, 20 )
@@ -328,6 +330,7 @@ __meta__ = {
 margin_top = 6.0
 margin_right = 220.0
 margin_bottom = 20.0
+custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 text = "Resupply Frequency"
 align = 1
 
@@ -340,6 +343,7 @@ margin_bottom = 40.0
 margin_top = 44.0
 margin_right = 220.0
 margin_bottom = 58.0
+custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 text = "100%"
 align = 1
 
