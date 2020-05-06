@@ -24,7 +24,7 @@ alignment = 1
 [node name="Resume" type="Button" parent="VBoxContainer"]
 visible = false
 margin_right = 300.0
-margin_bottom = 30.0
+margin_bottom = 37.0
 rect_min_size = Vector2( 0, 30 )
 text = "Resume"
 

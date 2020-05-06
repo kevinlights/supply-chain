@@ -2,6 +2,13 @@ extends HBoxContainer
 
 var transit_vehicle_scene = preload("res://game_entities/transit_vehicle/TransitVehicle.tscn")
 
+var visual_indicators = {
+	"home": preload("res://game_entities/supply_point/visual_indicators/HomeAnchors.tscn"),
+	"store": preload("res://game_entities/supply_point/visual_indicators/StoreAnchors.tscn"),
+	"default": preload("res://game_entities/supply_point/visual_indicators/HomeAnchors.tscn")
+}
+
+
 var sp_name : String
 var stock_level : int
 var max_stock_level : int
@@ -21,7 +28,6 @@ var should_update_indicators : bool
 var stock_indicator_count : int
 var stock_indicator_anchor : TextureRect
 var stock_indicator_value : float
-var stock_indicator_pool : Array
 var consumption_rate : int
 var production_rate : int
 var consume_produce_rate : float
@@ -86,26 +92,19 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	configure_stock_indicators()
 
 func configure_stock_indicators():
-	if has_node("SupplyPointVisual/AnchorBackground"):
-		stock_indicator_anchor = get_node("SupplyPointVisual/AnchorBackground")
-		stock_indicator_count = stock_indicator_anchor.get_child_count()
-		stock_indicator_value = 1.0 / (float(stock_indicator_count) / max_stock_level)
-		for indicator in stock_indicator_anchor.get_children():
-			indicator.visible = false
-	for i in range(0, 20):
-		stock_indicator_pool.append(load("res://game_entities/supply_point/home_visuals/stock_item_%02d.png" % i))
+	if sp_name.to_lower() in visual_indicators:
+		stock_indicator_anchor = visual_indicators[sp_name.to_lower()].instance()
+	else:
+		stock_indicator_anchor = visual_indicators["default"].instance()
 
+	get_node("SupplyPointVisual").add_child(stock_indicator_anchor)
+	stock_indicator_count = stock_indicator_anchor.get_child_count()
+	stock_indicator_value = 1.0 / (float(stock_indicator_count) / max_stock_level)
+	stock_indicator_anchor.set_indicator_value(stock_indicator_value)
 
 func update_stock_indicators():
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
-	for i in range(0, stock_indicator_count):
-		if i < stock_level / stock_indicator_value:
-			if stock_indicator_anchor.get_child(i).visible == false:
-				stock_indicator_anchor.get_child(i).texture = stock_indicator_pool[randi() % stock_indicator_pool.size() - 1]
-				stock_indicator_anchor.get_child(i).visible = true
-			#TODO: Set texture from pool of images
-		else:
-			stock_indicator_anchor.get_child(i).visible = false
+	stock_indicator_anchor.update_stock_indicators(stock_level)
 
 func set_demand_factor(value : float) -> void:
 	demand_factor = value

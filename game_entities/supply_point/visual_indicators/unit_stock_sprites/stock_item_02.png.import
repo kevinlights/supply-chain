@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stock_item_19.png-2abb2d02d028e5b50403aa4097769a64.stex"
+path="res://.import/stock_item_02.png-6bda542f77b915dd66a941dd9a36f415.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game_entities/supply_point/home_visuals/stock_item_19.png"
-dest_files=[ "res://.import/stock_item_19.png-2abb2d02d028e5b50403aa4097769a64.stex" ]
+source_file="res://game_entities/supply_point/visual_indicators/unit_stock_sprites/stock_item_02.png"
+dest_files=[ "res://.import/stock_item_02.png-6bda542f77b915dd66a941dd9a36f415.stex" ]
 
 [params]
 

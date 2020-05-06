@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/toilet.png-e56b6fe56879ce790961acf76e178246.stex"
+path="res://.import/stock_item_04.png-fef05bf1427f0400d54137c41e18e884.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game_entities/supply_point/home_visuals/toilet.png"
-dest_files=[ "res://.import/toilet.png-e56b6fe56879ce790961acf76e178246.stex" ]
+source_file="res://game_entities/supply_point/visual_indicators/unit_stock_sprites/stock_item_04.png"
+dest_files=[ "res://.import/stock_item_04.png-fef05bf1427f0400d54137c41e18e884.stex" ]
 
 [params]
 
