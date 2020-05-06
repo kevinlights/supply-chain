@@ -5,6 +5,7 @@ var transit_vehicle_scene = preload("res://game_entities/transit_vehicle/Transit
 var visual_indicators = {
 	"home": preload("res://game_entities/supply_point/visual_indicators/HomeAnchors.tscn"),
 	"store": preload("res://game_entities/supply_point/visual_indicators/StoreAnchors.tscn"),
+	"warehouse": preload("res://game_entities/supply_point/visual_indicators/WarehouseAnchors.tscn"),
 	"default": preload("res://game_entities/supply_point/visual_indicators/HomeAnchors.tscn")
 }
 
@@ -98,6 +99,7 @@ func configure_stock_indicators():
 		stock_indicator_anchor = visual_indicators["default"].instance()
 
 	get_node("SupplyPointVisual").add_child(stock_indicator_anchor)
+	get_node("SupplyPointVisual").move_child(stock_indicator_anchor, 0)
 	stock_indicator_count = stock_indicator_anchor.get_child_count()
 	stock_indicator_value = 1.0 / (float(stock_indicator_count) / max_stock_level)
 	stock_indicator_anchor.set_indicator_value(stock_indicator_value)
