@@ -12,13 +12,10 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
-[node name="Newspaper" type="VBoxContainer"]
+[node name="Newspaper" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 1280, 720 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Paper" type="ColorRect" parent="."]
 margin_right = 1280.0
