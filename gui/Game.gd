@@ -1,12 +1,23 @@
 extends HBoxContainer
 
 var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.tscn")
+var newspaper_scene = preload("res://game_entities/newspaper/Newspaper.tscn")
 
 var menu_node : CenterContainer
 
 # Simulation requires a manufacturer, a warehouse, and a consumer which are
 # defined as supply points
 var sp_list := []
+var event_list := {}
+var current_event_list := []
+var supply_point_list := {
+							"manufacturer": {},
+							"warehouse": {"transit_size": 100},
+							"store": {"transit_size": 40},
+							"home": {"max_level": 100, "initial_level": 0, "initial_demand": 40}
+						}
+var event_frequency := 20.0
+var next_event_time := 20.0
 
 # Bring up menu if player hits ESC
 func _input(event: InputEvent) -> void:
@@ -19,24 +30,21 @@ func _input(event: InputEvent) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Instantiate the manufacturer, warehouse and home
-	sp_list.push_back(supply_point_scene.instance())
-	sp_list.back().init("Manufacturer")
-
-	sp_list.push_back(supply_point_scene.instance())
-	sp_list.back().init("Warehouse")
-	sp_list.back().set_transit_size(100)
-
-	sp_list.push_back(supply_point_scene.instance())
-	sp_list.back().init("Store")
-	sp_list.back().set_transit_size(40)
-
-	sp_list.push_back(supply_point_scene.instance())
-	sp_list.back().init("Home", 100, 0, 40)
-	# sp_list.back().set_demand_factor(0.5)
+	for sp in supply_point_list:
+		sp_list.push_back(supply_point_scene.instance())
+		sp_list.back().init(sp)
+		if "transit_size" in supply_point_list[sp]:
+			sp_list.back().set_transit_size(supply_point_list[sp]["transit_size"])
+		if "max_level" in supply_point_list[sp]:
+			sp_list.back().set_max_stock_level(supply_point_list[sp]["max_level"])
+		if "initial_level" in supply_point_list[sp]:
+			sp_list.back().set_stock_level(supply_point_list[sp]["initial_level"])
+		if "initial_demand" in supply_point_list[sp]:
+			sp_list.back().update_demand(supply_point_list[sp]["initial_demand"])
 
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)
+	load_events("json/events.json")
 
 # Iterates over each supply point and connects it to the destination for its cargo and sets first entry as producer and final entry as consumer
 func setup_downstreams(list : Array) -> void:
@@ -53,3 +61,87 @@ func setup_downstreams(list : Array) -> void:
 func add_supply_points(list: Array) -> void:
 	for sp in list:
 		add_child(sp)
+
+func read_json(path):
+	var file = File.new()
+	if not file.file_exists(path):
+		print("ERROR: Unable to open resource ", path)
+	file.open(path, file.READ)
+	var text = file.get_as_text()
+	file.close()
+	var parse = JSON.parse(text)
+	if parse.error == OK:
+		return parse.result
+	else:
+		print("Error reading ", path, " at line " + str(parse.error_line) + ": " + parse.error_string)
+		return null
+
+func load_events(path):
+	#TODO: Load this from file(s)
+	event_list = read_json(path)
+
+func get_random_event():
+	var candidates = []
+	for event_type in event_list:
+		if event_type in supply_point_list || event_type == "generic":
+			for item in event_list[event_type]:
+				candidates.push_back(item)
+	candidates.shuffle()
+	if candidates.size() > 0:
+		return candidates[0]
+	else:
+		return {
+					"time": 0,
+					"headline": "Business as usual",
+					"image": "test.png",
+				}
+
+func add_event(event : Dictionary) -> void:
+	print("Adding event ", event["headline"])
+
+	event = event.duplicate()
+
+	#TODO: Implement proper pausing here
+	var newspaper = newspaper_scene.instance()
+	newspaper.set_event(event)
+	get_parent().add_child(newspaper)
+
+	if event["time"] > 0:
+		current_event_list.push_back(event)
+
+	var target : Control
+	if "supply_point" in event:
+		for sp in sp_list:
+			if sp.sp_name == event["supply_point"]:
+				target = sp
+	if !is_instance_valid(target):
+		target = sp_list[randi() % sp_list.size()]
+	event["target"] = target
+
+	if "min_demand_offset" in event:
+		event["target"].adjust_min_demand_offset(event["min_demand_offset"])
+	#TODO: Add more event effects
+
+func remove_event(event : Dictionary) -> void:
+	print("Removing event ", event["headline"])
+
+	if "min_demand_offset" in event:
+		event["target"].adjust_min_demand_offset(-event["min_demand_offset"])
+	#TODO: Add more event effects
+
+	current_event_list.erase(event)
+
+func _process(delta : float):
+	next_event_time -= delta
+	if next_event_time <= 0:
+		next_event_time += event_frequency
+		add_event(get_random_event())
+
+	var expired_events := []
+	for event in current_event_list:
+		event["time"] -= delta
+		if event["time"] <= 0:
+			expired_events.push_back(event)
+	for event in expired_events:
+		remove_event(event)
+

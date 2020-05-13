@@ -14,6 +14,7 @@ var sp_name : String
 var stock_level : int
 var max_stock_level : int
 var demand_level : int
+var min_demand_offset : int = 0
 var min_demand : int
 var max_demand : int
 var pending_stock: int
@@ -31,7 +32,7 @@ var stock_indicator_anchor : TextureRect
 var stock_indicator_value : float
 var consumption_rate : int
 var production_rate : int
-var consume_produce_rate : float
+var consume_produce_frequency : float
 
 # Temporary
 var demand_factor : float
@@ -73,7 +74,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	max_demand = new_max_demand
 	pending_stock = 0
 	tick_rate = 1.0
-	consume_produce_rate = 0.50
+	consume_produce_frequency = 0.50
 	production_rate = 5
 	consumption_rate = 1
 	counter = 0.0
@@ -91,6 +92,17 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand").set_value(demand_level)
 	configure_stock_indicators()
+
+func set_max_stock_level(value : int) -> void:
+	max_stock_level = value
+
+func set_stock_level(value : int) -> void:
+	stock_level = value
+	update_stock_indicators()
+
+func adjust_min_demand_offset(value : int):
+	min_demand_offset += value
+	update_demand(demand_level)
 
 func configure_stock_indicators():
 	if sp_name.to_lower() in visual_indicators:
@@ -139,17 +151,29 @@ func adjust_stock(value : int) -> void:
 # Sets the demand_level to the given value and updates the text for the level
 func update_demand(value : float) -> void:
 	demand_level = int(value)
+	if demand_level < min_demand + min_demand_offset:
+		demand_level = min_demand + min_demand_offset
+	if is_instance_valid(demand_slider):
+		correct_demand_level()
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
+
+func correct_demand_level() -> void:
+	if demand_level != demand_slider.value:
+		demand_slider.disconnect("value_changed", self, "update_demand")
+		demand_slider.set_value(demand_level)
+		demand_slider.connect("value_changed", self, "update_demand")
 
 # If enough time has passed, a supply point will produce/consume/request stock
 func _process(delta):
+	correct_demand_level()
+
 	if should_update_indicators:
 		update_stock_indicators()
 		should_update_indicators = false
 	counter += delta
 	consume_counter += delta
-	if consume_counter >= consume_produce_rate:
-		consume_counter -= consume_produce_rate
+	if consume_counter >= consume_produce_frequency:
+		consume_counter -= consume_produce_frequency
 		if is_producing:
 			produce_stock(production_rate)
 		if is_consuming:

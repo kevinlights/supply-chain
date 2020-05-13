@@ -1,0 +1,32 @@
+{
+	"manufacturer":
+	[
+		{
+			"time": 10,
+			"headline": "Oh noes",
+			"image": "test.png",
+			"min_demand_offset": 5,
+			"supply_point": "manufacturer",
+		}
+	],
+	"home":
+	[
+		{
+			"time": 10,
+			"headline": "Big bad",
+			"image": "test.png",
+			"min_demand_offset": 50,
+			"supply_point": "home",
+		}
+	],
+	"generic":
+	[
+		{
+			"time": 10,
+			"headline": "Wah nay",
+			"image": "test.png",
+			"min_demand_offset": 5,
+			"supply_point": "generic",
+		}
+	]
+}
