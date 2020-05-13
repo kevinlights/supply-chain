@@ -1,5 +1,5 @@
 {
-	"Supply Chain": ["Add a clever subtitle here"],
+	"Supply Chain": ["An exploration of the impact of the fragility of just-in-time supply chains"],
 	"Concept Design":
 		[
 			"Josh \"Cheeseness\" Bush",
@@ -13,4 +13,53 @@
 		[
 			"Josh \"Cheeseness\" Bush",
 		],
+	"Supporters":
+		[
+			"This game was made with the Patreon support of the following people\n(in alphabetical order)\n",
+			"Adam Augusta",
+			"Kevin \"neviklink\" Bartlam",
+			"Brad Bone",
+			"Mouse Bowden",
+			"Caroline",
+			"Michael Carr",
+			"Rob Crowther",
+			"Deadlinux",
+			"Mark Dougherty",
+			"dpanter",
+			"Flesk",
+			"hatniX",
+			"Alan Hazelden",
+			"Sven \"DrMcCoy\" Hesse",
+			"Hodge",
+			"Danny Houtworm",
+			"Kjell Iwarson",
+			"JP LeBreton",
+			"lclhstr",
+			"Seth McClain",
+			"Jennifer McMurray",
+			"Matthew",
+			"Michael",
+			"Simon Nyssen",
+			"Andrew Pam",
+			"Daniel Scharrer",
+			"Pablo Lopez Soriano",
+			"Andreas Struller",
+			"The Linux Gamer",
+			"Tibor Török",
+			"Paul Walsh",
+			"John Warner",
+			"Michael Watzko",
+			"Coby West",
+			"Silent Whisper",
+			"Jigme Yli-Rasku",
+			"Hannah Zicarelli",
+		],
+	"Technologies":
+		[
+			"This game uses the MIT licenced Godot engine.\nCopyright (c) 2007-2019 Juan Linietsky, Ariel Manzur.\nCopyright (c) 2014-2020 Godot Engine contributors\nVisit godotengine.org for more information.\n",
+		],
+	"Third party assets":
+		[
+			"Hussar Bold\n﻿Copyright (c) 2014-2015, Robert Jablonski/Cannot Into Space Fonts.\nThis Font Software is licensed under the SIL Open Font License, Version 1.1.\nFull licence details and files can be found in the fonts/hussar_bd folder\n",
+		]
 }
