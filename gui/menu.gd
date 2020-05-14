@@ -32,22 +32,20 @@ func _ready():
 # Pauses game and makes menus visible
 func show_menu():
 	self.visible = true
-	self.set_process(true)
 
 	resume_button.visible = true
 	game_node.visible = false
-	game_node.set_process(false)
+	get_tree().paused = true
 
-# Hides menu and pauses game
+# Hides menu and unpauses game
 func hide_menu():
 	self.visible = false
-	self.set_process(false)
+	get_tree().paused = false
 
 # Hides the menu and resumes the game
 func resume_game():
 	hide_menu()
 	game_node.visible = true
-	game_node.set_process(true)
 
 # Creates a new game with SupplyPoints back to default values
 func new_game():

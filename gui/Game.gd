@@ -17,7 +17,7 @@ var supply_point_list := {
 							"home": {"max_level": 100, "initial_level": 0, "initial_demand": 40}
 						}
 var event_frequency := 20.0
-var next_event_time := 20.0
+var next_event_time := 5.0
 
 # Bring up menu if player hits ESC
 func _input(event: InputEvent) -> void:
@@ -77,7 +77,6 @@ func read_json(path):
 		return null
 
 func load_events(path):
-	#TODO: Load this from file(s)
 	event_list = read_json(path)
 
 func get_random_event():
@@ -98,10 +97,8 @@ func get_random_event():
 
 func add_event(event : Dictionary) -> void:
 	print("Adding event ", event["headline"])
-
 	event = event.duplicate()
 
-	#TODO: Implement proper pausing here
 	var newspaper = newspaper_scene.instance()
 	newspaper.set_event(event)
 	get_parent().add_child(newspaper)
