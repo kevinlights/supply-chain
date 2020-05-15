@@ -9,13 +9,13 @@ var visual_indicators = {
 	"default": preload("res://game_entities/supply_point/visual_indicators/HomeAnchors.tscn")
 }
 
-
 var sp_name : String
 var stock_level : int
 var max_stock_level : int
 var demand_level : int
 var min_demand_offset : int = 0
 var max_demand_offset : int = 0
+var max_stock_level_offset : int = 0
 var min_demand : int
 var max_demand : int
 var pending_stock: int
@@ -34,6 +34,7 @@ var stock_indicator_value : float
 var consumption_rate : int
 var production_rate : int
 var consume_produce_frequency : float
+var consume_produce_frequency_multiplier : float = 1.0
 
 var demand_marker_min : TextureRect
 var demand_marker_max : TextureRect
@@ -41,6 +42,26 @@ var demand_marker_max : TextureRect
 # Temporary
 var demand_factor : float
 var transit_size : int
+
+# Quarterly performance indicators
+var stock_in : int = 0
+var stock_out : int = 0
+var waste : int = 0
+var opening_stock : int = 0
+var closing_stock : int = 0
+var ticks_at_max : int = 0
+var ticks_at_min : int = 0
+var ticks_no_produce : int = 0
+var ticks_no_consume : int = 0
+
+# Lifetime performance indicators
+var stock_in_life : Array
+var stock_out_life : Array
+var opening_stock_life : Array
+var closing_stock_life : Array
+var ticks_at_max_life : Array
+var ticks_no_produce_life : Array
+var ticks_no_consume_life : Array
 
 # Can the supply point receive the amount of toilet paper?
 func request_stock(amount : int):
@@ -61,17 +82,24 @@ func request_stock(amount : int):
 
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
-	adjust_stock(amount)
+	if (stock_level < max_stock_level + max_stock_level_offset):
+		amount = min(amount, max_stock_level + max_stock_level_offset - stock_level)
+		adjust_stock(amount)
+	else:
+		ticks_no_produce += 1
 
 # Draw from the existing stockpile (no toilet paper debt yet)
 func consume_stock(amount: int) -> void:
-	adjust_stock(-amount)
+	var adj_amount : int = min(amount, stock_level)
+	adjust_stock(-adj_amount)
+	if (adj_amount != amount):
+		ticks_no_consume += 1
 
 # Constructor for SupplyPoint. Default supply points start without stock and
 # demand 50 units of toilet paper. Default constraints are [0, 100]
 func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, new_demand := 50,
 	new_max_demand := 100, new_min_demand := 0):
-	max_stock_level = new_max_level
+	max_stock_level = new_max_level + max_stock_level_offset
 	stock_level = new_level
 	demand_level = new_demand
 	min_demand = new_min_demand
@@ -104,15 +132,23 @@ func set_stock_level(value : int) -> void:
 	stock_level = value
 	update_stock_indicators()
 
-func adjust_min_demand_offset(value : int):
+func adjust_min_demand_offset(value : int) -> void:
 	min_demand_offset += value
 	demand_marker_min.set_position(Vector2(demand_marker_min.get_parent().get_parent().get_size().x / 100.0 * (min_demand + min_demand_offset) - 6, 0))
 	update_demand(demand_level)
 
-func adjust_max_demand_offset(value : int):
+func adjust_max_demand_offset(value : int) -> void:
 	max_demand_offset += value
 	demand_marker_max.set_position(Vector2(demand_marker_max.get_parent().get_parent().get_size().x / 100.0 * (max_demand + max_demand_offset), 0))
 	update_demand(demand_level)
+
+func adjust_max_stock_level_offset(value: int) -> void:
+	max_stock_level_offset += value
+
+func adjust_consume_produce_frequency_multiplier(value: float) -> void:
+	var counter_fraction := (consume_produce_frequency * consume_produce_frequency_multiplier) / consume_counter
+	consume_produce_frequency_multiplier += value
+	consume_counter = counter_fraction * consume_produce_frequency_multiplier * consume_produce_frequency
 
 func configure_stock_indicators():
 	if sp_name.to_lower() in visual_indicators:
@@ -154,15 +190,22 @@ func adjust_pending_stock(value : int) -> void:
 	pending_stock += value
 
 # adjust_stock is a helper function to centralize all stock adjustments
-func adjust_stock(value : int) -> void:
-	stock_level = int(clamp(stock_level + value, 0, max_stock_level))
+func adjust_stock(value : int, dostats := true) -> void:
+	var previous_stock := stock_level
+	stock_level = int(clamp(stock_level + value, 0, max_stock_level + max_stock_level_offset))
+	var diff = previous_stock - stock_level
+	if diff != value:
+		waste += abs(diff - value)
 	should_update_indicators = true
+	if dostats:
+		if diff > 0:
+			stock_in += diff
+		else:
+			stock_out += diff
 
 # Sets the demand_level to the given value and updates the text for the level
 func update_demand(value : float) -> void:
-	demand_level = int(value)
-	if demand_level < min_demand + min_demand_offset:
-		demand_level = min_demand + min_demand_offset
+	demand_level = int(clamp(value, min_demand + min_demand_offset, max_demand + max_demand_offset))
 	if is_instance_valid(demand_slider):
 		correct_demand_level()
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
@@ -182,14 +225,18 @@ func _process(delta):
 		should_update_indicators = false
 	counter += delta
 	consume_counter += delta
-	if consume_counter >= consume_produce_frequency:
-		consume_counter -= consume_produce_frequency
+	if consume_counter >= consume_produce_frequency * consume_produce_frequency_multiplier:
+		consume_counter -= consume_produce_frequency * consume_produce_frequency_multiplier
 		if is_producing:
 			produce_stock(production_rate)
 		if is_consuming:
 			consume_stock(consumption_rate)
 	if counter >= tick_rate:
 		counter -= tick_rate
+		if stock_level >= (max_stock_level + max_stock_level_offset):
+			ticks_at_max += 1
+		elif stock_level <= 0:
+			ticks_at_min += 1
 		if (is_producing):
 			pass
 		else:

@@ -18,6 +18,8 @@ var supply_point_list := {
 						}
 var event_frequency := 20.0
 var next_event_time := 5.0
+var report_frequency := 60.0 * 5.0
+var next_report_time := report_frequency
 
 # Bring up menu if player hits ESC
 func _input(event: InputEvent) -> void:
@@ -117,6 +119,18 @@ func add_event(event : Dictionary) -> void:
 
 	if "min_demand_offset" in event:
 		event["target"].adjust_min_demand_offset(event["min_demand_offset"])
+
+	if "max_demand_offset" in event:
+		event["target"].adjust_max_demand_offset(event["max_demand_offset"])
+
+	if "max_stock_level_offset" in event:
+		event["target"].adjust_max_stock_level_offset(event["max_stock_level_offset"])
+
+	if "consume_produce_frequency_offset" in event:
+		event["target"].adjust_consume_produce_frequency_multiplier(event["consume_produce_frequency_offset"])
+
+	if "adjust_stock_level" in event:
+		event["target"].adjust_stock(event["adjust_stock_level"])
 	#TODO: Add more event effects
 
 func remove_event(event : Dictionary) -> void:
@@ -124,6 +138,18 @@ func remove_event(event : Dictionary) -> void:
 
 	if "min_demand_offset" in event:
 		event["target"].adjust_min_demand_offset(-event["min_demand_offset"])
+
+	if "max_demand_offset" in event:
+		event["target"].adjust_max_demand_offset(-event["max_demand_offset"])
+
+	if "max_stock_level_offset" in event:
+		event["target"].adjust_max_stock_level_offset(-event["max_stock_level_offset"])
+
+	if "consume_produce_frequency_offset" in event:
+		event["target"].adjust_consume_produce_frequency_multiplier(-event["consume_produce_frequency_offset"])
+
+	if "adjust_stock_level" in event:
+		event["target"].adjust_stock(-event["adjust_stock_level"])
 	#TODO: Add more event effects
 
 	current_event_list.erase(event)
@@ -141,4 +167,8 @@ func _process(delta : float):
 			expired_events.push_back(event)
 	for event in expired_events:
 		remove_event(event)
-
+	
+	next_report_time -= delta
+	if next_report_time <= 0:
+		next_report_time += report_frequency
+		# IOU one report
