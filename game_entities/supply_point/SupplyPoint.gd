@@ -6,6 +6,7 @@ var visual_indicators = {
 	"home": preload("res://game_entities/supply_point/visual_indicators/HomeAnchors.tscn"),
 	"store": preload("res://game_entities/supply_point/visual_indicators/StoreAnchors.tscn"),
 	"warehouse": preload("res://game_entities/supply_point/visual_indicators/WarehouseAnchors.tscn"),
+	"manufacturer": preload("res://game_entities/supply_point/visual_indicators/ManufacturerAnchors.tscn"),
 	"default": preload("res://game_entities/supply_point/visual_indicators/HomeAnchors.tscn")
 }
 
@@ -83,14 +84,14 @@ func request_stock(amount : int):
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
 	if (stock_level < max_stock_level + max_stock_level_offset):
-		amount = min(amount, max_stock_level + max_stock_level_offset - stock_level)
+		amount = int(min(amount, max_stock_level + max_stock_level_offset - stock_level))
 		adjust_stock(amount)
 	else:
 		ticks_no_produce += 1
 
 # Draw from the existing stockpile (no toilet paper debt yet)
 func consume_stock(amount: int) -> void:
-	var adj_amount : int = min(amount, stock_level)
+	var adj_amount : int = int(min(amount, stock_level))
 	adjust_stock(-adj_amount)
 	if (adj_amount != amount):
 		ticks_no_consume += 1
@@ -195,7 +196,7 @@ func adjust_stock(value : int, dostats := true) -> void:
 	stock_level = int(clamp(stock_level + value, 0, max_stock_level + max_stock_level_offset))
 	var diff = previous_stock - stock_level
 	if diff != value:
-		waste += abs(diff - value)
+		waste += int(abs(diff - value))
 	should_update_indicators = true
 	if dostats:
 		if diff > 0:

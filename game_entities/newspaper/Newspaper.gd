@@ -24,7 +24,8 @@ func set_event(event : Dictionary):
 
 func _process(_delta):
 	if Input.is_action_just_released("ui_select"):
-		close()
+		if !animationTween.is_active():
+			close()
 
 func close():
 	get_tree().paused = false
