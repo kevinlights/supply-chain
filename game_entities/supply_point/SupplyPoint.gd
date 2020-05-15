@@ -15,6 +15,7 @@ var stock_level : int
 var max_stock_level : int
 var demand_level : int
 var min_demand_offset : int = 0
+var max_demand_offset : int = 0
 var min_demand : int
 var max_demand : int
 var pending_stock: int
@@ -33,6 +34,9 @@ var stock_indicator_value : float
 var consumption_rate : int
 var production_rate : int
 var consume_produce_frequency : float
+
+var demand_marker_min : TextureRect
+var demand_marker_max : TextureRect
 
 # Temporary
 var demand_factor : float
@@ -89,7 +93,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	should_update_indicators = false
 	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(sp_name.to_upper())
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
-	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
+	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand").set_value(demand_level)
 	configure_stock_indicators()
 
@@ -102,6 +106,12 @@ func set_stock_level(value : int) -> void:
 
 func adjust_min_demand_offset(value : int):
 	min_demand_offset += value
+	demand_marker_min.set_position(Vector2(demand_marker_min.get_parent().get_parent().get_size().x / 100.0 * (min_demand + min_demand_offset) - 6, 0))
+	update_demand(demand_level)
+
+func adjust_max_demand_offset(value : int):
+	max_demand_offset += value
+	demand_marker_max.set_position(Vector2(demand_marker_max.get_parent().get_parent().get_size().x / 100.0 * (max_demand + max_demand_offset), 0))
 	update_demand(demand_level)
 
 func configure_stock_indicators():
@@ -155,7 +165,7 @@ func update_demand(value : float) -> void:
 		demand_level = min_demand + min_demand_offset
 	if is_instance_valid(demand_slider):
 		correct_demand_level()
-	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level))
+	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
 
 func correct_demand_level() -> void:
 	if demand_level != demand_slider.value:
@@ -190,3 +200,7 @@ func _process(delta):
 func _ready() -> void:
 	demand_slider = get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand")
 	demand_slider.connect("value_changed", self, "update_demand")
+	demand_marker_min = get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/MarkerAnchor/MarkerL")
+	demand_marker_max = get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/MarkerAnchor/MarkerR")
+	adjust_min_demand_offset(0)
+	adjust_max_demand_offset(0)

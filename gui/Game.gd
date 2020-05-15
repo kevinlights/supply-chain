@@ -65,7 +65,7 @@ func add_supply_points(list: Array) -> void:
 func read_json(path):
 	var file = File.new()
 	if not file.file_exists(path):
-		print("ERROR: Unable to open resource ", path)
+		printerr("ERROR: Unable to open resource ", path)
 	file.open(path, file.READ)
 	var text = file.get_as_text()
 	file.close()
@@ -73,7 +73,7 @@ func read_json(path):
 	if parse.error == OK:
 		return parse.result
 	else:
-		print("Error reading ", path, " at line " + str(parse.error_line) + ": " + parse.error_string)
+		printerr("Error reading ", path, " at line " + str(parse.error_line) + ": " + parse.error_string)
 		return null
 
 func load_events(path):
