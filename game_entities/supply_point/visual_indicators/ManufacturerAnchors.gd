@@ -1,7 +1,6 @@
-extends TextureRect
+extends "res:///game_entities/supply_point/visual_indicators/AnchorsSuper.gd"
 
 var stock_indicator_pool : Array
-var stock_indicator_value : float = 1.0
 
 var conveyor_tweens : Array = []
 var stock_indicators : Array = []
@@ -38,7 +37,6 @@ func _ready():
 			get_node("Conveyor" + str(i + 1)).add_child(temp)
 			conveyor_tweens.back().interpolate_property(temp, "unit_offset", start, end, conveyor_time, Tween.TRANS_LINEAR, Tween.EASE_IN, conveyor_gap * i + item_gap * j)
 
-
 func update_stock_indicators(stock_level : int):
 	var current_stock_level := stock_level / stock_indicator_value
 	for i in range(0, stock_indicators.size()):
@@ -48,5 +46,13 @@ func update_stock_indicators(stock_level : int):
 		else:
 			stock_indicators[i].visible = false
 
-func set_indicator_value(newValue : float):
-	stock_indicator_value = newValue
+func set_animation_paused(newValue : bool):
+	if newValue == is_animation_paused:
+		return
+	is_animation_paused = newValue
+	if is_animation_paused:
+		for tween in conveyor_tweens:
+			tween.stop_all()
+	else:
+		for tween in conveyor_tweens:
+			tween.resume_all()

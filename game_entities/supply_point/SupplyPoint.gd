@@ -88,6 +88,11 @@ func produce_stock(amount: int) -> void:
 		adjust_stock(amount)
 	else:
 		ticks_no_produce += 1
+	if (stock_level < max_stock_level + max_stock_level_offset):
+		stock_indicator_anchor.set_animation_paused(false)
+	else:
+		stock_indicator_anchor.set_animation_paused(true)
+
 
 # Draw from the existing stockpile (no toilet paper debt yet)
 func consume_stock(amount: int) -> void:
@@ -95,6 +100,12 @@ func consume_stock(amount: int) -> void:
 	adjust_stock(-adj_amount)
 	if (adj_amount != amount):
 		ticks_no_consume += 1
+
+	if (stock_level > 0):
+		stock_indicator_anchor.set_animation_paused(false)
+	else:
+		stock_indicator_anchor.set_animation_paused(true)
+
 
 # Constructor for SupplyPoint. Default supply points start without stock and
 # demand 50 units of toilet paper. Default constraints are [0, 100]

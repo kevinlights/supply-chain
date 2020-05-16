@@ -1,7 +1,6 @@
-extends TextureRect
+extends "res:///game_entities/supply_point/visual_indicators/AnchorsSuper.gd"
 
 var stock_indicator_pool : Array
-var stock_indicator_value : float = 1.0
 
 func _ready():
 	for indicator in get_children():
@@ -18,6 +17,3 @@ func update_stock_indicators(stock_level : int):
 				get_child(i).visible = true
 		else:
 			get_child(i).visible = false
-
-func set_indicator_value(newValue : float):
-	stock_indicator_value = newValue
