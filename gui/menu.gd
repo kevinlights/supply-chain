@@ -56,9 +56,11 @@ func new_game():
 	get_parent().add_child(game_node)
 	hide_menu()
 
+# Shows settings menu, currently a stub
 func show_settings():
 	print("Show settings stub")
 
+# Plays credits
 func show_credits():
 	add_child(credits_scene.instance())
 

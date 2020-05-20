@@ -58,9 +58,11 @@ var ticks_no_consume : int = 0
 # Lifetime performance indicators
 var stock_in_life : Array
 var stock_out_life : Array
+var waste_life : Array
 var opening_stock_life : Array
 var closing_stock_life : Array
 var ticks_at_max_life : Array
+var ticks_at_min_life : Array
 var ticks_no_produce_life : Array
 var ticks_no_consume_life : Array
 
@@ -137,31 +139,38 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand").set_value(demand_level)
 	configure_stock_indicators()
 
+# Set max stock level to a given value
 func set_max_stock_level(value : int) -> void:
 	max_stock_level = value
 
+# Set stock level to a given value
 func set_stock_level(value : int) -> void:
 	stock_level = value
 	update_stock_indicators()
 
+# Adjust minimum demand by a given value. Keeps track of temporary effects from events
 func adjust_min_demand_offset(value : int) -> void:
 	min_demand_offset += value
 	demand_marker_min.set_position(Vector2(demand_marker_min.get_parent().get_parent().get_size().x / 100.0 * (min_demand + min_demand_offset) - 6, 0))
 	update_demand(demand_level)
 
+# Adjust maximum demand by a given value. Keeps track of temporary effects from events
 func adjust_max_demand_offset(value : int) -> void:
 	max_demand_offset += value
 	demand_marker_max.set_position(Vector2(demand_marker_max.get_parent().get_parent().get_size().x / 100.0 * (max_demand + max_demand_offset), 0))
 	update_demand(demand_level)
 
+# Adjust maximum stock level by a given value. Keeps track of temporary effects from events
 func adjust_max_stock_level_offset(value: int) -> void:
 	max_stock_level_offset += value
 
+# Adjust the frequency for production and consumption. Keeps track of changes resulting from events
 func adjust_consume_produce_frequency_multiplier(value: float) -> void:
 	var counter_fraction := (consume_produce_frequency * consume_produce_frequency_multiplier) / consume_counter
 	consume_produce_frequency_multiplier += value
 	consume_counter = counter_fraction * consume_produce_frequency_multiplier * consume_produce_frequency
 
+# Set stock indicators
 func configure_stock_indicators():
 	if sp_name.to_lower() in visual_indicators:
 		stock_indicator_anchor = visual_indicators[sp_name.to_lower()].instance()
@@ -174,25 +183,32 @@ func configure_stock_indicators():
 	stock_indicator_value = 1.0 / (float(stock_indicator_count) / max_stock_level)
 	stock_indicator_anchor.set_indicator_value(stock_indicator_value)
 
+# Adjust stock indicators
 func update_stock_indicators():
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
 	stock_indicator_anchor.update_stock_indicators(stock_level)
 
+# Set demand factor (no longer used?)
 func set_demand_factor(value : float) -> void:
 	demand_factor = value
 
+# Set transit size to a given value
 func set_transit_size(value : int) -> void:
 	transit_size = value
 
+# Set tick rate to a given value
 func set_tick_rate(value : float) -> void:
 	tick_rate = value
 
+# Turn consuming on (true) or off (false)
 func set_is_consuming(value : bool) -> void:
 	is_consuming = value
 
+# Turn production on (true) or off (false)
 func set_is_producing(value : bool) -> void:
 	is_producing = value
 
+# Set the downstream SupplyPoint to the given node
 func set_downstream(value : Node):
 	downstream = value
 	value.upstream = self
@@ -201,11 +217,11 @@ func set_downstream(value : Node):
 func adjust_pending_stock(value : int) -> void:
 	pending_stock += value
 
-# adjust_stock is a helper function to centralize all stock adjustments
+# Adjust_stock is a helper function to centralize all stock adjustments
 func adjust_stock(value : int, dostats := true) -> void:
 	var previous_stock := stock_level
 	stock_level = int(clamp(stock_level + value, 0, max_stock_level + max_stock_level_offset))
-	var diff = previous_stock - stock_level
+	var diff = stock_level - previous_stock
 	if diff != value:
 		waste += int(abs(diff - value))
 	should_update_indicators = true
@@ -222,11 +238,46 @@ func update_demand(value : float) -> void:
 		correct_demand_level()
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
 
+# Adjusts demand level if the slider does not match
 func correct_demand_level() -> void:
 	if demand_level != demand_slider.value:
 		demand_slider.disconnect("value_changed", self, "update_demand")
 		demand_slider.set_value(demand_level)
 		demand_slider.connect("value_changed", self, "update_demand")
+
+# Prints report values to output and stores them to lifetime
+func make_report() -> void:
+	# Print the report
+	print("Report for %s" % sp_name)
+	print("Stock in: ", str(stock_in))
+	print("Stock out: ", str(stock_out))
+	print("Waste: ", str(waste))
+	print("Opening stock: ", str(opening_stock))
+	print ("Closing  stock: ", str(closing_stock))
+	print("Ticks at max: ", str(ticks_at_max))
+	print("Ticks at min: ", str(ticks_at_min))
+	print("Ticks no production: ", str(ticks_no_produce))
+	print("Ticks no consumption: ", str(ticks_no_consume))
+	
+	# Add to lifetime records and reset
+	stock_in_life.append(stock_in)
+	stock_in = 0
+	stock_out_life.append(stock_out)
+	stock_out = 0
+	waste_life.append(waste)
+	waste = 0
+	opening_stock_life.append(opening_stock)
+	opening_stock = 0
+	closing_stock_life.append(closing_stock)
+	closing_stock = 0
+	ticks_at_max_life.append(ticks_at_max)
+	ticks_at_max = 0
+	ticks_at_min_life.append(ticks_at_min)
+	ticks_at_min = 0
+	ticks_no_produce_life.append(ticks_no_produce)
+	ticks_no_produce = 0
+	ticks_no_consume_life.append(ticks_no_consume)
+	ticks_no_consume = 0
 
 # If enough time has passed, a supply point will produce/consume/request stock
 func _process(delta):

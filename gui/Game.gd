@@ -66,6 +66,7 @@ func add_supply_points(list: Array) -> void:
 	for sp in list:
 		add_child(sp)
 
+# A helper function to read in json files for the event list
 func read_json(path):
 	var file = File.new()
 	if not file.file_exists(path):
@@ -80,9 +81,11 @@ func read_json(path):
 		printerr("Error reading ", path, " at line " + str(parse.error_line) + ": " + parse.error_string)
 		return null
 
+# Populates event list
 func load_events(path):
 	event_list = read_json(path)
 
+# Draws first event from a shuffled list of events in event_list
 func get_random_event():
 	var candidates = []
 	for event_type in event_list:
@@ -99,6 +102,7 @@ func get_random_event():
 					"image": "test.png",
 				}
 
+# Produces a given event's effects in the game
 func add_event(event : Dictionary) -> void:
 	print("Adding event ", event["headline"])
 	event = event.duplicate()
@@ -135,6 +139,7 @@ func add_event(event : Dictionary) -> void:
 		event["target"].adjust_stock(event["adjust_stock_level"])
 	#TODO: Add more event effects
 
+# Removes the effects of the given event
 func remove_event(event : Dictionary) -> void:
 	print("Removing event ", event["headline"])
 
@@ -156,6 +161,16 @@ func remove_event(event : Dictionary) -> void:
 
 	current_event_list.erase(event)
 
+# Helper to generate a report. Currently prints values to output.
+func generate_report() -> void:
+	print("Report time")
+	for sp in sp_list:
+		sp.make_report()
+		# Game plan:
+		# * Report might be like Newspaper in which case make_report() returns a component to report
+		# * generate_report() will produce the report screen with whatever makes the graphs
+
+# Count down time to next event and next report and trigger them if enough time has passed
 func _process(delta : float):
 	next_event_time -= delta
 	if next_event_time <= 0:
@@ -174,4 +189,4 @@ func _process(delta : float):
 	next_report_time -= delta
 	if next_report_time <= 0:
 		next_report_time += report_frequency
-		# IOU one report
+		generate_report()

@@ -2,6 +2,7 @@ extends Control
 
 var animationTween : Tween
 
+# Pause the game and play the newspaper animation
 func _ready():
 	get_tree().paused = true
 	animationTween = Tween.new()
@@ -10,6 +11,7 @@ func _ready():
 	animationTween.interpolate_method(self, "set_scale", Vector2(0.0001, 0.0001), Vector2(1, 1), 0.6, Tween.TRANS_SINE, Tween.EASE_OUT)
 	animationTween.start()
 
+# Populate paper with event details
 func set_event(event : Dictionary):
 	if "headline" in event:
 		get_node("Paper/TitleContent/Headline").set_text(event["headline"].to_upper())
@@ -22,11 +24,13 @@ func set_event(event : Dictionary):
 			get_node("Paper/PaperContent/Center/PhotoFrame/Photo").texture = null
 			pass
 
+# Close on player input only if the paper has finished its animation
 func _process(_delta):
 	if Input.is_action_just_released("ui_select"):
 		if !animationTween.is_active():
 			close()
 
+# Unpause the game and remove the paper
 func close():
 	get_tree().paused = false
 	get_parent().set_process(true)
