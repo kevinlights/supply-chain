@@ -10,6 +10,7 @@ var destination : Node
 var speed : float = 5.0
 var trip_duration : float
 var travelTween : Tween
+var crash : bool = false
 
 # Vehicle collects the given amount of toilet paper, limited by the amount
 # available at the given supply point and its carrying capacity, and reduces
@@ -26,7 +27,7 @@ func pick_up():
 	destination.adjust_stock(-cargo)
 	has_picked_up = true
 	destination = destination.downstream
-	start_travel(destination.get_node("RightLane"))
+	start_travel(destination.get_node("RightLane"), crash)
 
 # Vehicle delivers its cargo to the given supply point. Any surplus to the
 # supply point's capacity is thrown away
@@ -37,7 +38,7 @@ func deliver() -> void:
 	queue_free()
 
 # Move to destination for the given lane (animation)
-func start_travel(lane: Node):
+func start_travel(lane: Node, will_crash: bool = false):
 	# Add vehicle to lane
 	if is_instance_valid(get_parent()):
 		get_parent().remove_child(self)
@@ -65,9 +66,22 @@ func start_travel(lane: Node):
 		startPosition += offset * Vector2(1, -1.25)
 		endPosition += offset * Vector2(1, 1.25)
 
+	if will_crash:
+		endPosition = ((endPosition - startPosition) / 2) + startPosition
+		travelTween.connect("tween_completed", self, "handle_crash")
+
 	# Move from start to end
-	travelTween.interpolate_method(self, "set_position", startPosition, endPosition, speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	travelTween.interpolate_method(self, "set_position", startPosition, endPosition, speed, Tween.TRANS_SINE, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
 	travelTween.start()
+
+func set_crash(val := true) -> void:
+	crash = val
+	
+func handle_crash(_obj, _key) -> void:
+	destination.adjust_pending_stock(-desired_cargo)
+	destination.adjust_waste(desired_cargo)
+	destination.get_parent().add_event({"headline": "crash", "time": 0, "image": ""}) # We'll fix this later
+	queue_free()
 
 # Constructor for TransitVehicle. Default vehicle starts empty with space for 10 units
 func _ready():

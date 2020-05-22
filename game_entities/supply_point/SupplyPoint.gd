@@ -36,6 +36,7 @@ var consumption_rate : int
 var production_rate : int
 var consume_produce_frequency : float
 var consume_produce_frequency_multiplier : float = 1.0
+var next_vehicle_crash : bool = false
 
 var demand_marker_min : TextureRect
 var demand_marker_max : TextureRect
@@ -76,6 +77,11 @@ func request_stock(amount : int):
 		return
 
 	var vehicle = transit_vehicle_scene.instance()
+	
+	if next_vehicle_crash:
+		vehicle.set_crash()
+		set_next_vehicle_crash(false)
+
 	if transit_size != -1:
 		vehicle.set_cargo_limit(transit_size)
 	else:
@@ -121,7 +127,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	pending_stock = 0
 	tick_rate = 1.0
 	consume_produce_frequency = 0.50
-	production_rate = 5
+	production_rate = 2
 	consumption_rate = 1
 	counter = 0.0
 	consume_counter = 0.0
@@ -217,13 +223,16 @@ func set_downstream(value : Node):
 func adjust_pending_stock(value : int) -> void:
 	pending_stock += value
 
+func adjust_waste(value: int) -> void:
+	waste += value
+
 # Adjust_stock is a helper function to centralize all stock adjustments
 func adjust_stock(value : int, dostats := true) -> void:
 	var previous_stock := stock_level
 	stock_level = int(clamp(stock_level + value, 0, max_stock_level + max_stock_level_offset))
 	var diff = stock_level - previous_stock
 	if diff != value:
-		waste += int(abs(diff - value))
+		adjust_waste(int(abs(diff - value)))
 	should_update_indicators = true
 	if dostats:
 		if diff > 0:
@@ -250,10 +259,10 @@ func make_report() -> void:
 	# Print the report
 	print("Report for %s" % sp_name)
 	print("Stock in: ", str(stock_in))
-	print("Stock out: ", str(stock_out))
+	print("Stock out: ", str(abs(stock_out)))
 	print("Waste: ", str(waste))
 	print("Opening stock: ", str(opening_stock))
-	print ("Closing  stock: ", str(closing_stock))
+	print("Closing  stock: ", str(closing_stock))
 	print("Ticks at max: ", str(ticks_at_max))
 	print("Ticks at min: ", str(ticks_at_min))
 	print("Ticks no production: ", str(ticks_no_produce))
@@ -278,6 +287,9 @@ func make_report() -> void:
 	ticks_no_produce = 0
 	ticks_no_consume_life.append(ticks_no_consume)
 	ticks_no_consume = 0
+	
+func set_next_vehicle_crash(val := true) -> void:
+	next_vehicle_crash = val
 
 # If enough time has passed, a supply point will produce/consume/request stock
 func _process(delta):

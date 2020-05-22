@@ -27,6 +27,10 @@
 			"image": "test.png",
 			"min_demand_offset": 5,
 			"supply_point": "generic",
+		},
+		{
+			"time": 0,
+			"transit_vehicle_crash": "IOU one string"
 		}
 	]
 }

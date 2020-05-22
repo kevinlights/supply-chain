@@ -104,12 +104,13 @@ func get_random_event():
 
 # Produces a given event's effects in the game
 func add_event(event : Dictionary) -> void:
-	print("Adding event ", event["headline"])
+	print("Adding event ", event)
 	event = event.duplicate()
-
-	var newspaper = newspaper_scene.instance()
-	newspaper.set_event(event)
-	get_parent().add_child(newspaper)
+	
+	if "headline" in event:
+		var newspaper = newspaper_scene.instance()
+		newspaper.set_event(event)
+		get_parent().add_child(newspaper)
 
 	if event["time"] > 0:
 		current_event_list.push_back(event)
@@ -137,6 +138,9 @@ func add_event(event : Dictionary) -> void:
 
 	if "adjust_stock_level" in event:
 		event["target"].adjust_stock(event["adjust_stock_level"])
+		
+	if "transit_vehicle_crash" in event:
+		event["target"].set_next_vehicle_crash()
 	#TODO: Add more event effects
 
 # Removes the effects of the given event
@@ -163,7 +167,6 @@ func remove_event(event : Dictionary) -> void:
 
 # Helper to generate a report. Currently prints values to output.
 func generate_report() -> void:
-	print("Report time")
 	for sp in sp_list:
 		sp.make_report()
 		# Game plan:
