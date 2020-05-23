@@ -26,7 +26,7 @@ func set_event(event : Dictionary):
 
 # Close on player input only if the paper has finished its animation
 func _process(_delta):
-	if Input.is_action_just_released("ui_select"):
+	if Input.is_action_just_released("ui_select") ||  Input.is_action_just_released("ui_accept") ||  Input.is_action_just_released("ui_cancel"):
 		if !animationTween.is_active():
 			close()
 
