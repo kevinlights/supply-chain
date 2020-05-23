@@ -71,7 +71,7 @@ func start_travel(lane: Node, will_crash: bool = false):
 		travelTween.connect("tween_completed", self, "handle_crash")
 
 	# Move from start to end
-	travelTween.interpolate_method(self, "set_position", startPosition, endPosition, speed, Tween.TRANS_SINE, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
+	travelTween.interpolate_method(self, "set_position", startPosition, endPosition, speed if will_crash else speed / 2.0, Tween.TRANS_SINE, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
 	travelTween.start()
 
 func set_crash(val := true) -> void:
