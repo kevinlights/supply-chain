@@ -1,4 +1,4 @@
-extends "res:///game_entities/supply_point/visual_indicators/AnchorsSuper.gd"
+extends "res://game_entities/supply_point/visual_indicators/AnchorsSuper.gd"
 
 func _ready():
 	for indicator in get_children():

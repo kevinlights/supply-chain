@@ -48,7 +48,7 @@ func _ready():
 
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)
-	load_events("json/events.json")
+	load_events("res://json/events.json")
 
 # Iterates over each supply point and connects it to the destination for its cargo and sets first entry as producer and final entry as consumer
 func setup_downstreams(list : Array) -> void:

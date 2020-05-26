@@ -1,4 +1,4 @@
-extends "res:///game_entities/supply_point/visual_indicators/AnchorsSuper.gd"
+extends "res://game_entities/supply_point/visual_indicators/AnchorsSuper.gd"
 
 var stock_indicator_pool : Array
 
