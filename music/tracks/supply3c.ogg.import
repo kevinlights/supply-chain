@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/supply3c.ogg-891e07d06360e31be4c5ffe7cd612582.oggstr"
+
+[deps]
+
+source_file="res://music/tracks/supply3c.ogg"
+dest_files=[ "res://.import/supply3c.ogg-891e07d06360e31be4c5ffe7cd612582.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

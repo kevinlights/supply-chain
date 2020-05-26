@@ -9,9 +9,12 @@ var credits_button : Button
 var quit_button : Button
 var resume_button : Button
 var game_node : HBoxContainer
+var music_player : AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
+
 	resume_button = get_node("VBoxContainer/Resume")
 	new_button = get_node("VBoxContainer/New")
 	settings_button = get_node("VBoxContainer/Settings")
@@ -29,18 +32,22 @@ func _ready():
 	if quit_button.connect("pressed", self, "quit_game") != OK:
 		printerr("Error while connecting signal to quit game button")
 
+	music_player = get_node("MusicPlayer")
+	music_player.play_menu_music()
+
 # Pauses game and makes menus visible
 func show_menu():
 	self.visible = true
-
 	resume_button.visible = true
 	game_node.visible = false
 	get_tree().paused = true
+	music_player.play_menu_music()
 
 # Hides menu and unpauses game
 func hide_menu():
 	self.visible = false
 	get_tree().paused = false
+	music_player.resume_track()
 
 # Hides the menu and resumes the game
 func resume_game():
@@ -49,6 +56,7 @@ func resume_game():
 
 # Creates a new game with SupplyPoints back to default values
 func new_game():
+	music_player.assemble_playlist()
 	if is_instance_valid(game_node):
 		game_node.queue_free()
 	game_node = game_scene.instance()
