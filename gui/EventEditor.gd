@@ -27,6 +27,11 @@ func _ready():
 	generate_editor_ui(0)
 	get_tree().paused = true
 
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			close()
+
 func populate_selectors(selected_supply_point = "", selected_item_index = -1):
 	event_selector.disconnect("item_selected", self, "generate_editor_ui")
 	event_selector.clear()
@@ -273,4 +278,8 @@ func preview_event():
 func activate_event():
 	get_tree().paused = false
 	game_node.add_event(selected_event)
+	queue_free()
+
+func close():
+	get_tree().paused = false
 	queue_free()
