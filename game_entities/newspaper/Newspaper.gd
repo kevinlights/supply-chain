@@ -17,7 +17,7 @@ func set_event(event : Dictionary):
 	if "headline" in event:
 		get_node("Paper/TitleContent/Headline").set_text(event["headline"].to_upper())
 	if "image" in event:
-		var imagePath = "game_entities/newspaper/" + event["image"]
+		var imagePath = "res://game_entities/newspaper/images/" + event["image"]
 		if ResourceLoader.exists(imagePath):
 			get_node("Paper/PaperContent/Center/PhotoFrame/Photo").texture = load(imagePath)
 		else:

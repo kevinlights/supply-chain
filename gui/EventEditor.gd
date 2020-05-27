@@ -163,7 +163,7 @@ func generate_string_widget(name, value, removeable):
 	temp_container.add_child(widget)
 
 	if "validate_func" in game_node.event_prop_list[name]:
-		widget.connect("text_changed", self, game_node.event_prop_list[name]["validate_func"], [widget])
+		widget.connect("text_changed", self, game_node.event_prop_list[name]["validate_func"], [widget, name])
 	widget.connect("text_changed", self, "update_string_value", [widget, name])
 
 	if removeable:
@@ -197,12 +197,15 @@ func update_float_value(value, prop):
 func update_bool_value(value, prop):
 	selected_event[prop] = value
 
-func check_image(widget, value = ""):
+func check_image(widget, prop, value = ""):
 	if value == "":
 		value = widget.get_text()
 	var valid = false
 	if value.ends_with(".png"):
-		if ResourceLoader.exists("res://game_entities/supply_point/" + value):
+		var path = ""
+		if prop in game_node.event_prop_list && "prefix" in game_node.event_prop_list[prop]:
+			path = game_node.event_prop_list[prop]["prefix"]
+		if ResourceLoader.exists(path + value):
 			valid = true
 	if is_instance_valid(widget):
 		if valid:
@@ -211,7 +214,7 @@ func check_image(widget, value = ""):
 			widget.add_color_override("font_color", color_bad)
 	return valid
 
-func check_sp_name(widget, value = ""):
+func check_sp_name(widget, _prop, value = ""):
 	if value == "":
 		value = widget.get_text()
 	var valid = false
@@ -234,7 +237,7 @@ func save_event():
 		if prop in game_node.event_prop_list:
 			if "validate_func" in game_node.event_prop_list[prop]:
 				print("Trying validation of ", prop)
-				if !call(game_node.event_prop_list[prop]["validate_func"], null, selected_event[prop]):
+				if !call(game_node.event_prop_list[prop]["validate_func"], null, prop, selected_event[prop]):
 					print("Can't save, ", prop, " value is invalid.")
 					return
 	if selected_item_index != -1:
@@ -248,7 +251,6 @@ func save_event():
 	else:
 		game_node.event_list[selected_supply_point].push_back(selected_event)
 		selected_item_index = game_node.event_list[selected_supply_point].size() -1
-	#TODO: Trigger json output
 	print("Validation passed?", selected_event)
 	save_event_list()
 	populate_selectors(selected_supply_point, selected_item_index)
