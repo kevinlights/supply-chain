@@ -25,7 +25,6 @@ func assemble_playlist(path := music_path) -> void:
 			if !music_folder.current_is_dir():
 				if file_name.ends_with(".ogg.import"):
 					file_name = file_name.substr(0, file_name.length() - 7)
-					print(file_name)
 				if file_name.ends_with(".ogg"):
 					if !(file_name in file_names):
 						file_names.append(file_name)
@@ -38,9 +37,6 @@ func assemble_playlist(path := music_path) -> void:
 
 	current_track_index = -1
 	paused_track_time = 0
-
-	print(file_names)
-	print(playlist)
 
 func handle_music_end() -> void:
 	pass
@@ -61,7 +57,7 @@ func play_track(track_index := current_track_index, start_time := 0.0) -> void:
 		track_index = 0
 
 		#If shuffling is desired, make sure the first track in the newly shuffled list isn't the last track we played
-#		var temp = playlist[0].back().get_path()
+#		var temp = playlist.back().get_path()
 #		playlist.shuffle()
 #		if playlist[0].get_path() == temp:
 #			playlist.push_back(playlist.pop_front())

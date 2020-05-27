@@ -17,6 +17,8 @@ _global_script_class_icons={
 
 config/name="Supply Chain"
 run/main_scene="res://gui/menu.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="supplychain"
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
 config/icon="res://icon.png"
 

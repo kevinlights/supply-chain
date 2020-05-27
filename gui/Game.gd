@@ -20,7 +20,8 @@ var event_frequency := 20.0
 var next_event_time := 5.0
 var report_frequency := 60.0 * 5.0
 var next_report_time := report_frequency
-var do_events := true
+var skip_events := false
+var skip_reports := false
 
 
 # Bring up menu if player hits ESC
@@ -178,7 +179,7 @@ func _process(delta : float):
 	next_event_time -= delta
 	if next_event_time <= 0:
 		next_event_time += event_frequency
-		if do_events:
+		if !skip_events:
 			add_event(get_random_event())
 
 	var expired_events := []

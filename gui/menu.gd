@@ -10,6 +10,7 @@ var quit_button : Button
 var resume_button : Button
 var game_node : HBoxContainer
 var music_player : AudioStreamPlayer
+var settings : Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,11 +33,13 @@ func _ready():
 	if quit_button.connect("pressed", self, "quit_game") != OK:
 		printerr("Error while connecting signal to quit game button")
 
+	settings = get_node("Settings")
+
 	music_player = get_node("MusicPlayer")
 	music_player.play_menu_music()
 
 # Pauses game and makes menus visible
-func show_menu():
+func show_menu() -> void:
 	self.visible = true
 	resume_button.visible = true
 	game_node.visible = false
@@ -44,34 +47,36 @@ func show_menu():
 	music_player.play_menu_music()
 
 # Hides menu and unpauses game
-func hide_menu():
+func hide_menu() -> void:
 	self.visible = false
 	get_tree().paused = false
 	music_player.resume_track()
 
 # Hides the menu and resumes the game
-func resume_game():
+func resume_game() -> void:
 	hide_menu()
 	game_node.visible = true
 
 # Creates a new game with SupplyPoints back to default values
-func new_game():
+func new_game() -> void:
 	music_player.assemble_playlist()
 	if is_instance_valid(game_node):
 		game_node.queue_free()
 	game_node = game_scene.instance()
 	game_node.menu_node = self
+	game_node.skip_events = settings.get_setting("gameplay", "skip_events")
+	game_node.skip_reports = settings.get_setting("gameplay", "skip_reports")
 	get_parent().add_child(game_node)
 	hide_menu()
 
 # Shows settings menu, currently a stub
-func show_settings():
-	print("Show settings stub")
+func show_settings() -> void:
+	settings.visible = true
 
 # Plays credits
-func show_credits():
+func show_credits() -> void:
 	add_child(credits_scene.instance())
 
 # Exit the game
-func quit_game():
+func quit_game() -> void:
 	get_tree().quit()
