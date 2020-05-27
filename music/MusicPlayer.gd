@@ -62,7 +62,7 @@ func play_track(track_index := current_track_index, start_time := 0.0) -> void:
 #		if playlist[0].get_path() == temp:
 #			playlist.push_back(playlist.pop_front())
 
-	print("Playing music track ", playlist[track_index].get_path(), " at ", start_time)
+	print("Playing music track ", playlist[track_index].get_path(), "" if start_time <= 0 else " at " + String(start_time))
 	set_stream(playlist[track_index])
 	current_track_index = track_index
 

@@ -1,6 +1,7 @@
 extends Control
 
 var animationTween : Tween
+var is_preview = false
 
 # Pause the game and play the newspaper animation
 func _ready():
@@ -32,6 +33,7 @@ func _process(_delta):
 
 # Unpause the game and remove the paper
 func close():
-	get_tree().paused = false
-	get_parent().set_process(true)
+	if !is_preview:
+		get_tree().paused = false
+		get_parent().set_process(true)
 	queue_free()

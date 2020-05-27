@@ -2,6 +2,7 @@ extends HBoxContainer
 
 var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.tscn")
 var newspaper_scene = preload("res://game_entities/newspaper/Newspaper.tscn")
+var event_editor_scene = preload("res://gui/EventEditor.tscn")
 
 var menu_node : CenterContainer
 
@@ -16,6 +17,79 @@ var supply_point_list := {
 							"store": {"transit_size": 40},
 							"home": {"max_level": 100, "initial_level": 0, "initial_demand": 40}
 						}
+
+#TODO: Add more event effects
+var event_prop_list := {
+					"internal_name":
+						{
+							"required": true,
+							"type": TYPE_STRING,
+							"default": ""
+						},
+					"supply_point":
+						{
+							"required": true,
+							"type": TYPE_STRING,
+							"default": "generic",
+							"validate_func" : "check_sp_name"
+							#TODO: Add support for a "values" array that causes a dropdown to be used
+						},
+					"time":
+						{
+							"required": true,
+							"type": TYPE_REAL,
+							"default": 0
+						},
+					"headline":
+						{
+							"type": TYPE_STRING,
+							"default": "A funny thing happened today"
+						},
+					"image":
+						{
+							"type": TYPE_STRING,
+							"default": "A funny thing happened today",
+							"prefix": "res://game_entities/newspaper/images/",
+							"validate_func" : "check_image"
+						},
+					"min_demand_offset":
+						{
+							"func": "adjust_min_demand_offset",
+							"type": TYPE_INT,
+							"default": 1
+						},
+					"max_demand_offset":
+						{
+							"func": "adjust_max_demand_offset",
+							"type": TYPE_INT,
+							"default": -1
+						},
+					"max_stock_level_offset":
+						{
+							"func": "adjust_max_stock_level_offset",
+							"type": TYPE_INT,
+							"default": -10
+						},
+					"consume_produce_frequency_multiplier":
+						{
+							"func": "adjust_consume_produce_frequency_multiplier",
+							"type": TYPE_REAL,
+							"default": 0.5
+						},
+					"adjust_stock_level":
+						{
+							"func": "adjust_stock",
+							"type": TYPE_INT,
+							"default": -5
+						},
+					"transit_vehicle_crash":
+						{
+							"func": "set_next_vehicle_crash",
+							"type": TYPE_BOOL,
+							"default": true
+						},
+					}
+
 var event_frequency := 20.0
 var next_event_time := 5.0
 var report_frequency := 60.0 * 5.0
@@ -26,12 +100,17 @@ var skip_reports := false
 
 # Bring up menu if player hits ESC
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey && event.scancode == KEY_ESCAPE:
-		if is_instance_valid(menu_node):
-			menu_node.show_menu()
-		else:
-			printerr("Unable to show menu")
-			get_tree().quit()
+	if event is InputEventKey && event.is_pressed():
+		if event.scancode == KEY_ESCAPE:
+			if is_instance_valid(menu_node):
+				menu_node.show_menu()
+				get_tree().set_input_as_handled()
+			else:
+				printerr("Unable to show menu")
+				get_tree().set_input_as_handled()
+				get_tree().quit()
+		elif event.scancode == KEY_E:
+			get_parent().add_child(event_editor_scene.instance())
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -125,44 +204,20 @@ func add_event(event : Dictionary) -> void:
 		target = sp_list[randi() % sp_list.size()]
 	event["target"] = target
 
-	if "min_demand_offset" in event:
-		event["target"].adjust_min_demand_offset(event["min_demand_offset"])
-
-	if "max_demand_offset" in event:
-		event["target"].adjust_max_demand_offset(event["max_demand_offset"])
-
-	if "max_stock_level_offset" in event:
-		event["target"].adjust_max_stock_level_offset(event["max_stock_level_offset"])
-
-	if "consume_produce_frequency_offset" in event:
-		event["target"].adjust_consume_produce_frequency_multiplier(event["consume_produce_frequency_offset"])
-
-	if "adjust_stock_level" in event:
-		event["target"].adjust_stock(event["adjust_stock_level"])
-		
-	if "transit_vehicle_crash" in event:
-		event["target"].set_next_vehicle_crash()
-	#TODO: Add more event effects
+	for effect in event_prop_list:
+		if effect in event:
+			if "func" in event_prop_list[effect]:
+				event["target"].call(event_prop_list[effect]["func"], event[effect])
 
 # Removes the effects of the given event
 func remove_event(event : Dictionary) -> void:
 	print("Removing event ", event["headline"])
 
-	if "min_demand_offset" in event:
-		event["target"].adjust_min_demand_offset(-event["min_demand_offset"])
-
-	if "max_demand_offset" in event:
-		event["target"].adjust_max_demand_offset(-event["max_demand_offset"])
-
-	if "max_stock_level_offset" in event:
-		event["target"].adjust_max_stock_level_offset(-event["max_stock_level_offset"])
-
-	if "consume_produce_frequency_offset" in event:
-		event["target"].adjust_consume_produce_frequency_multiplier(-event["consume_produce_frequency_offset"])
-
-	if "adjust_stock_level" in event:
-		event["target"].adjust_stock(-event["adjust_stock_level"])
-	#TODO: Add more event effects
+	for effect in event_prop_list:
+		if effect in event:
+			if "func" in event_prop_list[effect]:
+				if event_prop_list[effect] in [TYPE_INT, TYPE_REAL]:
+					event["target"].call(event_prop_list[effect]["func"], -event[effect])
 
 	current_event_list.erase(event)
 

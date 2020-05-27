@@ -2,6 +2,7 @@
 	"manufacturer":
 	[
 		{
+			"internal_name": "Oh noes",
 			"time": 10,
 			"headline": "Oh noes",
 			"image": "test.png",
@@ -12,6 +13,7 @@
 	"home":
 	[
 		{
+			"internal_name": "Big bad",
 			"time": 10,
 			"headline": "Big bad",
 			"image": "test.png",
@@ -22,6 +24,7 @@
 	"generic":
 	[
 		{
+			"internal_name": "Wah nay",
 			"time": 10,
 			"headline": "Wah nay",
 			"image": "test.png",
@@ -29,8 +32,9 @@
 			"supply_point": "generic",
 		},
 		{
+			"internal_name": "vehicle crash",
 			"time": 0,
-			"transit_vehicle_crash": "IOU one string"
+			"transit_vehicle_crash": true
 		}
 	]
 }
