@@ -5,14 +5,13 @@ var creditsFile = "credits.json" #The file that credits are stored in
 var headingFont = preload("res://fonts/heading.tres") #The font that we'll use for headings
 var subHeadingFont = preload("res://fonts/heading.tres") #The font that we'll use for headings of sub sections
 var creditsAnchor #A node that the credits will all be attached to
-
+var firstItem = true
 
 func _ready():
 	get_node("Back").connect("pressed", self, "close")
 
 	#Instantiate a new VBoxContainer and set it to the window size
 	creditsAnchor = VBoxContainer.new()
-	creditsAnchor.set_size(get_viewport().get_visible_rect().size - get_viewport().get_visible_rect().size / 3)
 	creditsAnchor.connect("gui_input", self, "process_input")
 
 	#Read json from the credits file
@@ -79,14 +78,17 @@ func add_credits_item(item, anchor, depth, section):
 				anchor.add_child(tempContainer)
 				anchor = tempContainer
 
-			#Instantiate and add a MarginContainer to the anchor before the heading, sized based on depth
-			var marginTemp = MarginContainer.new()
-			if depth == 0:
-				marginTemp.set("rect_min_size", Vector2(10, 50))
+			if !firstItem:
+				#Instantiate and add a MarginContainer to the anchor before the heading, sized based on depth
+				var marginTemp = MarginContainer.new()
+				if depth == 0:
+					marginTemp.set("rect_min_size", Vector2(10, 50))
+				else:
+					marginTemp.set("rect_min_size", Vector2(10, 25))
+				anchor.add_child(marginTemp)
+				marginTemp.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 			else:
-				marginTemp.set("rect_min_size", Vector2(10, 25))
-			anchor.add_child(marginTemp)
-			marginTemp.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
+				firstItem = false
 
 			#Instantiate a Label for the heading, set its text, font and alignment, then add it to the anchor
 			var tempLabel = Label.new()

@@ -59,7 +59,6 @@ func _ready():
 		settingsContainer.add_child(headingLabel)
 		for item in settings[category]:
 			settings[category][item]["stored_value"] = retrieve_config_value(category, item)
-			print(settings[category][item])
 			if settings[category][item]["type"] == TYPE_BOOL:
 				var widget := CheckBox.new()
 				widget.set_text(item.capitalize())
