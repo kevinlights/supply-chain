@@ -33,7 +33,8 @@ func _gui_input(event):
 			close()
 
 func populate_selectors(selected_supply_point = "", selected_item_index = -1):
-	event_selector.disconnect("item_selected", self, "generate_editor_ui")
+	if event_selector.is_connected("item_selected", self, "generate_editor_ui"):
+		event_selector.disconnect("item_selected", self, "generate_editor_ui")
 	event_selector.clear()
 	event_selector.add_item("-New event-")
 
@@ -86,7 +87,7 @@ func generate_editor_ui(id):
 	else:
 		selected_supply_point = event_selector.get_selected_metadata()
 		selected_item_index = event_selector.get_selected_id()
-		selected_event = game_node.event_list[selected_supply_point][selected_item_index]
+		selected_event = game_node.event_list[selected_supply_point][selected_item_index].duplicate()
 
 	for prop in game_node.event_prop_list:
 		if "required" in game_node.event_prop_list[prop] && game_node.event_prop_list[prop]["required"] == true:
@@ -235,6 +236,7 @@ func check_sp_name(widget, _prop, value = ""):
 
 func save_event_list():
 	print("save_event_list stub")
+	game_node.write_json(game_node.events_file, game_node.event_list)
 	#TODO: Output game_node.event_list to json file
 
 func save_event():

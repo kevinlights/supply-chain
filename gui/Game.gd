@@ -3,6 +3,7 @@ extends HBoxContainer
 var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.tscn")
 var newspaper_scene = preload("res://game_entities/newspaper/Newspaper.tscn")
 var event_editor_scene = preload("res://gui/EventEditor.tscn")
+var events_file = "res://json/events.json"
 
 var menu_node : CenterContainer
 
@@ -128,7 +129,7 @@ func _ready():
 
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)
-	load_events("res://json/events.json")
+	load_events(events_file)
 
 # Iterates over each supply point and connects it to the destination for its cargo and sets first entry as producer and final entry as consumer
 func setup_downstreams(list : Array) -> void:
@@ -160,6 +161,14 @@ func read_json(path):
 	else:
 		printerr("Error reading ", path, " at line " + str(parse.error_line) + ": " + parse.error_string)
 		return null
+
+func write_json(path, data):
+	var file = File.new()
+	if file.open(path, File.WRITE) != OK:
+		printerr("Unable to open ", path, " for writing")
+		return false
+	file.store_string(to_json(data))
+	file.close()
 
 # Populates event list
 func load_events(path):
