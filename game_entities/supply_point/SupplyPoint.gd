@@ -17,6 +17,10 @@ var demand_level : int
 var min_demand_offset : int = 0
 var max_demand_offset : int = 0
 var max_stock_level_offset : int = 0
+var min_demand_increase_rate : int = 1
+var max_demand_increase_rate : int = -1
+var stock_comfort_band_min : int
+var stock_comfort_band_max : int
 var min_demand : int
 var max_demand : int
 var pending_stock: int
@@ -123,7 +127,8 @@ func consume_stock(amount: int) -> void:
 # demand 50 units of toilet paper. Default constraints are [0, 100]
 func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, new_demand := 50,
 	new_max_demand := 100, new_min_demand := 0):
-	max_stock_level = new_max_level + max_stock_level_offset
+	max_stock_level = new_max_level
+	update_stock_comfort_band()
 	stock_level = new_level
 	demand_level = new_demand
 	min_demand = new_min_demand
@@ -152,6 +157,12 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 # Set max stock level to a given value
 func set_max_stock_level(value : int) -> void:
 	max_stock_level = value
+	update_stock_comfort_band()
+
+func update_stock_comfort_band():
+	stock_comfort_band_min = int((max_stock_level + max_stock_level_offset) * 0.25)
+	stock_comfort_band_max = int((max_stock_level + max_stock_level_offset) * 0.75)
+
 
 # Set stock level to a given value
 func set_stock_level(value : int) -> void:
@@ -178,6 +189,7 @@ func adjust_max_demand_offset(value : int) -> void:
 # Adjust maximum stock level by a given value. Keeps track of temporary effects from events
 func adjust_max_stock_level_offset(value: int) -> void:
 	max_stock_level_offset += value
+	update_stock_comfort_band()
 
 # Adjust the frequency for production and consumption. Keeps track of changes resulting from events
 func adjust_consume_produce_frequency_multiplier(value: float) -> void:
@@ -339,8 +351,16 @@ func _process(delta):
 		counter -= tick_rate
 		if stock_level >= (max_stock_level + max_stock_level_offset):
 			ticks_at_max += 1
+			adjust_max_demand_offset(max_demand_increase_rate)
+			adjust_min_demand_offset(-min_demand_increase_rate)
 		elif stock_level <= 0:
 			ticks_at_min += 1
+			adjust_min_demand_offset(min_demand_increase_rate)
+			adjust_max_demand_offset(-max_demand_increase_rate)
+		elif stock_level > stock_comfort_band_min && stock_level < stock_comfort_band_max:
+			adjust_min_demand_offset(-min_demand_increase_rate)
+			adjust_max_demand_offset(-max_demand_increase_rate)
+
 		if (is_producing):
 			pass
 		else:
