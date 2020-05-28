@@ -1,7 +1,7 @@
 extends AudioStreamPlayer
 
 var playlist := []
-var menu_music := preload("res://music/menu.ogg")
+var menu_music := preload("res://music/supplytitle.ogg")
 var music_path := "res://music/tracks/"
 var current_track_index : int = -1
 var paused_track_time := 0.0
