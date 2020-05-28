@@ -55,6 +55,7 @@ var ticks_at_max : int = 0
 var ticks_at_min : int = 0
 var ticks_no_produce : int = 0
 var ticks_no_consume : int = 0
+var transit_time : float = 0
 
 # Lifetime performance indicators
 var stock_in_life : Array
@@ -66,6 +67,7 @@ var ticks_at_max_life : Array
 var ticks_at_min_life : Array
 var ticks_no_produce_life : Array
 var ticks_no_consume_life : Array
+var transit_time_life : Array
 
 # Can the supply point receive the amount of toilet paper?
 func request_stock(amount : int):
@@ -226,6 +228,9 @@ func adjust_pending_stock(value : int) -> void:
 func adjust_waste(value: int) -> void:
 	waste += value
 
+func adjust_transit_time(value: float) -> void:
+	transit_time += value
+
 # Adjust_stock is a helper function to centralize all stock adjustments
 func adjust_stock(value : int, dostats := true) -> void:
 	var previous_stock := stock_level
@@ -267,6 +272,7 @@ func make_report() -> void:
 	print("Ticks at min: ", str(ticks_at_min))
 	print("Ticks no production: ", str(ticks_no_produce))
 	print("Ticks no consumption: ", str(ticks_no_consume))
+	print("Transit efficiency quotient: ", str(transit_time / stock_in))
 	
 	# Add to lifetime records and reset
 	stock_in_life.append(stock_in)
@@ -287,7 +293,9 @@ func make_report() -> void:
 	ticks_no_produce = 0
 	ticks_no_consume_life.append(ticks_no_consume)
 	ticks_no_consume = 0
-	
+	transit_time_life.append(transit_time)
+	transit_time = 0
+
 func set_next_vehicle_crash(val := true) -> void:
 	next_vehicle_crash = val
 

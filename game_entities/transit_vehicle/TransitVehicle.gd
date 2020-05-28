@@ -11,6 +11,7 @@ var speed : float = 5.0
 var trip_duration : float
 var travelTween : Tween
 var crash : bool = false
+var lifetime : float = 0.0
 
 # Vehicle collects the given amount of toilet paper, limited by the amount
 # available at the given supply point and its carrying capacity, and reduces
@@ -35,6 +36,7 @@ func deliver() -> void:
 	destination.adjust_stock(cargo)
 	destination.adjust_pending_stock(-desired_cargo) # Removing pending stock is adding negative stock
 	# cargo does not get set to 0 since the vehicle is destroyed after
+	destination.adjust_transit_time(lifetime)
 	queue_free()
 
 # Move to destination for the given lane (animation)
@@ -81,6 +83,7 @@ func handle_crash(_obj, _key) -> void:
 	destination.adjust_pending_stock(-desired_cargo)
 	destination.adjust_waste(desired_cargo)
 	destination.get_parent().add_event({"headline": "crash", "time": 0, "image": ""}) # We'll fix this later
+	destination.adjust_transit_time(lifetime)
 	queue_free()
 
 # Constructor for TransitVehicle. Default vehicle starts empty with space for 10 units
@@ -93,6 +96,7 @@ func _ready():
 
 # Check to see if the vehicle has arrived and pick up or deliver
 func _process(delta):
+	lifetime += delta
 	if is_instance_valid(destination):
 		trip_duration += delta
 		if trip_duration >= speed:
