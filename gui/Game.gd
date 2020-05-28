@@ -4,6 +4,7 @@ var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.t
 var newspaper_scene = preload("res://game_entities/newspaper/Newspaper.tscn")
 var event_editor_scene = preload("res://gui/EventEditor.tscn")
 var events_file = "res://json/events.json"
+var papers_file = "res://json/newspapers.json"
 
 var menu_node : CenterContainer
 
@@ -11,6 +12,7 @@ var menu_node : CenterContainer
 # defined as supply points
 var sp_list := []
 var event_list := {}
+var paper_list := {}
 var current_event_list := []
 var supply_point_list := {
 							"manufacturer": {},
@@ -91,9 +93,9 @@ var event_prop_list := {
 						},
 					}
 
-var event_frequency := 20.0
-var next_event_time := 5.0
-var report_frequency := 60.0 * 5.0
+var event_frequency := 60.0 * 2.0
+var next_event_time := 60.0 * 2.0
+var report_frequency := 60.0 * 7.0
 var next_report_time := report_frequency
 var skip_events := false
 var skip_reports := false
@@ -130,6 +132,7 @@ func _ready():
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)
 	load_events(events_file)
+	load_papers(papers_file)
 
 # Iterates over each supply point and connects it to the destination for its cargo and sets first entry as producer and final entry as consumer
 func setup_downstreams(list : Array) -> void:
@@ -174,6 +177,9 @@ func write_json(path, data):
 func load_events(path):
 	event_list = read_json(path)
 
+func load_papers(path):
+	paper_list = read_json(path)
+
 # Draws first event from a shuffled list of events in event_list
 func get_random_event():
 	var candidates = []
@@ -199,6 +205,8 @@ func add_event(event : Dictionary) -> void:
 	if "headline" in event:
 		var newspaper = newspaper_scene.instance()
 		newspaper.set_event(event)
+		newspaper.set_title(paper_list["titles"][randi() % paper_list["titles"].size()])
+		newspaper.set_date(paper_list["dates"][randi() % paper_list["dates"].size()])
 		get_parent().add_child(newspaper)
 
 	if event["time"] > 0:

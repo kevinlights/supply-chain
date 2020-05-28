@@ -32,7 +32,7 @@ func _gui_input(event):
 		if event.is_pressed():
 			close()
 
-func populate_selectors(selected_supply_point = "", selected_item_index = -1):
+func populate_selectors(select_supply_point = "", select_item_index = -1):
 	if event_selector.is_connected("item_selected", self, "generate_editor_ui"):
 		event_selector.disconnect("item_selected", self, "generate_editor_ui")
 	event_selector.clear()
@@ -52,9 +52,9 @@ func populate_selectors(selected_supply_point = "", selected_item_index = -1):
 				event_selector.set_item_metadata(event_selector.get_item_count() - 1, supply_point)
 	event_selector.connect("item_selected", self, "generate_editor_ui")
 
-	if selected_item_index != -1 && selected_supply_point in game_node.event_list:
+	if select_item_index != -1 && select_supply_point in game_node.event_list:
 		for i in range(0, event_selector.get_item_count()):
-			if event_selector.get_item_metadata(i) == selected_supply_point && event_selector.get_item_id(i) == selected_item_index:
+			if event_selector.get_item_metadata(i) == select_supply_point && event_selector.get_item_id(i) == select_item_index:
 				event_selector.select(i)
 	else:
 		event_selector.select(0)
