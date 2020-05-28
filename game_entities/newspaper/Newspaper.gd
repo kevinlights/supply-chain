@@ -22,6 +22,9 @@ func set_date(value : String):
 func set_event(event : Dictionary):
 	if "headline" in event:
 		get_node("Paper/Content/TitleContent/Headline").set_text(event["headline"].to_upper())
+	if "subheading" in event:
+		get_node("Paper/Content/TitleContent/Subheading").visible = true
+		get_node("Paper/Content/TitleContent/Subheading").set_text(event["subheading"])
 	if "image" in event:
 		var imagePath = "res://game_entities/newspaper/images/" + event["image"]
 		if ResourceLoader.exists(imagePath):

@@ -48,6 +48,11 @@ var event_prop_list := {
 							"type": TYPE_STRING,
 							"default": "A funny thing happened today"
 						},
+					"subheading":
+						{
+							"type": TYPE_STRING,
+							"default": "No, really. It was hilarious."
+						},
 					"image":
 						{
 							"type": TYPE_STRING,
