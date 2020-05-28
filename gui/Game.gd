@@ -51,7 +51,7 @@ var event_prop_list := {
 					"image":
 						{
 							"type": TYPE_STRING,
-							"default": "A funny thing happened today",
+							"default": "test.png",
 							"prefix": "res://game_entities/newspaper/images/",
 							"validate_func" : "check_image"
 						},
@@ -199,7 +199,10 @@ func get_random_event():
 
 # Produces a given event's effects in the game
 func add_event(event : Dictionary) -> void:
-	print("Adding event ", event)
+	if "internal_name" in event:
+		print("Adding event ", event["internal_name"])
+	else:
+		print("Adding unnamed event ", event)
 	event = event.duplicate()
 	
 	if "headline" in event:
@@ -228,12 +231,16 @@ func add_event(event : Dictionary) -> void:
 
 # Removes the effects of the given event
 func remove_event(event : Dictionary) -> void:
-	print("Removing event ", event["headline"])
+	if "internal_name" in event:
+		print("Removing event ", event["internal_name"])
+	else:
+		print("Removing unnamed event ", event)
 
 	for effect in event_prop_list:
 		if effect in event:
+			print("Trying ", effect)
 			if "func" in event_prop_list[effect]:
-				if event_prop_list[effect] in [TYPE_INT, TYPE_REAL]:
+				if event_prop_list[effect]["type"] in [TYPE_INT, TYPE_REAL]:
 					event["target"].call(event_prop_list[effect]["func"], -event[effect])
 
 	current_event_list.erase(event)
