@@ -17,7 +17,7 @@ var settings := {
 			"music_volume":
 			{
 				"type": TYPE_REAL,
-				"default": 0.75,
+				"default": 0.5,
 				"description": "Adjusts the volume of in-game music.",
 			},
 			"sfx_volume":

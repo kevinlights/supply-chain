@@ -91,6 +91,12 @@ var event_prop_list := {
 							"type": TYPE_BOOL,
 							"default": true
 						},
+					"transit_vehicle_speed_multiplier_offset":
+						{
+							"func": "adjust_transit_speed_multiplier",
+							"type": TYPE_REAL,
+							"default": 0.5
+						},
 					}
 
 var event_frequency := 60.0 * 2.0
@@ -238,7 +244,6 @@ func remove_event(event : Dictionary) -> void:
 
 	for effect in event_prop_list:
 		if effect in event:
-			print("Trying ", effect)
 			if "func" in event_prop_list[effect]:
 				if event_prop_list[effect]["type"] in [TYPE_INT, TYPE_REAL]:
 					event["target"].call(event_prop_list[effect]["func"], -event[effect])

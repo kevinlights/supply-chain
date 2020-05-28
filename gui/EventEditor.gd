@@ -145,11 +145,14 @@ func generate_float_widget(name, value, is_int, removeable):
 	temp_container.add_child(generate_label(name))
 	var widget = SpinBox.new()
 	widget.set_v_size_flags(Control.SIZE_EXPAND_FILL)
-	widget.set_value(value)
 	if is_int:
 		widget.set_step(1.0)
 	else:
 		widget.set_step(0.1)
+	widget.set_allow_lesser(true)
+	widget.set_allow_greater(true)
+	widget.set_value(value)
+
 	widget.connect("value_changed", self, "update_float_value", [name])
 	temp_container.add_child(widget)
 
@@ -249,13 +252,18 @@ func save_event():
 					return
 	if selected_item_index != -1:
 		if selected_supply_point != selected_event["supply_point"]:
-			game_node.event_prop_list[selected_supply_point].erase(selected_item_index)
+			print(selected_event["internal_name"] + " removing from supply point ", selected_supply_point)
+			game_node.event_list[selected_supply_point].erase(game_node.event_list[selected_supply_point][selected_item_index])
 			selected_item_index = -1
+		else:
+			print(selected_event["internal_name"] + " keeping supply point ", selected_supply_point)
 	selected_supply_point = selected_event["supply_point"]
 
 	if selected_item_index != -1:
 		game_node.event_list[selected_supply_point][selected_item_index] = selected_event
 	else:
+		if !(selected_supply_point in game_node.event_list):
+			game_node.event_list[selected_supply_point] = []
 		game_node.event_list[selected_supply_point].push_back(selected_event)
 		selected_item_index = game_node.event_list[selected_supply_point].size() -1
 	print("Validation passed?", selected_event)

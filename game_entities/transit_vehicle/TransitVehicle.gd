@@ -7,9 +7,10 @@ var cargo : int
 var has_picked_up : bool
 var desired_cargo : int
 var destination : Node
-var speed : float = 5.0
+var base_speed : float = 5.0
+var speed : float = base_speed
 var trip_duration : float
-var travelTween : Tween
+var travel_tween : Tween
 var crash : bool = false
 var lifetime : float = 0.0
 
@@ -42,39 +43,40 @@ func deliver() -> void:
 # Move to destination for the given lane (animation)
 func start_travel(lane: Node, will_crash: bool = false):
 	# Add vehicle to lane
-	if is_instance_valid(get_parent()):
-		get_parent().remove_child(self)
-	lane.add_child(self)
+	if get_parent() != lane:
+		if is_instance_valid(get_parent()):
+			get_parent().remove_child(self)
+		lane.add_child(self)
 
 	var startPosition : Vector2 = lane.get_node("Origin").get_position()
 	var endPosition : Vector2 = lane.get_node("Destination").get_position()
 	var offset : Vector2 = Vector2(int(get_size().x / 2), get_size().y)
 	set_position(startPosition)
 
-	if is_instance_valid(travelTween):
-		travelTween.remove_all()
-		travelTween.queue_free()
+	if is_instance_valid(travel_tween):
+		travel_tween.remove_all()
+		travel_tween.queue_free()
 
-	travelTween = Tween.new()
-	add_child(travelTween)
+	travel_tween = Tween.new()
+	add_child(travel_tween)
 
 	# Sets direction the car is facing
 	if startPosition.y > endPosition.y:
 		set_rotation(0.0)
-		startPosition += offset * Vector2(-1, 0.25)
-		endPosition += offset * Vector2(-1, -1.25)
+		startPosition += offset * Vector2(-1, 0.0)
+		endPosition += offset * Vector2(-1, -1.0)
 	else:
 		set_rotation(PI)
-		startPosition += offset * Vector2(1, -1.25)
-		endPosition += offset * Vector2(1, 1.25)
+		startPosition += offset * Vector2(1, -1.0)
+		endPosition += offset * Vector2(1, 1.0)
 
 	if will_crash:
 		endPosition = ((endPosition - startPosition) / 2) + startPosition
-		travelTween.connect("tween_completed", self, "handle_crash")
+		travel_tween.connect("tween_completed", self, "handle_crash")
 
 	# Move from start to end
-	travelTween.interpolate_method(self, "set_position", startPosition, endPosition, speed / 2.0 if will_crash else speed, Tween.TRANS_SINE, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
-	travelTween.start()
+	travel_tween.interpolate_method(self, "set_position", startPosition, endPosition, speed / 2.0 if will_crash else speed, Tween.TRANS_LINEAR, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
+	travel_tween.start()
 
 func set_crash(val := true) -> void:
 	crash = val
@@ -90,7 +92,6 @@ func handle_crash(_obj, _key) -> void:
 func _ready():
 	cargo_limit = 10
 	cargo = 0
-	speed = 5.0
 	trip_duration = 0.0
 	has_picked_up = false
 
@@ -106,6 +107,19 @@ func _process(delta):
 				deliver()
 			trip_duration = 0
 	get_node("ColorRect/Cargo").set_text(str(cargo)) # Helper to display cargo when debugging. Not always visible
+
+func set_speed_multiplier(value : float):
+	var progress = 0
+	if is_instance_valid(travel_tween):
+		progress = speed / travel_tween.tell()
+
+	#Speed is actually travel duration, so increasing velocity should mean smaller speed
+	speed = base_speed / value
+
+	if is_instance_valid(travel_tween):
+		start_travel(get_parent(), crash)
+		travel_tween.seek(speed / progress)
+		trip_duration = speed / progress
 
 # Sets cargo limits and corresponding vehicle displays (Cars for < 20, Trucks for 21-40, articulated trucks for more)
 func set_cargo_limit(new_limit: int = cargo_limit) -> void:

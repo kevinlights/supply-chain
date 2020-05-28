@@ -36,6 +36,7 @@ var consumption_rate : int
 var production_rate : int
 var consume_produce_frequency : float
 var consume_produce_frequency_multiplier : float = 1.0
+var transit_speed_multiplier : float = 1.0
 var next_vehicle_crash : bool = false
 
 var demand_marker_min : TextureRect
@@ -88,6 +89,7 @@ func request_stock(amount : int):
 		vehicle.set_cargo_limit(transit_size)
 	else:
 		vehicle.set_cargo_limit()
+	vehicle.set_speed_multiplier(transit_speed_multiplier)
 	# Vehicle checks for how much is needed then collects and delivers
 	vehicle.order(int(min(amount, max_stock_level - stock_level)), upstream)
 
@@ -177,6 +179,20 @@ func adjust_consume_produce_frequency_multiplier(value: float) -> void:
 	var counter_fraction := (consume_produce_frequency * consume_produce_frequency_multiplier) / consume_counter
 	consume_produce_frequency_multiplier += value
 	consume_counter = counter_fraction * consume_produce_frequency_multiplier * consume_produce_frequency
+
+func adjust_transit_speed_multiplier(value : float) -> void:
+	transit_speed_multiplier += value
+
+	#TODO: Set caps/limits?
+	for child in get_node("RightLane").get_children():
+		if child.has_method("set_speed_multiplier"):
+			print("Setting speed for existing returning vehicle")
+			child.set_speed_multiplier(transit_speed_multiplier)
+	if !is_producing:
+		for child in upstream.get_node("LeftLane").get_children():
+			if child.has_method("set_speed_multiplier"):
+				print("Setting speed for existing leaving vehicle")
+				child.set_speed_multiplier(transit_speed_multiplier)
 
 # Set stock indicators
 func configure_stock_indicators():
