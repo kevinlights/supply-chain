@@ -316,8 +316,9 @@ func update_demand(value : float) -> void:
 		correct_demand_level()
 	if is_producing:
 		#TODO: This will need to be tuned
+		#Note that consume_produce_frequency_multiplier as messed with by events will shape resulting values
 		consume_produce_frequency = (105.0 - demand_level) / 20.0
-		print(consume_produce_frequency)
+		#print(consume_produce_frequency)
 		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(max(1, demand_level * 2)) + "%")
 	else:
 		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")

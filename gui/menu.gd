@@ -11,6 +11,7 @@ var resume_button : Button
 var game_node : HBoxContainer
 var music_player : AudioStreamPlayer
 var settings : Control
+var start_stocked = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,6 +41,7 @@ func _ready():
 
 # Pauses game and makes menus visible
 func show_menu() -> void:
+	print("Showing menu")
 	self.visible = true
 	resume_button.visible = true
 	game_node.visible = false
@@ -48,6 +50,7 @@ func show_menu() -> void:
 
 # Hides menu and unpauses game
 func hide_menu() -> void:
+	print("Hiding menu")
 	self.visible = false
 	get_tree().paused = false
 	music_player.resume_track()
@@ -59,11 +62,13 @@ func resume_game() -> void:
 
 # Creates a new game with SupplyPoints back to default values
 func new_game() -> void:
+	print("Starting new game")
 	music_player.assemble_playlist()
 	if is_instance_valid(game_node):
 		game_node.queue_free()
 	game_node = game_scene.instance()
 	game_node.menu_node = self
+	game_node.start_stocked = start_stocked
 	game_node.skip_events = settings.get_setting("gameplay", "skip_events")
 	game_node.skip_reports = settings.get_setting("gameplay", "skip_reports")
 	get_parent().add_child(game_node)

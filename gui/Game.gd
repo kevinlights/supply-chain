@@ -10,6 +10,7 @@ var menu_node : CenterContainer
 
 # Simulation requires a manufacturer, a warehouse, and a consumer which are
 # defined as supply points
+var start_stocked = false
 var sp_list := []
 var event_list := {}
 var paper_list := {}
@@ -167,6 +168,8 @@ func _ready():
 			sp_list.back().set_stock_level(supply_point_list[sp]["initial_level"])
 		if "initial_demand" in supply_point_list[sp]:
 			sp_list.back().update_demand(supply_point_list[sp]["initial_demand"])
+		if start_stocked:
+			sp_list.back().adjust_stock(sp_list.back().max_stock_level / 2)
 
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)

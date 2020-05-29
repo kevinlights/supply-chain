@@ -28,6 +28,12 @@ var settings := {
 			}
 		},
 	"gameplay": {
+			"start_stocked":
+			{
+				"type": TYPE_BOOL,
+				"default": false,
+				"description": "Gives each supply point initial stock when starting a new game.",
+			},
 			#TODO: Maybe events and reports should be frequency ranges in minutes with 0 being never?
 			"skip_events":
 			{
@@ -136,3 +142,6 @@ func set_skip_events(value):
 func set_skip_reports(value):
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.skip_reports = value
+
+func set_start_stocked(value):
+	get_parent().start_stocked = value
