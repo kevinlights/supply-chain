@@ -175,20 +175,29 @@ func set_stock_level(value : int) -> void:
 	update_stock_indicators()
 
 # Adjust minimum demand by a given value. Keeps track of temporary effects from events
-func adjust_min_demand_offset(value : int) -> void:
+func adjust_min_demand_offset(value : int, check_max = true) -> void:
 	min_demand_offset += value
 	if min_demand + min_demand_offset < 0:
 		min_demand_offset = -min_demand
-
 	demand_marker_min.set_position(Vector2(demand_marker_min.get_parent().get_parent().get_size().x / 100.0 * (min_demand + min_demand_offset) - 6, 0))
+
+	if check_max:
+		if min_demand + min_demand_offset > max_demand + max_demand_offset:
+			adjust_max_demand_offset((min_demand + min_demand_offset) - (max_demand + max_demand_offset), false)
+
 	update_demand(demand_level)
 
 # Adjust maximum demand by a given value. Keeps track of temporary effects from events
-func adjust_max_demand_offset(value : int) -> void:
+func adjust_max_demand_offset(value : int, check_min = true) -> void:
 	max_demand_offset += value
 	if max_demand + max_demand_offset > 100:
 		max_demand_offset = 100 - max_demand
 	demand_marker_max.set_position(Vector2(demand_marker_max.get_parent().get_parent().get_size().x / 100.0 * (max_demand + max_demand_offset), 0))
+
+	if check_min:
+		if max_demand + max_demand_offset < min_demand + min_demand_offset:
+			adjust_min_demand_offset((max_demand + max_demand_offset) - (min_demand + min_demand_offset), false)
+
 	update_demand(demand_level)
 
 # Adjust maximum stock level by a given value. Keeps track of temporary effects from events
