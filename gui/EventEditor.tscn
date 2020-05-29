@@ -48,9 +48,21 @@ text = "Select event "
 
 [node name="EventSelector" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 margin_left = 87.0
-margin_right = 586.0
+margin_right = 496.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
+
+[node name="PrevButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 500.0
+margin_right = 540.0
+margin_bottom = 20.0
+text = "Prev"
+
+[node name="NextButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 544.0
+margin_right = 586.0
+margin_bottom = 20.0
+text = "Next"
 
 [node name="Status" type="Label" parent="PanelContainer/VBoxContainer"]
 margin_top = 59.0

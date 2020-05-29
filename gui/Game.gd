@@ -277,6 +277,7 @@ func add_event(event : Dictionary) -> void:
 				if event["ignore_supply_point"] == target.sp_name:
 					found_target = false
 			target_index += 1
+	print("Using target ", target.sp_name)
 	event["target"] = target
 
 	for effect in event_prop_list:

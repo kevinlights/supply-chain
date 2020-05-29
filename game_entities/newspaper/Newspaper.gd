@@ -34,6 +34,8 @@ func set_event(event : Dictionary):
 			get_node("Paper/Content/PaperContent/Center/PhotoFrame/Photo").texture = null
 			pass
 
+	#FIXME: Remove column lines if they spill over the page height (rect_clip_content doesn't work properly hen rotated)
+
 # Close on player input only if the paper has finished its animation
 func _process(_delta):
 	if Input.is_action_just_released("ui_select") ||  Input.is_action_just_released("ui_accept") ||  Input.is_action_just_released("ui_cancel"):

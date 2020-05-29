@@ -17,6 +17,9 @@ func _ready():
 	prop_selector = get_node("PanelContainer/VBoxContainer/HBoxContainer3/PropertyList")
 	get_node("PanelContainer/VBoxContainer/HBoxContainer3/AddPropertyButton").connect("pressed", self, "add_property")
 
+	get_node("PanelContainer/VBoxContainer/HBoxContainer/PrevButton").connect("pressed", self, "select_prev_event")
+	get_node("PanelContainer/VBoxContainer/HBoxContainer/NextButton").connect("pressed", self, "select_next_event")
+
 	get_node("PanelContainer/VBoxContainer/HBoxContainer2/SaveButton").connect("pressed", self, "save_event")
 	get_node("PanelContainer/VBoxContainer/HBoxContainer2/DeleteButton").connect("pressed", self, "delete_event")
 	get_node("PanelContainer/VBoxContainer/HBoxContainer2/PreviewButton").connect("pressed", self, "preview_event")
@@ -294,3 +297,21 @@ func activate_event():
 func close():
 	get_tree().paused = false
 	queue_free()
+
+func select_next_event():
+	if event_selector.get_item_count() < 2:
+		return
+	var temp = event_selector.get_selected() + 1
+	if temp >= event_selector.get_item_count():
+		temp = 0
+	event_selector.select(temp)
+	generate_editor_ui(temp)
+
+func select_prev_event():
+	if event_selector.get_item_count() < 2:
+		return
+	var temp = event_selector.get_selected() - 1
+	if temp < 0:
+		temp = event_selector.get_item_count() - 1
+	event_selector.select(temp)
+	generate_editor_ui(temp)

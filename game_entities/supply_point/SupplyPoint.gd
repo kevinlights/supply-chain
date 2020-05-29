@@ -360,22 +360,27 @@ func _process(delta):
 			if is_consuming:
 				consume_stock(consumption_rate)
 		else:
+			#TODO: Maybe this should be in produce_stock() and consume_stock()
 			if is_producing:
 				ticks_no_produce += 1
+				stock_indicator_anchor.set_animation_paused(false)
 			if is_consuming:
 				ticks_no_consume += 1
+				stock_indicator_anchor.set_animation_paused(false)
+
 	if counter >= tick_rate:
 		counter -= tick_rate
 		if stock_level >= (max_stock_level + max_stock_level_offset):
 			ticks_at_max += 1
 			adjust_max_demand_offset(max_demand_increase_rate)
-			adjust_min_demand_offset(-min_demand_increase_rate)
+			adjust_min_demand_offset(-min_demand_increase_rate * 2)
 		elif stock_level <= 0:
 			ticks_at_min += 1
 			adjust_min_demand_offset(min_demand_increase_rate)
-			adjust_max_demand_offset(-max_demand_increase_rate)
-		elif stock_level > stock_comfort_band_min && stock_level < stock_comfort_band_max:
+			adjust_max_demand_offset(-max_demand_increase_rate * 2)
+		if stock_level > stock_comfort_band_min:
 			adjust_min_demand_offset(-min_demand_increase_rate)
+		if stock_level < stock_comfort_band_max:
 			adjust_max_demand_offset(-max_demand_increase_rate)
 
 		if (is_producing):
