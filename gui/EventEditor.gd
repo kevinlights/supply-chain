@@ -272,11 +272,12 @@ func save_event():
 
 func delete_event():
 	if selected_item_index != -1:
-		game_node.event_prop_list[selected_supply_point].erase(selected_item_index)
+		game_node.event_list[selected_supply_point].erase(game_node.event_list[selected_supply_point][selected_item_index])
 		selected_item_index = -1
 		selected_supply_point = ""
 	save_event_list()
 	populate_selectors(selected_supply_point, selected_item_index)
+	generate_editor_ui(0)
 
 func preview_event():
 	if "headline" in selected_event:
