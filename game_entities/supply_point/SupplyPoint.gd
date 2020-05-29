@@ -40,7 +40,9 @@ var consumption_rate : int
 var production_rate : int
 var consume_produce_frequency : float
 var consume_produce_frequency_multiplier : float = 1.0
+var consume_produce_paused : bool = false
 var transit_speed_multiplier : float = 1.0
+var transit_vehicles_paused : bool = false
 var next_vehicle_crash : bool = false
 
 var demand_marker_min : TextureRect
@@ -79,7 +81,10 @@ func request_stock(amount : int):
 	if !is_instance_valid(upstream):
 		print("Something terrible has happened!")
 		return
-		
+
+	if transit_vehicles_paused:
+		return
+
 	if upstream.stock_level - pending_stock <= 0:
 		return
 
@@ -196,6 +201,12 @@ func adjust_consume_produce_frequency_multiplier(value: float) -> void:
 	var counter_fraction := (consume_produce_frequency * consume_produce_frequency_multiplier) / consume_counter
 	consume_produce_frequency_multiplier += value
 	consume_counter = counter_fraction * consume_produce_frequency_multiplier * consume_produce_frequency
+
+func pause_consume_produce(value : bool) -> void:
+	consume_produce_paused = value
+
+func pause_transit_vehicles(value : bool) -> void:
+	transit_vehicles_paused = value
 
 func adjust_transit_speed_multiplier(value : float) -> void:
 	transit_speed_multiplier += value
@@ -343,10 +354,16 @@ func _process(delta):
 	consume_counter += delta
 	if consume_counter >= consume_produce_frequency * consume_produce_frequency_multiplier:
 		consume_counter -= consume_produce_frequency * consume_produce_frequency_multiplier
-		if is_producing:
-			produce_stock(production_rate)
-		if is_consuming:
-			consume_stock(consumption_rate)
+		if !consume_produce_paused:
+			if is_producing:
+				produce_stock(production_rate)
+			if is_consuming:
+				consume_stock(consumption_rate)
+		else:
+			if is_producing:
+				ticks_no_produce += 1
+			if is_consuming:
+				ticks_no_consume += 1
 	if counter >= tick_rate:
 		counter -= tick_rate
 		if stock_level >= (max_stock_level + max_stock_level_offset):

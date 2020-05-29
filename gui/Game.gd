@@ -90,6 +90,34 @@ var event_prop_list := {
 							"type": TYPE_INT,
 							"default": -5
 						},
+					"consume_produce_pause":
+						{
+							"func": "pause_consume_produce",
+							"type": TYPE_BOOL,
+							"default": true
+						},
+					"skip_producing_supply_points":
+						{
+							"type": TYPE_BOOL,
+							"default": true
+						},
+					"skip_consuming_supply_points":
+						{
+							"type": TYPE_BOOL,
+							"default": true
+						},
+					"ignore_supply_point":
+						{
+							"type": TYPE_STRING,
+							"default": "generic",
+							"validate_func" : "check_sp_name"
+						},
+					"transit_vehicle_pause":
+						{
+							"func": "pause_transit_vehicles",
+							"type": TYPE_BOOL,
+							"default": true
+						},
 					"transit_vehicle_crash":
 						{
 							"func": "set_next_vehicle_crash",
@@ -232,7 +260,23 @@ func add_event(event : Dictionary) -> void:
 			if sp.sp_name == event["supply_point"]:
 				target = sp
 	if !is_instance_valid(target):
-		target = sp_list[randi() % sp_list.size()]
+		var target_list = sp_list.duplicate()
+		target_list.shuffle()
+		var target_index = 0
+		var found_target = false
+		while !found_target:
+			target = target_list[target_index]
+			found_target = true
+			if "skip_producing" in event && event["skip_producing"] == true:
+				if target.is_producing:
+					found_target = false
+			if "skip_producing" in event && event["skip_consuming"] == true:
+				if target.is_consuming:
+					found_target = false
+			if "ignore_supply_point" in event:
+				if event["ignore_supply_point"] == target.sp_name:
+					found_target = false
+			target_index += 1
 	event["target"] = target
 
 	for effect in event_prop_list:
@@ -252,6 +296,8 @@ func remove_event(event : Dictionary) -> void:
 			if "func" in event_prop_list[effect]:
 				if event_prop_list[effect]["type"] in [TYPE_INT, TYPE_REAL]:
 					event["target"].call(event_prop_list[effect]["func"], -event[effect])
+				if event_prop_list[effect]["type"] in [TYPE_BOOL]:
+					event["target"].call(event_prop_list[effect]["func"], !event[effect])
 
 	current_event_list.erase(event)
 
