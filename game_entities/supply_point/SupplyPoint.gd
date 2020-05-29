@@ -155,8 +155,14 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	should_update_indicators = false
 	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(sp_name.to_upper())
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
-	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
+	if is_producing:
+		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandLabel").set_text("Production Rate")
+		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(max(1, demand_level * 2)) + "%")
+	else:
+		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
+
 	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand").set_value(demand_level)
+
 	configure_stock_indicators()
 
 # Set max stock level to a given value
@@ -185,6 +191,7 @@ func adjust_min_demand_offset(value : int, check_max = true) -> void:
 		if min_demand + min_demand_offset > max_demand + max_demand_offset:
 			adjust_max_demand_offset((min_demand + min_demand_offset) - (max_demand + max_demand_offset), false)
 
+	#TODO: For optimisation, should this only be called if demand level is below combined min?
 	update_demand(demand_level)
 
 # Adjust maximum demand by a given value. Keeps track of temporary effects from events
@@ -198,6 +205,7 @@ func adjust_max_demand_offset(value : int, check_min = true) -> void:
 		if max_demand + max_demand_offset < min_demand + min_demand_offset:
 			adjust_min_demand_offset((max_demand + max_demand_offset) - (min_demand + min_demand_offset), false)
 
+	#TODO: For optimisation, should this only be called if demand level is below combined min?
 	update_demand(demand_level)
 
 # Adjust maximum stock level by a given value. Keeps track of temporary effects from events
@@ -268,6 +276,9 @@ func set_is_consuming(value : bool) -> void:
 # Turn production on (true) or off (false)
 func set_is_producing(value : bool) -> void:
 	is_producing = value
+	if is_producing:
+		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandLabel").set_text("Production Rate")
+
 
 # Set the downstream SupplyPoint to the given node
 func set_downstream(value : Node):
@@ -303,7 +314,13 @@ func update_demand(value : float) -> void:
 	demand_level = int(clamp(value, min_demand + min_demand_offset, max_demand + max_demand_offset))
 	if is_instance_valid(demand_slider):
 		correct_demand_level()
-	get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
+	if is_producing:
+		#TODO: This will need to be tuned
+		consume_produce_frequency = (105.0 - demand_level) / 20.0
+		print(consume_produce_frequency)
+		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(max(1, demand_level * 2)) + "%")
+	else:
+		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
 
 # Adjusts demand level if the slider does not match
 func correct_demand_level() -> void:

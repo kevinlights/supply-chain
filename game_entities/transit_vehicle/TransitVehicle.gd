@@ -84,7 +84,9 @@ func set_crash(val := true) -> void:
 func handle_crash(_obj, _key) -> void:
 	destination.adjust_pending_stock(-desired_cargo)
 	destination.adjust_waste(desired_cargo)
-	destination.get_parent().add_event({"headline": "crash", "time": 0, "image": ""}) # We'll fix this later
+	var crash_event = {"headline": "crash", "time": 0, "image": ""}
+	#TODO: Update image depending on cargo_limit thresholds
+	destination.get_parent().add_event(crash_event)
 	destination.adjust_transit_time(lifetime)
 	queue_free()
 
