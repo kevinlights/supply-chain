@@ -96,10 +96,6 @@ func add_credits_item(item, anchor, depth, section):
 			tempLabel.add_font_override("font", headingFont if depth == 0 else subHeadingFont)
 			tempLabel.set_align(Label.ALIGN_CENTER)
 			anchor.add_child(tempLabel)
-			if section == "\"Beeing Together\"":
-				tempLabel.set_mouse_filter(Control.MOUSE_FILTER_STOP)
-				tempLabel.connect("gui_input", get_parent(), "play_secret_song")
-				tempLabel.connect("mouse_entered", get_parent(), "on_binding_button_hover")
 
 			add_credits_item(item[section], anchor, depth + 1, section)
 	else:
@@ -116,15 +112,19 @@ func add_credits_item(item, anchor, depth, section):
 				if temp % anchor.columns != 0:
 					anchor.add_child(MarginContainer.new())
 
-			var tempLabel = Label.new()
-			tempLabel.set_text(subItem)
-			tempLabel.set_align(Label.ALIGN_CENTER)
-			anchor.add_child(tempLabel)
-
-			if subItem.ends_with(".co.uk") || subItem.ends_with(".com") || subItem.ends_with(".com.au"):
-				tempLabel.set_mouse_filter(Control.MOUSE_FILTER_STOP)
-				tempLabel.connect("gui_input", get_parent(), "open_button_url", [subItem])
-				tempLabel.connect("mouse_entered", get_parent(), "on_binding_button_hover")
+			if subItem.ends_with(".co.uk") || subItem.ends_with(".com") || subItem.ends_with(".com.au") || subItem.ends_with(".net") || subItem.ends_with(".ca"):
+				var tempButton = Button.new()
+				tempButton.set_text(subItem)
+				tempButton.set_text_align(Button.ALIGN_CENTER)
+				tempButton.set_focus_mode(Control.FOCUS_NONE)
+				tempButton.set_flat(true)
+				tempButton.connect("pressed", get_parent(), "open_url", [subItem])
+				anchor.add_child(tempButton)
+			else:
+				var tempLabel = Label.new()
+				tempLabel.set_text(subItem)
+				tempLabel.set_align(Label.ALIGN_CENTER)
+				anchor.add_child(tempLabel)
 
 			if section in ["Special Thanks", "Supporters"] && itemCount == 1:
 				anchor = setup_grid(anchor, 3 if item.size() >= 4 else item.size())

@@ -6,6 +6,7 @@ var credits_scene = preload("res://gui/Credits.tscn")
 var new_button : Button
 var settings_button : Button
 var credits_button : Button
+var website_button : Button
 var quit_button : Button
 var resume_button : Button
 var game_node : HBoxContainer
@@ -21,7 +22,9 @@ func _ready():
 	new_button = get_node("VBoxContainer/New")
 	settings_button = get_node("VBoxContainer/Settings")
 	credits_button = get_node("VBoxContainer/Credits")
+	website_button = get_node("VBoxContainer/Website")
 	quit_button = get_node("VBoxContainer/Quit")
+
 
 	if new_button.connect("pressed", self, "new_game") != OK:
 		printerr("Error while connecting signal to new game button")
@@ -30,6 +33,8 @@ func _ready():
 	if settings_button.connect("pressed", self, "show_settings") != OK:
 		printerr("Error while connecting signal to settings button")
 	if credits_button.connect("pressed", self, "show_credits") != OK:
+		printerr("Error while connecting signal to credits button")
+	if website_button.connect("pressed", self, "open_url", ["cheeseness.itch.io/supply-chain"]) != OK:
 		printerr("Error while connecting signal to credits button")
 	if quit_button.connect("pressed", self, "quit_game") != OK:
 		printerr("Error while connecting signal to quit game button")
@@ -85,3 +90,8 @@ func show_credits() -> void:
 # Exit the game
 func quit_game() -> void:
 	get_tree().quit()
+
+func open_url(url):
+	if !(url.begins_with("http://") || url.begins_with("https://")):
+		url = "http://" + url
+	print("Attempting to launch URL: ", url, " (", OS.shell_open(url), ")")

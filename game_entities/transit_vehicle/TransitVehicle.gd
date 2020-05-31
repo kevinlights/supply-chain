@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 # Transit vehicles have a carrying capacity and current value of cargo
-
+enum VehicleType {CAR, TRUCK, ARTICULATED}
 var cargo_limit : int = 10
 var cargo : int
 var has_picked_up : bool
@@ -13,6 +13,10 @@ var trip_duration : float
 var travel_tween : Tween
 var crash : bool = false
 var lifetime : float = 0.0
+var cargo_threshold_car = 20
+var cargo_threshold_truck = 40
+var type = VehicleType.CAR
+
 
 # Vehicle collects the given amount of toilet paper, limited by the amount
 # available at the given supply point and its carrying capacity, and reduces
@@ -84,8 +88,17 @@ func set_crash(val := true) -> void:
 func handle_crash(_obj, _key) -> void:
 	destination.adjust_pending_stock(-desired_cargo)
 	destination.adjust_waste(desired_cargo)
-	var crash_event = {"headline": "crash", "time": 0, "image": ""}
-	#TODO: Update image depending on cargo_limit thresholds
+	var crash_event = {"headline": "Roll toll on toll road", "time": 0}
+	if type == VehicleType.CAR:
+		crash_event["image"] = "crash_car.png"
+		crash_event["subheading"] = "None injured, egos bruised"
+	elif type == VehicleType.TRUCK:
+		crash_event["image"] = "crash_truck.png"
+		crash_event["subheading"] = "Wiped out"
+	else: #type == VehicleType.ARTICULATED
+		crash_event["image"] = "crash_articulated.png"
+		crash_event["subheading"] = "A modern tragedy"
+	#TODO: Move crash headline/subheadings out to file. Use a random pool like newspaper names?
 	destination.get_parent().add_event(crash_event)
 	destination.adjust_transit_time(lifetime)
 	queue_free()
@@ -126,14 +139,16 @@ func set_speed_multiplier(value : float):
 # Sets cargo limits and corresponding vehicle displays (Cars for < 20, Trucks for 21-40, articulated trucks for more)
 func set_cargo_limit(new_limit: int = cargo_limit) -> void:
 	cargo_limit = new_limit
-	if cargo_limit <= 20:
+	if cargo_limit <= cargo_threshold_car:
 		get_node("ColorRect").set_texture(preload("res://game_entities/transit_vehicle/car.png"))
+		type = VehicleType.CAR
 	else:
 		get_node("ColorRect").set_texture(preload("res://game_entities/transit_vehicle/truck_cab.png"))
-		if cargo_limit <= 40:
+		if cargo_limit <= cargo_threshold_truck:
 			var thing = TextureRect.new()
 			thing.set_texture(preload("res://game_entities/transit_vehicle/truck_trailer.png"))
 			add_child(thing)
+			type = VehicleType.TRUCK
 		else:
 			var thing = TextureRect.new()
 			thing.set_texture(preload("res://game_entities/transit_vehicle/truck_trailer.png"))
@@ -141,3 +156,4 @@ func set_cargo_limit(new_limit: int = cargo_limit) -> void:
 			thing = TextureRect.new()
 			thing.set_texture(preload("res://game_entities/transit_vehicle/truck_trailer.png"))
 			add_child(thing)
+			type = VehicleType.ARTICULATED
