@@ -2,17 +2,10 @@
 
 [ext_resource path="res://fonts/report_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://game_entities/report/Report.gd" type="Script" id=2]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-border_blend = true
+[ext_resource path="res://fonts/newspaper_subheading.tres" type="DynamicFont" id=3]
 
 [node name="Control" type="Control"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
@@ -20,50 +13,68 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RightSheet" type="ColorRect" parent="."]
+[node name="FiguresSheet" type="ColorRect" parent="."]
 margin_left = 80.0
 margin_right = 620.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 540, 720 )
+mouse_filter = 2
 color = Color( 0.870588, 0.870588, 0.870588, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RightSheet"]
-margin_right = 540.0
-margin_bottom = 720.0
+[node name="HBoxContainer" type="HBoxContainer" parent="FiguresSheet"]
+margin_right = 40.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 540, 720 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer3" type="MarginContainer" parent="FiguresSheet/HBoxContainer"]
+margin_right = 20.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 20, 20 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FiguresSheet/HBoxContainer"]
+margin_left = 24.0
+margin_right = 516.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
 custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="RightSheet/VBoxContainer"]
-margin_right = 540.0
+[node name="MarginContainer" type="MarginContainer" parent="FiguresSheet/HBoxContainer/VBoxContainer"]
+margin_right = 492.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 20, 20 )
 
-[node name="Title" type="Label" parent="RightSheet/VBoxContainer"]
-margin_right = 540.0
-margin_bottom = 103.0
+[node name="Title" type="Label" parent="FiguresSheet/HBoxContainer/VBoxContainer"]
+margin_top = 20.0
+margin_right = 492.0
+margin_bottom = 123.0
 custom_fonts/font = ExtResource( 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Retail Trade and Manufacturing Survey"
+custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+text = "Retail Trade and Manufacture Survey"
 autowrap = true
 
-[node name="MarginContainer2" type="MarginContainer" parent="RightSheet/VBoxContainer"]
-margin_top = 103.0
-margin_right = 540.0
-margin_bottom = 113.0
+[node name="MarginContainer2" type="MarginContainer" parent="FiguresSheet/HBoxContainer/VBoxContainer"]
+margin_top = 123.0
+margin_right = 492.0
+margin_bottom = 133.0
 rect_min_size = Vector2( 0, 10 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RightSheet/VBoxContainer"]
-margin_top = 113.0
+[node name="MarginContainer4" type="MarginContainer" parent="FiguresSheet/HBoxContainer"]
+margin_left = 520.0
 margin_right = 540.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 540, 607 )
-custom_constants/separation = 0
+rect_min_size = Vector2( 20, 20 )
 
-[node name="LeftSheet" type="ColorRect" parent="."]
+[node name="ChartsSheet" type="ColorRect" parent="."]
 margin_left = 660.0
 margin_right = 1200.0
 margin_bottom = 720.0
@@ -73,111 +84,55 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LeftSheet"]
-margin_right = 540.0
-margin_bottom = 720.0
+[node name="HBoxContainer" type="HBoxContainer" parent="ChartsSheet"]
+margin_right = 40.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 540, 720 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer2" type="MarginContainer" parent="LeftSheet/VBoxContainer"]
+[node name="MarginContainer5" type="MarginContainer" parent="ChartsSheet/HBoxContainer"]
+margin_right = 20.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChartsSheet/HBoxContainer"]
+margin_left = 24.0
+margin_right = 516.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
+margin_right = 492.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Title" type="Label" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 492.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+text = "Historic Data"
+
+[node name="MarginContainer3" type="MarginContainer" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
+margin_top = 59.0
+margin_right = 492.0
+margin_bottom = 79.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="MarginContainer6" type="MarginContainer" parent="ChartsSheet/HBoxContainer"]
+margin_left = 520.0
 margin_right = 540.0
-margin_bottom = 10.0
-rect_min_size = Vector2( 0, 10 )
-
-[node name="Stock In" type="Label" parent="LeftSheet/VBoxContainer"]
-margin_top = 14.0
-margin_right = 540.0
-margin_bottom = 28.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Stock In"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LeftSheet/VBoxContainer"]
-margin_top = 32.0
-margin_right = 540.0
-margin_bottom = 232.0
-rect_min_size = Vector2( 540, 200 )
-custom_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="LeftSheet/VBoxContainer/HBoxContainer"]
-margin_right = 10.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 10, 0 )
-
-[node name="Panel" type="Panel" parent="LeftSheet/VBoxContainer/HBoxContainer"]
-margin_left = 10.0
-margin_right = 530.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 520, 200 )
-custom_styles/panel = SubResource( 1 )
-
-[node name="MarginContainer2" type="MarginContainer" parent="LeftSheet/VBoxContainer/HBoxContainer"]
-margin_left = 530.0
-margin_right = 530.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 0, 10 )
-
-[node name="Stock Out" type="Label" parent="LeftSheet/VBoxContainer"]
-margin_top = 236.0
-margin_right = 540.0
-margin_bottom = 250.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Stock Out"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="LeftSheet/VBoxContainer"]
-margin_top = 254.0
-margin_right = 540.0
-margin_bottom = 454.0
-rect_min_size = Vector2( 540, 200 )
-custom_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="LeftSheet/VBoxContainer/HBoxContainer2"]
-margin_right = 10.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 10, 0 )
-
-[node name="Panel" type="Panel" parent="LeftSheet/VBoxContainer/HBoxContainer2"]
-margin_left = 10.0
-margin_right = 530.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 520, 200 )
-custom_styles/panel = SubResource( 1 )
-
-[node name="MarginContainer2" type="MarginContainer" parent="LeftSheet/VBoxContainer/HBoxContainer2"]
-margin_left = 530.0
-margin_right = 530.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 0, 10 )
-
-[node name="Waste" type="Label" parent="LeftSheet/VBoxContainer"]
-margin_top = 458.0
-margin_right = 540.0
-margin_bottom = 472.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Waste"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="LeftSheet/VBoxContainer"]
-margin_top = 476.0
-margin_right = 540.0
-margin_bottom = 676.0
-rect_min_size = Vector2( 540, 200 )
-custom_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="LeftSheet/VBoxContainer/HBoxContainer3"]
-margin_right = 10.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 10, 0 )
-
-[node name="Panel" type="Panel" parent="LeftSheet/VBoxContainer/HBoxContainer3"]
-margin_left = 10.0
-margin_right = 530.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 520, 200 )
-custom_styles/panel = SubResource( 1 )
-
-[node name="MarginContainer2" type="MarginContainer" parent="LeftSheet/VBoxContainer/HBoxContainer3"]
-margin_left = 530.0
-margin_right = 530.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 0, 10 )
+margin_bottom = 720.0
+rect_min_size = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

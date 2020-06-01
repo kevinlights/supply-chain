@@ -312,14 +312,9 @@ func remove_event(event : Dictionary) -> void:
 func generate_report() -> void:
 	var report = report_scene.instance()
 	for sp in sp_list:
-		var sp_vals = sp.get_report_values()
-		report.make_section(sp_vals)
-		sp.make_report()
+		report.make_section(sp)
+		#sp.make_report() #We do this in _process now so that this function is non-destructive to the underlying data
 	get_parent().add_child(report)
-		# Plan:
-		# * Report might be like Newspaper in which case make_report() returns a component to report
-		# * generate_report() will produce the report screen with whatever makes the graphs
-		# * Make the report pause the game
 
 # Count down time to next event and next report and trigger them if enough time has passed
 func _process(delta : float):
@@ -341,3 +336,6 @@ func _process(delta : float):
 	if next_report_time <= 0:
 		next_report_time += report_frequency
 		generate_report()
+		#Process historic data outside of showing reports so that report generation is non-destructive
+		for sp in sp_list:
+			sp.make_report()

@@ -46,4 +46,5 @@ ui_select={
 [rendering]
 
 environment/default_clear_color=Color( 0.0862745, 0.0862745, 0.101961, 1 )
+quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"

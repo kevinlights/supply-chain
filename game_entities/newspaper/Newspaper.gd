@@ -4,7 +4,7 @@ var animationTween : Tween
 var is_preview = false
 
 # Pause the game and play the newspaper animation
-func _ready():
+func _ready() -> void:
 	get_tree().paused = true
 	animationTween = Tween.new()
 	add_child(animationTween)
@@ -37,13 +37,13 @@ func set_event(event : Dictionary):
 	#FIXME: Remove column lines if they spill over the page height (rect_clip_content doesn't work properly hen rotated)
 
 # Close on player input only if the paper has finished its animation
-func _process(_delta):
+func _process(_delta : float) -> void:
 	if Input.is_action_just_released("ui_select") ||  Input.is_action_just_released("ui_accept") ||  Input.is_action_just_released("ui_cancel"):
 		if !animationTween.is_active():
 			close()
 
 # Unpause the game and remove the paper
-func close():
+func close() -> void:
 	if !is_preview:
 		get_tree().paused = false
 		get_parent().set_process(true)

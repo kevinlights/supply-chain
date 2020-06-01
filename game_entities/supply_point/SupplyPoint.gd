@@ -65,16 +65,23 @@ var ticks_no_consume : int = 0
 var transit_time : float = 0
 
 # Lifetime performance indicators
-var stock_in_life : Array
-var stock_out_life : Array
-var waste_life : Array
-var opening_stock_life : Array
-var closing_stock_life : Array
-var ticks_at_max_life : Array
-var ticks_at_min_life : Array
-var ticks_no_produce_life : Array
-var ticks_no_consume_life : Array
-var transit_time_life : Array
+var historic_stock = {
+			"stock_in": [],
+			"stock_out": [],
+			"waste": [],
+			"opening_stock": [],
+			"closing_stock": [],
+		}
+var historic_time = {
+			"ticks_at_max": [],
+			"ticks_at_min": [],
+			"ticks_no_produce": [],
+			"ticks_no_consume": [],
+	}
+var historic_misc = {
+			"transit_time": [],
+		}
+var max_datum_count = 20 #Note, this corresponds to max_datum_count in Chart.gd, which establishes horozontal scale of charts based on the assumption of a fixed maximum number of values
 
 # Can the supply point receive the amount of toilet paper?
 func request_stock(amount : int):
@@ -341,49 +348,43 @@ func make_report() -> void:
 	print("Ticks at min: ", str(ticks_at_min))
 	print("Ticks no production: ", str(ticks_no_produce))
 	print("Ticks no consumption: ", str(ticks_no_consume))
-	print("Transit efficiency quotient: ", str(transit_time / stock_in))
+	print("Transit efficiency quotient: ", "0" if stock_in == 0 else str(transit_time / stock_in))
 	
 	reset_period()
 
-# Send report information to report
-func get_report_values() -> Dictionary:
-	# TODO: Get a real name
-	return {"name": sp_name,
-			"stock_in": stock_in, 
-			"stock_out": stock_out,
-			"waste": waste,
-			"opening": opening_stock,
-			"closing": closing_stock,
-			"max": ticks_at_max,
-			"min": ticks_at_min,
-			"is_prod": is_producing,
-			"no_produce": ticks_no_produce,
-			"is_cons": is_consuming,
-			"no_consume": ticks_no_consume,
-			"efficiency": transit_time / stock_in}
-
 # Add measurements lifetime records and reset
 func reset_period() -> void:
-	stock_in_life.append(stock_in)
-	stock_in = 0
-	stock_out_life.append(stock_out)
-	stock_out = 0
-	waste_life.append(waste)
-	waste = 0
-	opening_stock_life.append(opening_stock)
-	opening_stock = 0
-	closing_stock_life.append(closing_stock)
-	closing_stock = 0
-	ticks_at_max_life.append(ticks_at_max)
-	ticks_at_max = 0
-	ticks_at_min_life.append(ticks_at_min)
-	ticks_at_min = 0
-	ticks_no_produce_life.append(ticks_no_produce)
-	ticks_no_produce = 0
-	ticks_no_consume_life.append(ticks_no_consume)
-	ticks_no_consume = 0
-	transit_time_life.append(transit_time)
+	#TODO: Decide whether or not we want to bake this calculation into historic data longer term (for now, it's simplifying chart generation)
+	historic_misc["transit_time"].append(0.0 if stock_in == 0 else transit_time / stock_in)
 	transit_time = 0
+	historic_stock["stock_in"].append(stock_in)
+	stock_in = 0
+	historic_stock["stock_out"].append(stock_out)
+	stock_out = 0
+	historic_stock["waste"].append(waste)
+	waste = 0
+	historic_stock["opening_stock"].append(opening_stock)
+	opening_stock = 0
+	historic_stock["closing_stock"].append(closing_stock)
+	closing_stock = 0
+	historic_time["ticks_at_max"].append(ticks_at_max)
+	ticks_at_max = 0
+	historic_time["ticks_at_min"].append(ticks_at_min)
+	ticks_at_min = 0
+	historic_time["ticks_no_produce"].append(ticks_no_produce)
+	ticks_no_produce = 0
+	historic_time["ticks_no_consume"].append(ticks_no_consume)
+	ticks_no_consume = 0
+
+	for series in historic_stock:
+		while historic_stock[series].size() > max_datum_count:
+			historic_stock[series].pop_front()
+	for series in historic_time:
+		while historic_time[series].size() > max_datum_count:
+			historic_time[series].pop_front()
+	for series in historic_misc:
+		while historic_misc[series].size() > max_datum_count:
+			historic_misc[series].pop_front()
 
 # Set an indicator for the next vehicle crash
 func set_next_vehicle_crash(val := true) -> void:
