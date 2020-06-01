@@ -134,9 +134,9 @@ var event_prop_list := {
 						},
 					}
 
-var event_frequency := 60.0 * 2.0
-var next_event_time := 60.0 * 2.0
-var report_frequency := 60.0 * 7.0
+var event_frequency := 60.0 * 1.0
+var next_event_time := event_frequency + 30.0 #Plus 30 sec to move us off the minute boundary and avoid clashes with reports
+var report_frequency := 60.0 * 4.0
 var next_report_time := report_frequency
 var skip_events := false
 var skip_reports := false
@@ -318,11 +318,13 @@ func generate_report() -> void:
 
 # Count down time to next event and next report and trigger them if enough time has passed
 func _process(delta : float):
+	var displaying_event = false
 	next_event_time -= delta
 	if next_event_time <= 0:
 		next_event_time += event_frequency
 		if !skip_events:
 			add_event(get_random_event())
+			displaying_event = true
 
 	var expired_events := []
 	for event in current_event_list:
@@ -333,7 +335,7 @@ func _process(delta : float):
 		remove_event(event)
 	
 	next_report_time -= delta
-	if next_report_time <= 0:
+	if next_report_time <= 0 && !displaying_event:
 		next_report_time += report_frequency
 		generate_report()
 		#Process historic data outside of showing reports so that report generation is non-destructive
