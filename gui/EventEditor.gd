@@ -241,9 +241,7 @@ func check_sp_name(widget, _prop, value = ""):
 	return valid
 
 func save_event_list():
-	print("save_event_list stub")
 	game_node.write_json(game_node.events_file, game_node.event_list)
-	#TODO: Output game_node.event_list to json file
 
 func save_event():
 	for prop in selected_event:
