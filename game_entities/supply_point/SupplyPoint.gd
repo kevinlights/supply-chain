@@ -174,7 +174,6 @@ func update_stock_comfort_band():
 	stock_comfort_band_min = int((max_stock_level + max_stock_level_offset) * 0.25)
 	stock_comfort_band_max = int((max_stock_level + max_stock_level_offset) * 0.75)
 
-
 # Set stock level to a given value
 func set_stock_level(value : int) -> void:
 	stock_level = value
@@ -279,7 +278,6 @@ func set_is_producing(value : bool) -> void:
 	if is_producing:
 		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandLabel").set_text("Production Rate")
 
-
 # Set the downstream SupplyPoint to the given node
 func set_downstream(value : Node):
 	downstream = value
@@ -345,7 +343,27 @@ func make_report() -> void:
 	print("Ticks no consumption: ", str(ticks_no_consume))
 	print("Transit efficiency quotient: ", str(transit_time / stock_in))
 	
-	# Add to lifetime records and reset
+	reset_period()
+
+# Send report information to report
+func get_report_values() -> Dictionary:
+	# TODO: Get a real name
+	return {"name": sp_name,
+			"stock_in": stock_in, 
+			"stock_out": stock_out,
+			"waste": waste,
+			"opening": opening_stock,
+			"closing": closing_stock,
+			"max": ticks_at_max,
+			"min": ticks_at_min,
+			"is_prod": is_producing,
+			"no_produce": ticks_no_produce,
+			"is_cons": is_consuming,
+			"no_consume": ticks_no_consume,
+			"efficiency": transit_time / stock_in}
+
+# Add measurements lifetime records and reset
+func reset_period() -> void:
 	stock_in_life.append(stock_in)
 	stock_in = 0
 	stock_out_life.append(stock_out)
@@ -367,6 +385,7 @@ func make_report() -> void:
 	transit_time_life.append(transit_time)
 	transit_time = 0
 
+# Set an indicator for the next vehicle crash
 func set_next_vehicle_crash(val := true) -> void:
 	next_vehicle_crash = val
 

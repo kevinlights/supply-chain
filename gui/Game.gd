@@ -2,6 +2,7 @@ extends HBoxContainer
 
 var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.tscn")
 var newspaper_scene = preload("res://game_entities/newspaper/Newspaper.tscn")
+var report_scene = preload("res://game_entities/report/Report.tscn")
 var event_editor_scene = preload("res://gui/EventEditor.tscn")
 var events_file = "res://json/events.json"
 var papers_file = "res://json/newspapers.json"
@@ -154,6 +155,8 @@ func _input(event: InputEvent) -> void:
 				get_tree().quit()
 		elif event.scancode == KEY_E:
 			get_parent().add_child(event_editor_scene.instance())
+		elif event.scancode == KEY_R:
+			generate_report()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -307,11 +310,16 @@ func remove_event(event : Dictionary) -> void:
 
 # Helper to generate a report. Currently prints values to output.
 func generate_report() -> void:
+	var report = report_scene.instance()
 	for sp in sp_list:
+		var sp_vals = sp.get_report_values()
+		report.make_section(sp_vals)
 		sp.make_report()
-		# Game plan:
+	get_parent().add_child(report)
+		# Plan:
 		# * Report might be like Newspaper in which case make_report() returns a component to report
 		# * generate_report() will produce the report screen with whatever makes the graphs
+		# * Make the report pause the game
 
 # Count down time to next event and next report and trigger them if enough time has passed
 func _process(delta : float):
