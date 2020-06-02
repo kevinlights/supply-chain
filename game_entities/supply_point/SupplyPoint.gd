@@ -82,6 +82,7 @@ var historic_misc = {
 			"transit_time": [],
 		}
 var max_datum_count = 20 #Note, this corresponds to max_datum_count in Chart.gd, which establishes horozontal scale of charts based on the assumption of a fixed maximum number of values
+var historic_datum_count = -1 #Start at -1 so that we can be at 0 for the first period
 
 # Can the supply point receive the amount of toilet paper?
 func request_stock(amount : int):
@@ -377,14 +378,15 @@ func reset_period() -> void:
 	ticks_no_consume = 0
 
 	for series in historic_stock:
-		while historic_stock[series].size() > max_datum_count:
+		while historic_stock[series].size() > max_datum_count + 1:
 			historic_stock[series].pop_front()
 	for series in historic_time:
-		while historic_time[series].size() > max_datum_count:
+		while historic_time[series].size() > max_datum_count + 1:
 			historic_time[series].pop_front()
 	for series in historic_misc:
-		while historic_misc[series].size() > max_datum_count:
+		while historic_misc[series].size() > max_datum_count + 1:
 			historic_misc[series].pop_front()
+	historic_datum_count += 1
 
 # Set an indicator for the next vehicle crash
 func set_next_vehicle_crash(val := true) -> void:

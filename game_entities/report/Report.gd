@@ -41,12 +41,12 @@ func clear_charts():
 
 func setup_charts(supply_point):
 	get_node("ChartsSheet/HBoxContainer/VBoxContainer/Title").set_text("Historic Data for " + supply_point.sp_name.capitalize())
-	setup_chart(supply_point.historic_stock, supply_point.is_producing, supply_point.is_consuming)
-	setup_chart(supply_point.historic_time, supply_point.is_producing, supply_point.is_consuming)
+	setup_chart(supply_point.historic_stock, supply_point.historic_datum_count, supply_point.is_producing, supply_point.is_consuming)
+	setup_chart(supply_point.historic_time, supply_point.historic_datum_count, supply_point.is_producing, supply_point.is_consuming)
 	if !supply_point.is_producing:
-		setup_chart(supply_point.historic_misc, supply_point.is_producing, supply_point.is_consuming)
+		setup_chart(supply_point.historic_misc, supply_point.historic_datum_count, supply_point.is_producing, supply_point.is_consuming)
 
-func setup_chart(dataset, is_producing, is_consuming):
+func setup_chart(dataset, offset, is_producing, is_consuming):
 	var chart = chart_section.instance()
-	chart.set_data(dataset.duplicate(), is_producing, is_consuming)
+	chart.set_data(dataset.duplicate(), offset, is_producing, is_consuming)
 	get_node("ChartsSheet/HBoxContainer/VBoxContainer").add_child(chart)
