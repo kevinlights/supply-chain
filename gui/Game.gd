@@ -156,6 +156,9 @@ func _input(event: InputEvent) -> void:
 		elif event.scancode == KEY_E:
 			get_parent().add_child(event_editor_scene.instance())
 		elif event.scancode == KEY_R:
+			if Input.is_key_pressed(KEY_SHIFT):
+				for sp in sp_list:
+					sp.make_report()
 			generate_report()
 
 # Called when the node enters the scene tree for the first time.

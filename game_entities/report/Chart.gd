@@ -14,9 +14,12 @@ var colours := {
 		"ticks_no_consume": Color.red,
 		"transit_time": Color.orange,
 	}
+var padding = Vector2(10, 10)
+var min_v_scale = 5
 var max_datum_count := 20
 var series_offset_step := 2
 var use_series_offset := true
+var label_font = preload("res://fonts/report_value.tres")
 
 func _ready() -> void:
 	chart = get_node("VBoxContainer/ChartArea")
@@ -31,21 +34,27 @@ func set_data(new_data, is_producing, is_consuming) -> void:
 	get_node("VBoxContainer/Label").set_text(PoolStringArray(data.keys()).join(", "))
 
 func draw_chart() -> void:
-	print("Drawing?", data)
-	var max_value = 1
+	var max_value = min_v_scale
 	for series in data:
 		var smax = data[series].max()
 		if smax > max_value:
 			max_value = smax
 
-	var padding = Vector2(10, 10)
 	var scale = (chart.get_size() - padding * 2) / Vector2(max_datum_count, 1)
 
 	#Draw axis lines
 	chart.draw_line(padding - Vector2(2, 2), Vector2(padding.x - 2, scale.y + padding.y + 2), Color.black)
 	chart.draw_line(Vector2(padding.x - 3, scale.y + padding.y + 2), Vector2(chart.get_size().x - padding.x + 2, scale.y + padding.y + 2), Color.black)
 
-	#TODO: Draw labels based on domain defined by scale
+	#Draw tickmarks and labels
+	#TODO: Work out appropriate rounding so that 3 - 4 vertical tickmarks can be shown comfortably
+	chart.draw_line(Vector2(padding.x - 3, scale.y + padding.y + 2), Vector2(padding.x - 6, scale.y + padding.y + 2), Color.black)
+	chart.draw_string(label_font, Vector2(padding.x - 8, scale.y + padding.y + 2) + (label_font.get_string_size("0") * Vector2(-1, 0.25)), "0", Color.black)
+
+	chart.draw_line(Vector2(padding.x - 3, 0 + padding.y), Vector2(padding.x - 6, 0 + padding.y), Color.black)
+	chart.draw_string(label_font, Vector2(padding.x - 8 , 0 + padding.y + 2) + (label_font.get_string_size(String(max_value)) * Vector2(-1, 0.25)), String(max_value), Color.black)
+
+	#TODO: Draw horizontal labels
 
 	#Plot data
 	var series_offset = 0
