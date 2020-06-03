@@ -17,7 +17,7 @@ var event_list := {}
 var paper_list := {}
 var current_event_list := []
 var supply_point_list := {
-							"manufacturer": {},
+							"manufacturer": {"max_level": 50},
 							"warehouse": {"transit_size": 100},
 							"store": {"transit_size": 40},
 							"home": {"max_level": 100, "initial_level": 0, "initial_demand": 40}
@@ -137,7 +137,7 @@ var event_prop_list := {
 var event_frequency := 60.0 * 1.0
 var next_event_time := event_frequency + 30.0 #Plus 30 sec to move us off the minute boundary and avoid clashes with reports
 var report_frequency := 60.0 * 4.0
-var next_report_time := report_frequency
+var next_report_time := report_frequency / 2
 var skip_events := false
 var skip_reports := false
 
