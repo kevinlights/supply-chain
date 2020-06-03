@@ -2,7 +2,7 @@
 
 [ext_resource path="res://gui/menu.theme" type="Theme" id=1]
 [ext_resource path="res://gui/Settings.gd" type="Script" id=2]
-[ext_resource path="res://fonts/small_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/tiny_font.tres" type="DynamicFont" id=3]
 
 [node name="Settings" type="Control"]
 anchor_right = 1.0
@@ -56,9 +56,12 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="."]
 margin_left = -640.0
-margin_top = 330.0
-margin_right = 620.0
-margin_bottom = 350.0
-rect_min_size = Vector2( 1260, 20 )
+margin_top = 340.0
+margin_right = 630.0
+margin_bottom = 360.0
+rect_min_size = Vector2( 1270, 20 )
 custom_fonts/font = ExtResource( 3 )
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
