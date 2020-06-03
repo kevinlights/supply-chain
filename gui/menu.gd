@@ -3,6 +3,7 @@ extends CenterContainer
 var game_scene = preload("res://gui/Game.tscn")
 var credits_scene = preload("res://gui/Credits.tscn")
 
+var version_number : String = "Unknown"
 var new_button : Button
 var settings_button : Button
 var credits_button : Button
@@ -17,6 +18,8 @@ var start_stocked = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+
+	load_version_number()
 
 	resume_button = get_node("VBoxContainer/Resume")
 	new_button = get_node("VBoxContainer/New")
@@ -40,6 +43,7 @@ func _ready():
 		printerr("Error while connecting signal to quit game button")
 
 	settings = get_node("Settings")
+	settings.get_node("Label").set_text(version_number)
 
 	music_player = get_node("MusicPlayer")
 	music_player.play_menu_music()
@@ -95,3 +99,14 @@ func open_url(url):
 	if !(url.begins_with("http://") || url.begins_with("https://")):
 		url = "http://" + url
 	print("Attempting to launch URL: ", url, " (", OS.shell_open(url), ")")
+
+func load_version_number():
+	var version_file = "res://version.txt"
+	var file = File.new()
+	if not file.file_exists(version_file):
+		print("ERROR: Unable to load version")
+		return
+	file.open(version_file, file.READ)
+	version_number = file.get_as_text().strip_edges()
+	print("Running ", version_number)
+	file.close()
