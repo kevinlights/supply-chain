@@ -33,7 +33,6 @@ var upstream : Node
 var downstream : Node
 var demand_slider : HSlider
 var should_update_indicators : bool
-var stock_indicator_count : int
 var stock_indicator_anchor : TextureRect
 var stock_indicator_value : float
 var consumption_rate : int
@@ -158,7 +157,6 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	demand_factor = 1.0
 	transit_size = -1
 	sp_name = new_name
-	stock_indicator_count = 0
 	stock_indicator_value = 1.0
 	should_update_indicators = false
 	get_node("SupplyPointVisual/VBoxContainer/Title").set_text(sp_name.to_upper())
@@ -176,6 +174,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 # Set max stock level to a given value
 func set_max_stock_level(value : int) -> void:
 	max_stock_level = value
+	update_stock_indicator_value()
 	update_stock_comfort_band()
 
 func update_stock_comfort_band():
@@ -257,8 +256,10 @@ func configure_stock_indicators():
 
 	get_node("SupplyPointVisual").add_child(stock_indicator_anchor)
 	get_node("SupplyPointVisual").move_child(stock_indicator_anchor, 0)
-	stock_indicator_count = stock_indicator_anchor.get_child_count()
-	stock_indicator_value = 1.0 / (float(stock_indicator_count) / max_stock_level)
+	update_stock_indicator_value()
+
+func update_stock_indicator_value():
+	stock_indicator_value = 1.0 / (float(stock_indicator_anchor.get_indicator_count()) / max_stock_level)
 	stock_indicator_anchor.set_indicator_value(stock_indicator_value)
 
 # Adjust stock indicators

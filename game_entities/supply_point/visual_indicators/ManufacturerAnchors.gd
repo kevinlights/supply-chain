@@ -46,6 +46,14 @@ func update_stock_indicators(stock_level : int):
 		else:
 			stock_indicators[i].visible = false
 
+func get_indicator_count() -> int:
+	var indicators = 0
+	for indicator in get_children():
+		if indicator is TextureRect:
+			indicators += 1
+	return indicators
+
+
 func set_animation_paused(newValue : bool):
 	if newValue == is_animation_paused:
 		return

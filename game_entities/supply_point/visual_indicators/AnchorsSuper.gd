@@ -11,3 +11,6 @@ func set_indicator_value(newValue : float):
 
 func set_animation_paused(newValue : bool):
 	is_animation_paused = newValue
+
+func get_indicator_count() -> int:
+	return get_child_count()
