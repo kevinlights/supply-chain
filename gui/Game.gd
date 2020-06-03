@@ -20,7 +20,7 @@ var supply_point_list := {
 							"manufacturer": {"max_level": 50},
 							"warehouse": {"transit_size": 100},
 							"store": {"transit_size": 40},
-							"home": {"max_level": 100, "initial_level": 0, "initial_demand": 40}
+							"home": {"max_level": 50, "initial_level": 0, "initial_demand": 40}
 						}
 
 #TODO: Add more event effects
@@ -276,10 +276,10 @@ func add_event(event : Dictionary) -> void:
 		while !found_target:
 			target = target_list[target_index]
 			found_target = true
-			if "skip_producing" in event && event["skip_producing"] == true:
+			if "skip_producing_supply_points" in event && event["skip_producing_supply_points"] == true:
 				if target.is_producing:
 					found_target = false
-			if "skip_producing" in event && event["skip_consuming"] == true:
+			if "skip_consuming_supply_points" in event && event["skip_consuming_supply_points"] == true:
 				if target.is_consuming:
 					found_target = false
 			if "ignore_supply_point" in event:
