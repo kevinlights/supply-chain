@@ -1,16 +1,16 @@
 extends Control
 
-var animationTween : Tween
+var animation_tween : Tween
 var is_preview = false
 
 # Pause the game and play the newspaper animation
 func _ready() -> void:
 	get_tree().paused = true
-	animationTween = Tween.new()
-	add_child(animationTween)
-	animationTween.interpolate_method(self, "set_rotation", -TAU * 3, 0, 0.75, Tween.TRANS_SINE, Tween.EASE_OUT)
-	animationTween.interpolate_method(self, "set_scale", Vector2(0.0001, 0.0001), Vector2(1, 1), 0.6, Tween.TRANS_SINE, Tween.EASE_OUT)
-	animationTween.start()
+	animation_tween = Tween.new()
+	add_child(animation_tween)
+	animation_tween.interpolate_method(self, "set_rotation", -TAU * 3, 0, 0.75, Tween.TRANS_SINE, Tween.EASE_OUT)
+	animation_tween.interpolate_method(self, "set_scale", Vector2(0.0001, 0.0001), Vector2(1, 1), 0.6, Tween.TRANS_SINE, Tween.EASE_OUT)
+	animation_tween.start()
 
 func set_title(value : String):
 	get_node("Paper/Content/TitleContent/Title").set_text(value)
@@ -39,7 +39,7 @@ func set_event(event : Dictionary):
 # Close on player input only if the paper has finished its animation
 func _process(_delta : float) -> void:
 	if Input.is_action_just_released("ui_select") ||  Input.is_action_just_released("ui_accept") ||  Input.is_action_just_released("ui_cancel"):
-		if !animationTween.is_active():
+		if !animation_tween.is_active():
 			close()
 
 # Unpause the game and remove the paper

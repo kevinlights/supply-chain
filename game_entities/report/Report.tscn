@@ -1,15 +1,85 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://fonts/report_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://game_entities/report/Report.gd" type="Script" id=2]
 [ext_resource path="res://fonts/small_font.tres" type="DynamicFont" id=3]
 
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.847059, 0.776471, 0.564706, 1 )
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.847059, 0.776471, 0.564706, 1 )
+corner_radius_top_left = 50
+corner_radius_bottom_left = 50
+corner_detail = 1
+
+[sub_resource type="Animation" id=3]
+resource_name = "in"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2580, 1000 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.999999, 1 ),
+"update": 0,
+"values": [ Vector2( 5, 5 ), Vector2( 1, 1 ) ]
+}
+
 [node name="Control" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -2580.0
+margin_top = 1000.0
+margin_right = -2580.0
+margin_bottom = 1000.0
 rect_min_size = Vector2( 1280, 720 )
+rect_scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="Panel" parent="."]
+margin_left = 60.0
+margin_top = -40.0
+margin_right = 1220.0
+margin_bottom = 760.0
+rect_min_size = Vector2( 1160, 800 )
+mouse_filter = 2
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="Panel" parent="ColorRect"]
+margin_left = -40.0
+margin_top = 135.0
+margin_right = 10.0
+margin_bottom = 385.0
+rect_min_size = Vector2( 40, 250 )
+mouse_filter = 2
+custom_styles/panel = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -150,3 +220,7 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "in"
+anims/in = SubResource( 3 )
