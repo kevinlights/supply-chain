@@ -228,6 +228,8 @@ func adjust_consume_produce_frequency_multiplier(value: float) -> void:
 
 func pause_consume_produce(value : bool) -> void:
 	consume_produce_paused = value
+	if value:
+		stock_indicator_anchor.set_animation_paused(true)
 
 func pause_transit_vehicles(value : bool) -> void:
 	transit_vehicles_paused = value
@@ -412,10 +414,10 @@ func _process(delta):
 			#TODO: Maybe this should be in produce_stock() and consume_stock()
 			if is_producing:
 				ticks_no_produce += 1
-				stock_indicator_anchor.set_animation_paused(false)
+				stock_indicator_anchor.set_animation_paused(true)
 			if is_consuming:
 				ticks_no_consume += 1
-				stock_indicator_anchor.set_animation_paused(false)
+				stock_indicator_anchor.set_animation_paused(true)
 
 	if counter >= tick_rate:
 		counter -= tick_rate
