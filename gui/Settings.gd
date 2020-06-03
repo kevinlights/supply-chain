@@ -1,7 +1,8 @@
 extends Control
 
-var headingFont = preload("res://fonts/heading.tres") #The font that we'll use for headings
-var settingsContainer : VBoxContainer
+var heading_font = preload("res://fonts/heading.tres") #The font that we'll use for headings
+var ui_font = preload("res://fonts/small_font.tres")
+var settings_container : VBoxContainer
 var user_config : ConfigFile
 var config_file := "user://config.cfg"
 var gap_space : int = 10
@@ -56,25 +57,27 @@ func _ready():
 	if user_config.load(config_file) != OK:
 		printerr("Unable to load user config. Using defaults.")
 
-	settingsContainer = get_node("ColorRect/CenterContainer/VBoxContainer")
+	settings_container = get_node("ColorRect/CenterContainer/VBoxContainer")
 
 	for category in settings:
-		var headingLabel := Label.new()
-		headingLabel.set_text(category.capitalize())
-		headingLabel.add_font_override("font", headingFont)
-		settingsContainer.add_child(headingLabel)
+		var heading_label := Label.new()
+		heading_label.set_text(category.capitalize())
+		heading_label.add_font_override("font", heading_font)
+		settings_container.add_child(heading_label)
 		for item in settings[category]:
 			settings[category][item]["stored_value"] = retrieve_config_value(category, item)
 			if settings[category][item]["type"] == TYPE_BOOL:
 				var widget := CheckBox.new()
+				widget.add_font_override("font", ui_font)
 				widget.set_text(item.capitalize())
 				widget.hint_tooltip = settings[category][item]["description"]
 				widget.set_pressed(settings[category][item]["stored_value"])
 				update_setting_bool(settings[category][item]["stored_value"], category, item)
 				widget.connect("toggled", self, "update_setting_bool", [category, item])
-				settingsContainer.add_child(widget)
+				settings_container.add_child(widget)
 			elif settings[category][item]["type"] == TYPE_REAL:
 				var label := Label.new()
+				label.add_font_override("font", ui_font)
 				label.set_text(item.capitalize())
 				label.hint_tooltip = settings[category][item]["description"]
 				label.set_mouse_filter(Control.MOUSE_FILTER_STOP)
@@ -88,14 +91,14 @@ func _ready():
 				widget.set_value(settings[category][item]["stored_value"])
 				widget.hint_tooltip = settings[category][item]["description"]
 				widget.connect("value_changed", self, "update_setting_range", [category, item, label])
-				settingsContainer.add_child(label)
-				settingsContainer.add_child(widget)
+				settings_container.add_child(label)
+				settings_container.add_child(widget)
 			var gap := MarginContainer.new()
 			gap.set_custom_minimum_size(Vector2(gap_space, gap_space))
-			settingsContainer.add_child(gap)
+			settings_container.add_child(gap)
 		var gap := MarginContainer.new()
 		gap.set_custom_minimum_size(Vector2(gap_space, gap_space))
-		settingsContainer.add_child(gap)
+		settings_container.add_child(gap)
 
 func update_setting_bool(state, category, setting):
 	if has_method("set_" + setting):

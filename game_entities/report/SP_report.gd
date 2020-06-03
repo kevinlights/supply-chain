@@ -12,12 +12,12 @@ var ticks_min : Label
 var ticks_wo_prod : Label
 var ticks_wo_cons : Label
 var efficiency : Label
+var charts_button : TextureButton
 
 # Link up nodes that are going to get values
 func _ready():
 	setup_nodes()
-	title.connect("mouse_entered", get_parent().get_parent().get_parent().get_parent(), "setup_charts", [sp])
-	title.connect("mouse_exited", get_parent().get_parent().get_parent().get_parent(), "clear_charts")
+	charts_button.connect("pressed", get_parent().get_parent().get_parent().get_parent(), "setup_charts", [sp])
 
 
 # Take dict originally from supply point and populate report values
@@ -51,7 +51,8 @@ func write_values(supply_point : HBoxContainer) -> void:
 
 # Helper to assign labels to variables
 func setup_nodes() -> void:
-	title = get_node("SP_name")
+	charts_button = get_node("Row0/HistoricButton")
+	title = get_node("Row0/SP_name")
 	stock_in = get_node("Row1/StockIn/Value")
 	stock_out = get_node("Row1/StockOut/Value")
 	waste = get_node("Row1/Waste/Value")

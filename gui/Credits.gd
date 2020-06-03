@@ -4,6 +4,7 @@ extends Control
 var creditsFile = "credits.json" #The file that credits are stored in
 var headingFont = preload("res://fonts/heading.tres") #The font that we'll use for headings
 var subHeadingFont = preload("res://fonts/heading.tres") #The font that we'll use for headings of sub sections
+var ui_font = preload("res://fonts/small_font.tres")
 var creditsAnchor #A node that the credits will all be attached to
 var firstItem = true
 
@@ -122,6 +123,7 @@ func add_credits_item(item, anchor, depth, section):
 				anchor.add_child(tempButton)
 			else:
 				var tempLabel = Label.new()
+				tempLabel.add_font_override("font", ui_font)
 				tempLabel.set_text(subItem)
 				tempLabel.set_align(Label.ALIGN_CENTER)
 				anchor.add_child(tempLabel)

@@ -7,11 +7,17 @@ var sections := []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().paused = true
+	connect("gui_input", self, "handle_input")
+
+func _process(_delta : float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		close()
 
 # Check to see if the player wants to close the report
-func _process(_delta : float) -> void:
-	if Input.is_action_just_released("ui_select") ||  Input.is_action_just_released("ui_accept") ||  Input.is_action_just_released("ui_cancel"):
-		close()
+func handle_input(event : InputEvent) -> void:
+	if event is InputEventKey || event is InputEventMouseButton || event is InputEventJoypadButton:
+		if event.is_action("ui_select") ||  event.is_action("ui_accept"):
+			close()
 
 # Unpause the game and remove the report
 func close() -> void:
@@ -40,6 +46,7 @@ func clear_charts():
 		chart_page.remove_child(old_chart)
 
 func setup_charts(supply_point):
+	clear_charts()
 	get_node("ChartsSheet/HBoxContainer/VBoxContainer/Title").set_text("Historic Data for " + supply_point.sp_name.capitalize())
 	setup_chart(supply_point.historic_stock, supply_point.historic_datum_count, supply_point.is_producing, supply_point.is_consuming)
 	setup_chart(supply_point.historic_time, supply_point.historic_datum_count, supply_point.is_producing, supply_point.is_consuming)

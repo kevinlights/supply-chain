@@ -2,12 +2,13 @@
 
 [ext_resource path="res://fonts/report_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://game_entities/report/Report.gd" type="Script" id=2]
-[ext_resource path="res://fonts/newspaper_subheading.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/small_font.tres" type="DynamicFont" id=3]
 
 [node name="Control" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+rect_min_size = Vector2( 1280, 720 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -18,7 +19,6 @@ margin_left = 80.0
 margin_right = 620.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 540, 720 )
-mouse_filter = 2
 color = Color( 0.870588, 0.870588, 0.870588, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -37,42 +37,44 @@ __meta__ = {
 margin_right = 20.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 20, 20 )
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="FiguresSheet/HBoxContainer"]
 margin_left = 24.0
 margin_right = 516.0
 margin_bottom = 720.0
 size_flags_horizontal = 3
-custom_constants/separation = 0
+custom_constants/separation = 16
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="FiguresSheet/HBoxContainer/VBoxContainer"]
 margin_right = 492.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 20, 20 )
+rect_min_size = Vector2( 20, 0 )
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="FiguresSheet/HBoxContainer/VBoxContainer"]
-margin_top = 20.0
+margin_top = 16.0
 margin_right = 492.0
-margin_bottom = 123.0
+margin_bottom = 49.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "Retail Trade and Manufacture Survey"
+text = "Retail Trade & Manufacture Survey"
 autowrap = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="FiguresSheet/HBoxContainer/VBoxContainer"]
-margin_top = 123.0
+margin_top = 65.0
 margin_right = 492.0
-margin_bottom = 133.0
-rect_min_size = Vector2( 0, 10 )
+margin_bottom = 65.0
+mouse_filter = 2
 
 [node name="MarginContainer4" type="MarginContainer" parent="FiguresSheet/HBoxContainer"]
 margin_left = 520.0
 margin_right = 540.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 20, 20 )
+mouse_filter = 2
 
 [node name="ChartsSheet" type="ColorRect" parent="."]
 margin_left = 660.0
@@ -96,6 +98,7 @@ __meta__ = {
 margin_right = 20.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 20, 20 )
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -111,28 +114,39 @@ __meta__ = {
 
 [node name="MarginContainer2" type="MarginContainer" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
 margin_right = 492.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
-margin_top = 24.0
+margin_top = 16.0
 margin_right = 492.0
-margin_bottom = 55.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 text = "Historic Data"
 
-[node name="MarginContainer3" type="MarginContainer" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
-margin_top = 59.0
+[node name="Instructions" type="Label" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
+margin_top = 53.0
 margin_right = 492.0
-margin_bottom = 79.0
+margin_bottom = 71.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+text = "Click a supply point's chart icon to see historic values over time."
+
+[node name="MarginContainer3" type="MarginContainer" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
+margin_top = 75.0
+margin_right = 492.0
+margin_bottom = 95.0
 rect_min_size = Vector2( 0, 20 )
+mouse_filter = 2
 
 [node name="MarginContainer6" type="MarginContainer" parent="ChartsSheet/HBoxContainer"]
 margin_left = 520.0
 margin_right = 540.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 20, 20 )
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }

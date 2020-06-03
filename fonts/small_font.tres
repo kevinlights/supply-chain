@@ -1,8 +1,8 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[ext_resource path="res://fonts/Montserrat/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/Montserrat/Montserrat-Regular.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 72
+size = 14
 use_filter = true
 font_data = ExtResource( 1 )

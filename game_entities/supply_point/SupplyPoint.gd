@@ -73,13 +73,13 @@ var historic_stock = {
 			"closing_stock": [],
 		}
 var historic_time = {
-			"ticks_at_max": [],
-			"ticks_at_min": [],
-			"ticks_no_produce": [],
-			"ticks_no_consume": [],
+			"time_full": [],
+			"time_empty": [],
+			"unable_to_produce": [],
+			"unable_to_consume": [],
 	}
 var historic_misc = {
-			"transit_time": [],
+			"transit_efficiency": [],
 		}
 var max_datum_count = 20 #Note, this corresponds to max_datum_count in Chart.gd, which establishes horozontal scale of charts based on the assumption of a fixed maximum number of values
 var historic_datum_count = -1 #Start at -1 so that we can be at 0 for the first period
@@ -356,7 +356,7 @@ func make_report() -> void:
 # Add measurements lifetime records and reset
 func reset_period() -> void:
 	#TODO: Decide whether or not we want to bake this calculation into historic data longer term (for now, it's simplifying chart generation)
-	historic_misc["transit_time"].append(0.0 if stock_in == 0 else transit_time / stock_in)
+	historic_misc["transit_efficiency"].append(0.0 if stock_in == 0 else transit_time / stock_in)
 	transit_time = 0
 	historic_stock["stock_in"].append(stock_in)
 	stock_in = 0
@@ -368,13 +368,13 @@ func reset_period() -> void:
 	opening_stock = 0
 	historic_stock["closing_stock"].append(closing_stock)
 	closing_stock = 0
-	historic_time["ticks_at_max"].append(ticks_at_max)
+	historic_time["time_full"].append(ticks_at_max)
 	ticks_at_max = 0
-	historic_time["ticks_at_min"].append(ticks_at_min)
+	historic_time["time_empty"].append(ticks_at_min)
 	ticks_at_min = 0
-	historic_time["ticks_no_produce"].append(ticks_no_produce)
+	historic_time["unable_to_produce"].append(ticks_no_produce)
 	ticks_no_produce = 0
-	historic_time["ticks_no_consume"].append(ticks_no_consume)
+	historic_time["unable_to_consume"].append(ticks_no_consume)
 	ticks_no_consume = 0
 
 	for series in historic_stock:
