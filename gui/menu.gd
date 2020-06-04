@@ -10,6 +10,7 @@ var credits_button : Button
 var website_button : Button
 var quit_button : Button
 var resume_button : Button
+var button_container : VBoxContainer
 var game_node : HBoxContainer
 var music_player : AudioStreamPlayer
 var settings : Control
@@ -27,7 +28,7 @@ func _ready():
 	credits_button = get_node("VBoxContainer/Credits")
 	website_button = get_node("VBoxContainer/Website")
 	quit_button = get_node("VBoxContainer/Quit")
-
+	button_container = get_node("VBoxContainer")
 
 	if new_button.connect("pressed", self, "new_game") != OK:
 		printerr("Error while connecting signal to new game button")
@@ -52,6 +53,7 @@ func _ready():
 func show_menu() -> void:
 	print("Showing menu")
 	self.visible = true
+	button_container.visible = true
 	resume_button.visible = true
 	game_node.visible = false
 	get_tree().paused = true
@@ -63,6 +65,12 @@ func hide_menu() -> void:
 	self.visible = false
 	get_tree().paused = false
 	music_player.resume_track()
+
+func fake_hide_menu() -> void:
+	button_container.visible = false
+
+func fake_show_menu() -> void:
+	button_container.visible = true
 
 # Hides the menu and resumes the game
 func resume_game() -> void:
@@ -86,10 +94,12 @@ func new_game() -> void:
 # Shows settings menu, currently a stub
 func show_settings() -> void:
 	settings.visible = true
+	fake_hide_menu()
 
 # Plays credits
 func show_credits() -> void:
 	add_child(credits_scene.instance())
+	fake_hide_menu()
 
 # Exit the game
 func quit_game() -> void:

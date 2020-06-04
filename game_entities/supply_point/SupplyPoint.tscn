@@ -341,7 +341,7 @@ margin_right = 220.0
 margin_bottom = 22.0
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "Resupply Frequency"
+text = "Resupply Threshold"
 align = 1
 
 [node name="Demand" type="HSlider" parent="SupplyPointVisual/VBoxContainer/Panel/VBoxContainer"]

@@ -41,6 +41,7 @@ func read_json(path):
 		return null
 
 func close():
+	get_parent().fake_show_menu()
 	queue_free()
 
 func process_input(event):

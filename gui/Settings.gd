@@ -133,6 +133,7 @@ func update_setting_volume(value, bus):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus.capitalize()), linear2db(value))
 
 func close():
+	get_parent().fake_show_menu()
 	visible = false
 
 func get_setting(category, setting):

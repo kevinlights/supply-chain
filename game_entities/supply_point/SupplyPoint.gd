@@ -438,7 +438,7 @@ func _process(delta):
 		if (is_producing):
 			pass
 		else:
-			if stock_level + pending_stock < demand_level:
+			if stock_level + pending_stock < max_stock_level * (demand_level / 100.0):
 				request_stock(int(demand_level * demand_factor))
 
 # Initialize values for sliders

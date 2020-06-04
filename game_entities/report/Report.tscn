@@ -19,7 +19,7 @@ corner_detail = 1
 
 [sub_resource type="Animation" id=3]
 resource_name = "in"
-length = 0.4
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
 tracks/0/interp = 2
@@ -44,35 +44,104 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 5, 5 ), Vector2( 1, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("FiguresSheet:rect_rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.535887, 1 ),
+"update": 0,
+"values": [ 3.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("FiguresSheet:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.535887, 1 ),
+"update": 0,
+"values": [ Vector2( 80, 80 ), Vector2( 80, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ChartsSheet:rect_rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.420448, 1 ),
+"update": 0,
+"values": [ -2.0, 0.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ChartsSheet:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.420448, 1 ),
+"update": 0,
+"values": [ Vector2( 660, 85 ), Vector2( 660, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Folder:rect_rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 0.5 ),
+"update": 0,
+"values": [ 0.0, -1.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Folder:rect_position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 0.5 ),
+"update": 0,
+"values": [ Vector2( 60, -40 ), Vector2( 55, -40 ) ]
+}
 
 [node name="Control" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -2580.0
-margin_top = 1000.0
-margin_right = -2580.0
-margin_bottom = 1000.0
+margin_bottom = 0.000610352
 rect_min_size = Vector2( 1280, 720 )
-rect_scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="Panel" parent="."]
-margin_left = 60.0
+[node name="Folder" type="Panel" parent="."]
+margin_left = 55.0
 margin_top = -40.0
-margin_right = 1220.0
+margin_right = 1215.0
 margin_bottom = 760.0
 rect_min_size = Vector2( 1160, 800 )
+rect_rotation = -1.0
 mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect2" type="Panel" parent="ColorRect"]
+[node name="Tab" type="Panel" parent="Folder"]
 margin_left = -40.0
 margin_top = 135.0
 margin_right = 10.0
@@ -80,6 +149,16 @@ margin_bottom = 385.0
 rect_min_size = Vector2( 40, 250 )
 mouse_filter = 2
 custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crease" type="ColorRect" parent="Folder"]
+margin_left = 580.0
+margin_right = 582.0
+margin_bottom = 800.0
+rect_min_size = Vector2( 2, 800 )
+color = Color( 0.792969, 0.702366, 0.430557, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

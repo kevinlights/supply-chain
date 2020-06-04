@@ -126,7 +126,9 @@ func _process(delta):
 func set_speed_multiplier(value : float):
 	var progress = 0
 	if is_instance_valid(travel_tween):
-		progress = speed / travel_tween.tell()
+		progress = travel_tween.tell()
+		if progress != 0:
+			progress = speed / progress
 
 	#Speed is actually travel duration, so increasing velocity should mean smaller speed
 	speed = base_speed / value
