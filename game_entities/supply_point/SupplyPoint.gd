@@ -202,6 +202,8 @@ func adjust_min_demand_offset(value : int, check_max = true) -> void:
 	min_demand_offset += value
 	if min_demand + min_demand_offset < 0:
 		min_demand_offset = -min_demand
+
+	#Slider grabber is positioned 7px from the edge of the slider widget. Theme customisation doesn't really allow control of this, so let's compensate
 	demand_marker_min.set_position(Vector2((demand_marker_min.get_parent().get_parent().get_size().x - 14) / 100.0 * (min_demand + min_demand_offset) + 1, 0))
 
 	if check_max:
@@ -216,6 +218,8 @@ func adjust_max_demand_offset(value : int, check_min = true) -> void:
 	max_demand_offset += value
 	if max_demand + max_demand_offset > 100:
 		max_demand_offset = 100 - max_demand
+
+	#Slider grabber is positioned 7px from the edge of the slider widget. Theme customisation doesn't really allow control of this, so let's compensate
 	demand_marker_max.set_position(Vector2((demand_marker_max.get_parent().get_parent().get_size().x - 14) / 100.0 * (max_demand + max_demand_offset) + 7, 0))
 
 	if check_min:

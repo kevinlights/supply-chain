@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://fonts/report_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://game_entities/report/Report.gd" type="Script" id=2]
 [ext_resource path="res://fonts/small_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/legend_font.tres" type="DynamicFont" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.847059, 0.776471, 0.564706, 1 )
@@ -153,6 +154,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label" type="Label" parent="Folder/Tab"]
+margin_left = 10.0245
+margin_top = 140.83
+margin_right = 50.0245
+margin_bottom = 158.83
+rect_rotation = -90.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+text = "Close"
+
 [node name="Crease" type="ColorRect" parent="Folder"]
 margin_left = 580.0
 margin_right = 582.0
@@ -275,18 +286,21 @@ custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 text = "Historic Data"
 
-[node name="Instructions" type="Label" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
+[node name="Instructions" type="RichTextLabel" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
 margin_top = 53.0
 margin_right = 492.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 3 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "Click a supply point's chart icon to see historic values over time."
+margin_bottom = 83.0
+rect_min_size = Vector2( 0, 30 )
+custom_fonts/normal_font = ExtResource( 3 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+bbcode_text = "Click a supply point's chart icon [img]res://game_entities/report/chart_icon.png[/img] to see historic values over time."
+text = "Click a supply point's chart icon  to see historic values over time."
 
 [node name="MarginContainer3" type="MarginContainer" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
-margin_top = 75.0
+margin_top = 87.0
 margin_right = 492.0
-margin_bottom = 95.0
+margin_bottom = 107.0
 rect_min_size = Vector2( 0, 20 )
 mouse_filter = 2
 
