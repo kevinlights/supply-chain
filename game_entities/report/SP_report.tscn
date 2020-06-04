@@ -74,14 +74,15 @@ text = "Stock In"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row1/StockIn"]
+[node name="Value" type="RichTextLabel" parent="Row1/StockIn"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="StockOut" type="VBoxContainer" parent="Row1"]
 margin_left = 112.0
@@ -100,14 +101,15 @@ text = "Stock Out"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row1/StockOut"]
+[node name="Value" type="RichTextLabel" parent="Row1/StockOut"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="Waste" type="VBoxContainer" parent="Row1"]
 margin_left = 212.0
@@ -126,14 +128,15 @@ text = "Waste"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row1/Waste"]
+[node name="Value" type="RichTextLabel" parent="Row1/Waste"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="OpeningStock" type="VBoxContainer" parent="Row1"]
 margin_left = 312.0
@@ -153,14 +156,15 @@ Stock"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row1/OpeningStock"]
+[node name="Value" type="RichTextLabel" parent="Row1/OpeningStock"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="ClosingStock" type="VBoxContainer" parent="Row1"]
 margin_left = 412.0
@@ -180,14 +184,15 @@ Stock"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row1/ClosingStock"]
+[node name="Value" type="RichTextLabel" parent="Row1/ClosingStock"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_top = 75.0
@@ -221,14 +226,15 @@ text = "Time Full"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row2/TicksMax"]
+[node name="Value" type="RichTextLabel" parent="Row2/TicksMax"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="TicksMin" type="VBoxContainer" parent="Row2"]
 margin_left = 312.0
@@ -247,14 +253,15 @@ text = "Time Empty"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row2/TicksMin"]
+[node name="Value" type="RichTextLabel" parent="Row2/TicksMin"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="TicksWOProd" type="VBoxContainer" parent="Row2"]
 visible = false
@@ -275,14 +282,15 @@ Produce"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row2/TicksWOProd"]
+[node name="Value" type="RichTextLabel" parent="Row2/TicksWOProd"]
 margin_top = 36.0
 margin_right = 80.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="TicksWOCons" type="VBoxContainer" parent="Row2"]
 visible = false
@@ -303,14 +311,15 @@ Consume"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row2/TicksWOCons"]
+[node name="Value" type="RichTextLabel" parent="Row2/TicksWOCons"]
 margin_top = 36.0
 margin_right = 80.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false
 
 [node name="Efficiency" type="VBoxContainer" parent="Row2"]
 margin_left = 412.0
@@ -330,11 +339,12 @@ Efficiency"
 align = 2
 valign = 2
 
-[node name="Value" type="Label" parent="Row2/Efficiency"]
+[node name="Value" type="RichTextLabel" parent="Row2/Efficiency"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 56.0
-custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
-text = "0"
-align = 2
+rect_min_size = Vector2( 80, 16 )
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+scroll_active = false

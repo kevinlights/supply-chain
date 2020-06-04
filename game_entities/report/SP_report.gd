@@ -1,18 +1,22 @@
 extends Control
 
+enum BadChange {UP, DOWN, NONE}
 var sp : HBoxContainer
 var title : Label
-var stock_in : Label
-var stock_out : Label
-var waste : Label
-var opening_stock : Label
-var closing_stock : Label
-var ticks_max : Label
-var ticks_min : Label
-var ticks_wo_prod : Label
-var ticks_wo_cons : Label
-var efficiency : Label
+var stock_in : RichTextLabel
+var stock_out : RichTextLabel
+var waste : RichTextLabel
+var opening_stock : RichTextLabel
+var closing_stock : RichTextLabel
+var ticks_max : RichTextLabel
+var ticks_min : RichTextLabel
+var ticks_wo_prod : RichTextLabel
+var ticks_wo_cons : RichTextLabel
+var efficiency : RichTextLabel
 var charts_button : TextureButton
+var bad_prefix := "[color=red]"
+var bad_suffix := "[/color]"
+
 
 # Link up nodes that are going to get values
 func _ready():
@@ -32,37 +36,53 @@ func write_values(supply_point : HBoxContainer) -> void:
 	if sp.historic_stock["stock_in"].size() > 0:
 		check = true
 
-	stock_in.set_text(str(sp.stock_in) + get_rise_fall(check, sp.stock_in, sp.historic_stock["stock_in"]))
-	stock_out.set_text(str(abs(sp.stock_out)) + get_rise_fall(check, abs(sp.stock_out), sp.historic_stock["stock_out"]))
-	waste.set_text(str(sp.waste) + get_rise_fall(check, sp.waste, sp.historic_stock["waste"]))
-	opening_stock.set_text(str(sp.opening_stock) + get_rise_fall(check, sp.opening_stock, sp.historic_stock["opening_stock"]))
-	closing_stock.set_text(str(sp.closing_stock) + get_rise_fall(check, sp.closing_stock, sp.historic_stock["closing_stock"]))
-	ticks_max.set_text(str(sp.ticks_at_max) + get_rise_fall(check, sp.ticks_at_max, sp.historic_time["time_full"]))
-	ticks_min.set_text(str(sp.ticks_at_min) + get_rise_fall(check, sp.ticks_at_min, sp.historic_time["time_empty"]))
+	stock_in.set_bbcode("[right]" + get_value_string(sp.stock_in, check, sp.historic_stock["stock_in"]))
+	stock_out.set_bbcode("[right]" + get_value_string(abs(sp.stock_out), check, sp.historic_stock["stock_out"]))
+	waste.set_bbcode("[right]" + get_value_string(sp.waste, check, sp.historic_stock["waste"], BadChange.UP))
+	opening_stock.set_bbcode("[right]" + get_value_string(sp.opening_stock, check, sp.historic_stock["opening_stock"]))
+	closing_stock.set_bbcode("[right]" + get_value_string(sp.closing_stock, check, sp.historic_stock["closing_stock"]))
+	ticks_max.set_bbcode("[right]" + get_value_string(sp.ticks_at_max, check, sp.historic_time["time_full"], BadChange.UP))
+	ticks_min.set_bbcode("[right]" + get_value_string(sp.ticks_at_min, check, sp.historic_time["time_empty"], BadChange.UP))
 
 	if sp.is_producing:
 		get_node("Row2/TicksWOProd").visible = true
 		get_node("Row2/Efficiency").visible = false
-		ticks_wo_prod.set_text(str(sp.ticks_no_produce) + get_rise_fall(check, sp.ticks_no_produce, sp.historic_time["unable_to_produce"]))
+		ticks_wo_prod.set_bbcode("[right]" + get_value_string(sp.ticks_no_produce, check, sp.historic_time["unable_to_produce"], BadChange.UP))
 		get_node("Row1/StockIn/Title").set_text("Stock\nProduced")
 	else:
-		efficiency.set_text(("0" if sp.stock_in == 0 else str(sp.transit_time / sp.stock_in)) + get_rise_fall(check, 0 if sp.stock_in == 0 else sp.transit_time / sp.stock_in, sp.historic_misc["transit_efficiency"]))
+		efficiency.set_bbcode("[right]" + get_value_string(0 if sp.stock_in == 0 else sp.transit_time / sp.stock_in, check, sp.historic_misc["transit_efficiency"], BadChange.DOWN))
 
 	if sp.is_consuming:
 		get_node("Row1/StockOut/Title").set_text("Stock\nConsumed")
 		get_node("Row2/TicksWOCons").visible = true
-		ticks_wo_cons.set_text(str(sp.ticks_no_consume) + get_rise_fall(check, sp.ticks_no_consume, sp.historic_time["unable_to_consume"]))
+		ticks_wo_cons.set_bbcode("[right]" + get_value_string(sp.ticks_no_consume, check, sp.historic_time["unable_to_consume"], BadChange.UP))
 
-func get_rise_fall(check, value, history):
+func get_value_string(value, check, history, bad = BadChange.NONE):
+	return get_formatted_value(value, bad) + get_rise_fall(check, value, history, bad)
+
+func get_formatted_value(value, bad):
+	var return_string = str(value)
+	if value > 0:
+		if bad == BadChange.UP:
+			return_string = bad_prefix + return_string + bad_suffix
+	else:
+		if bad == BadChange.DOWN:
+			return_string = bad_prefix + return_string + bad_suffix
+	return return_string
+
+func get_rise_fall(check, value, history, bad = BadChange.NONE):
+	var return_string = ""
 	if check:
 		var last_value = abs(history[history.size() - 1])
 		if value > last_value:
-			return "▲"
+			return_string += "▲"
+			if bad == BadChange.UP:
+				return_string = bad_prefix + return_string + bad_suffix
 		elif value < last_value:
-			return "▼"
-		else:
-			return ""
-	return ""
+			return_string += "▼"
+			if bad == BadChange.DOWN:
+				return_string = bad_prefix + return_string + bad_suffix
+	return return_string
 
 
 # Helper to assign labels to variables

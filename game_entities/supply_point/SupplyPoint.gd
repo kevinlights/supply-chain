@@ -221,7 +221,7 @@ func adjust_max_stock_level_offset(value: int) -> void:
 
 # Adjust the frequency for production and consumption. Keeps track of changes resulting from events
 func adjust_consume_produce_frequency_multiplier(value: float) -> void:
-	var counter_fraction := (consume_produce_frequency * consume_produce_frequency_multiplier) / consume_counter
+	var counter_fraction := consume_counter / (consume_produce_frequency * consume_produce_frequency_multiplier)
 	consume_produce_frequency_multiplier += value
 	consume_counter = counter_fraction * consume_produce_frequency_multiplier * consume_produce_frequency
 
