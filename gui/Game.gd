@@ -12,6 +12,7 @@ var menu_node : CenterContainer
 # Simulation requires a manufacturer, a warehouse, and a consumer which are
 # defined as supply points
 var start_stocked = false
+var auto_stop_production = false
 var sp_list := []
 var event_list := {}
 var paper_list := {}
@@ -181,6 +182,7 @@ func _ready():
 	add_supply_points(sp_list)
 	load_events(events_file)
 	load_papers(papers_file)
+	set_auto_stop_production(auto_stop_production)
 
 # Iterates over each supply point and connects it to the destination for its cargo and sets first entry as producer and final entry as consumer
 func setup_downstreams(list : Array) -> void:
@@ -197,6 +199,12 @@ func setup_downstreams(list : Array) -> void:
 func add_supply_points(list: Array) -> void:
 	for sp in list:
 		add_child(sp)
+
+func set_auto_stop_production(value):
+	auto_stop_production = value
+	for sp in sp_list:
+		if sp.is_producing:
+			sp.set_auto_stop_production(auto_stop_production)
 
 # A helper function to read in json files for the event list
 func read_json(path):

@@ -43,6 +43,7 @@ var consume_produce_paused : bool = false
 var transit_speed_multiplier : float = 1.0
 var transit_vehicles_paused : bool = false
 var next_vehicle_crash : bool = false
+var auto_stop_production : bool = false
 
 var demand_marker_min : TextureRect
 var demand_marker_max : TextureRect
@@ -112,15 +113,22 @@ func request_stock(amount : int):
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
 	if (stock_level < max_stock_level + max_stock_level_offset):
-		amount = int(min(amount, max_stock_level + max_stock_level_offset - stock_level))
-		adjust_stock(amount)
+		if auto_stop_production:
+			#Only produce the amount needed to fill storage
+			amount = int(min(amount, max_stock_level + max_stock_level_offset - stock_level))
 	else:
 		ticks_no_produce += 1
+		if auto_stop_production:
+			#Produce nothing so that there will be no wastage
+			amount = 0
+
 	if (stock_level < max_stock_level + max_stock_level_offset):
 		stock_indicator_anchor.set_animation_paused(false)
 	else:
-		stock_indicator_anchor.set_animation_paused(true)
+		if auto_stop_production:
+			stock_indicator_anchor.set_animation_paused(true)
 
+	adjust_stock(amount)
 
 # Draw from the existing stockpile (no toilet paper debt yet)
 func consume_stock(amount: int) -> void:
@@ -171,6 +179,9 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 
 	configure_stock_indicators()
 
+func set_auto_stop_production(value : bool) -> void:
+	auto_stop_production = value
+
 # Set max stock level to a given value
 func set_max_stock_level(value : int) -> void:
 	max_stock_level = value
@@ -191,7 +202,7 @@ func adjust_min_demand_offset(value : int, check_max = true) -> void:
 	min_demand_offset += value
 	if min_demand + min_demand_offset < 0:
 		min_demand_offset = -min_demand
-	demand_marker_min.set_position(Vector2(demand_marker_min.get_parent().get_parent().get_size().x / 100.0 * (min_demand + min_demand_offset) - 6, 0))
+	demand_marker_min.set_position(Vector2((demand_marker_min.get_parent().get_parent().get_size().x - 14) / 100.0 * (min_demand + min_demand_offset) + 1, 0))
 
 	if check_max:
 		if min_demand + min_demand_offset > max_demand + max_demand_offset:
@@ -205,7 +216,7 @@ func adjust_max_demand_offset(value : int, check_min = true) -> void:
 	max_demand_offset += value
 	if max_demand + max_demand_offset > 100:
 		max_demand_offset = 100 - max_demand
-	demand_marker_max.set_position(Vector2(demand_marker_max.get_parent().get_parent().get_size().x / 100.0 * (max_demand + max_demand_offset), 0))
+	demand_marker_max.set_position(Vector2((demand_marker_max.get_parent().get_parent().get_size().x - 14) / 100.0 * (max_demand + max_demand_offset) + 7, 0))
 
 	if check_min:
 		if max_demand + max_demand_offset < min_demand + min_demand_offset:

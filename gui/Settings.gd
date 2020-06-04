@@ -35,6 +35,12 @@ var settings := {
 				"default": false,
 				"description": "Gives each supply point initial stock when starting a new game.",
 			},
+			"auto_stop_production":
+			{
+				"type": TYPE_BOOL,
+				"default": false,
+				"description": "Automatically stops production when producing supply points are full.",
+			},
 			#TODO: Maybe events and reports should be frequency ranges in minutes with 0 being never?
 			"skip_events":
 			{
@@ -132,20 +138,25 @@ func retrieve_config_value(category, setting):
 func update_setting_volume(value, bus):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus.capitalize()), linear2db(value))
 
-func close():
+func close() -> void:
 	get_parent().fake_show_menu()
 	visible = false
 
 func get_setting(category, setting):
 	return retrieve_config_value(category, setting)
 
-func set_skip_events(value):
+func set_skip_events(value) -> void:
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.skip_events = value
 
-func set_skip_reports(value):
+func set_skip_reports(value) -> void:
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.skip_reports = value
 
-func set_start_stocked(value):
+func set_start_stocked(value) -> void:
 	get_parent().start_stocked = value
+
+func set_auto_stop_production(value) -> void:
+	get_parent().auto_stop_production = value
+	if is_instance_valid(get_parent().game_node):
+		get_parent().game_node.set_auto_stop_production(value)

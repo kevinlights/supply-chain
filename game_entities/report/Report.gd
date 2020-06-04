@@ -7,6 +7,7 @@ var sections := []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().paused = true
+	get_parent().set_process(false)
 	connect("gui_input", self, "handle_input")
 
 func _process(_delta : float) -> void:
@@ -18,6 +19,7 @@ func handle_input(event : InputEvent) -> void:
 	if event is InputEventKey || event is InputEventMouseButton || event is InputEventJoypadButton:
 		if event.is_action("ui_select") ||  event.is_action("ui_accept"):
 			close()
+			get_tree().set_input_as_handled()
 
 # Unpause the game and remove the report
 func close() -> void:
