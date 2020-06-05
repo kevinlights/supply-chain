@@ -346,7 +346,6 @@ func update_demand(value : float) -> void:
 	if is_instance_valid(demand_slider):
 		correct_demand_level()
 	if is_producing:
-		#TODO: This will need to be tuned
 		#Note that consume_produce_frequency_multiplier as messed with by events will shape resulting values
 		consume_produce_frequency = (105.0 - demand_level) / 20.0
 		#print(consume_produce_frequency)
@@ -361,25 +360,8 @@ func correct_demand_level() -> void:
 		demand_slider.set_value(demand_level)
 		demand_slider.connect("value_changed", self, "update_demand")
 
-# Prints report values to output and stores them to lifetime
+# Produces report values and stores them to lifetime
 func make_report() -> void:
-	# Print the report
-	print("Report for %s" % sp_name)
-	print("Stock in: ", str(stock_in))
-	print("Stock out: ", str(abs(stock_out)))
-	print("Waste: ", str(waste))
-	print("Opening stock: ", str(opening_stock))
-	print("Closing  stock: ", str(closing_stock))
-	print("Ticks at max: ", str(ticks_at_max))
-	print("Ticks at min: ", str(ticks_at_min))
-	print("Ticks no production: ", str(ticks_no_produce))
-	print("Ticks no consumption: ", str(ticks_no_consume))
-	print("Transit efficiency quotient: ", "0" if stock_in == 0 else str(transit_time / stock_in))
-	
-	reset_period()
-
-# Add measurements lifetime records and reset
-func reset_period() -> void:
 	#TODO: Decide whether or not we want to bake this calculation into historic data longer term (for now, it's simplifying chart generation)
 	historic_misc["transit_efficiency"].append(0.0 if stock_in == 0 else transit_time / stock_in)
 	transit_time = 0
