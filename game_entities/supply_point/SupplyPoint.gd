@@ -140,6 +140,7 @@ func consume_stock(amount: int) -> void:
 	adjust_stock(-adj_amount)
 	if (adj_amount != amount):
 		ticks_no_consume += 1
+		stock_indicator_anchor.do_cant_consume()
 
 	if (stock_level > 0):
 		stock_indicator_anchor.set_animation_paused(false)
@@ -423,6 +424,7 @@ func _process(delta):
 			if is_consuming:
 				ticks_no_consume += 1
 				stock_indicator_anchor.set_animation_paused(true)
+				stock_indicator_anchor.do_cant_consume()
 
 	if counter >= tick_rate:
 		counter -= tick_rate
