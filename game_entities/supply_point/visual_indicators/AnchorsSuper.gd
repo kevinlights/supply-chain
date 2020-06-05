@@ -14,3 +14,6 @@ func set_animation_paused(newValue : bool):
 
 func get_indicator_count() -> int:
 	return get_child_count()
+
+func do_cant_consume() -> void:
+	pass

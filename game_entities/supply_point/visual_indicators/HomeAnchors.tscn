@@ -1,12 +1,28 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://game_entities/supply_point/visual_indicators/toilet.png" type="Texture" id=1]
 [ext_resource path="res://game_entities/supply_point/visual_indicators/stock_item.png" type="Texture" id=2]
 [ext_resource path="res://game_entities/supply_point/visual_indicators/HomeAnchors.gd" type="Script" id=3]
 
+[sub_resource type="Animation" id=1]
+resource_name = "no_consume"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1.68179, 1, 0.615572, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -3 ), Vector2( 0, 3 ), Vector2( 0, 0 ) ]
+}
+
 [node name="AnchorBackground" type="TextureRect"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 242.0
+margin_bottom = 656.0
 texture = ExtResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
@@ -272,3 +288,6 @@ texture = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/no_consume = SubResource( 1 )
