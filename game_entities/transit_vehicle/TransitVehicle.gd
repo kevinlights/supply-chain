@@ -36,12 +36,14 @@ func pick_up():
 	destination.adjust_stock(-cargo)
 	has_picked_up = true
 	destination = destination.downstream
+	destination.adjust_enroute_stock(cargo)
 	start_travel(destination.get_node("RightLane"), crash)
 
 # Vehicle delivers its cargo to the given supply point. Any surplus to the
 # supply point's capacity is thrown away
 func deliver() -> void:
 	destination.adjust_stock(cargo)
+	destination.adjust_enroute_stock(-cargo)
 	destination.adjust_pending_stock(-desired_cargo) # Removing pending stock is adding negative stock
 	# cargo does not get set to 0 since the vehicle is destroyed after
 	destination.adjust_transit_time(lifetime)
@@ -93,6 +95,7 @@ func set_crash(val := true) -> void:
 	
 func handle_crash(_obj, _key) -> void:
 	destination.adjust_pending_stock(-desired_cargo)
+	destination.adjust_enroute_stock(-cargo)
 	destination.adjust_waste(desired_cargo)
 
 	var spillage_scene

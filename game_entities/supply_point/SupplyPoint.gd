@@ -24,6 +24,7 @@ var stock_comfort_band_max : int
 var min_demand : int
 var max_demand : int
 var pending_stock: int
+var enroute_stock: int
 var tick_rate : float
 var counter : float
 var consume_counter: float
@@ -94,7 +95,8 @@ func request_stock(amount : int):
 	if transit_vehicles_paused:
 		return
 
-	if upstream.stock_level - pending_stock <= 0:
+	if upstream.stock_level - (pending_stock - enroute_stock) <= 0:
+	#if upstream.stock_level - pending_stock <= 0:
 		return
 
 	var vehicle = transit_vehicle_scene.instance()
@@ -159,6 +161,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	min_demand = new_min_demand
 	max_demand = new_max_demand
 	pending_stock = 0
+	enroute_stock = 0
 	tick_rate = 1.0
 	consume_produce_frequency = 0.50
 	production_rate = 2
@@ -320,6 +323,9 @@ func set_downstream(value : Node):
 # add_pending_stock always adds to pending stock. Negative values on delivery
 func adjust_pending_stock(value : int) -> void:
 	pending_stock += value
+
+func adjust_enroute_stock(value : int) -> void:
+	enroute_stock += value
 
 func adjust_waste(value: int) -> void:
 	waste += value
