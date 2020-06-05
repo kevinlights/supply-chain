@@ -17,6 +17,9 @@ var cargo_threshold_car = 20
 var cargo_threshold_truck = 40
 var type = VehicleType.CAR
 
+var articulated_crash_scene = preload("res://game_entities/transit_vehicle/articulated_crash.tscn")
+var truck_crash_scene = preload("res://game_entities/transit_vehicle/truck_crash.tscn")
+var car_crash_scene = preload("res://game_entities/transit_vehicle/car_crash.tscn")
 
 # Vehicle collects the given amount of toilet paper, limited by the amount
 # available at the given supply point and its carrying capacity, and reduces
@@ -79,7 +82,7 @@ func start_travel(lane: Node, will_crash: bool = false):
 		travel_tween.connect("tween_completed", self, "handle_crash")
 
 	# Move from start to end
-	if speed < 0:
+	if speed <= 0:
 		printerr("Uh oh! Speed is negative (", speed, "). Resetting to default.")
 		speed = base_speed
 	travel_tween.interpolate_method(self, "set_position", startPosition, endPosition, speed / 2.0 if will_crash else speed, Tween.TRANS_LINEAR, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
@@ -91,21 +94,37 @@ func set_crash(val := true) -> void:
 func handle_crash(_obj, _key) -> void:
 	destination.adjust_pending_stock(-desired_cargo)
 	destination.adjust_waste(desired_cargo)
+
+	var spillage_scene
 	var crash_event = {"headline": "Roll toll on toll road", "time": 0, "target": destination}
 	if type == VehicleType.CAR:
 		crash_event["image"] = "crash_car.png"
 		crash_event["headline"] = "Car rolled close to home"
 		crash_event["subheading"] = "None injured, egos bruised"
+		spillage_scene = car_crash_scene
 	elif type == VehicleType.TRUCK:
 		crash_event["image"] = "crash_truck.png"
 		crash_event["subheading"] = "Wiped out stock doesn't reach shops"
+		spillage_scene = truck_crash_scene
 	else: #type == VehicleType.ARTICULATED
 		crash_event["image"] = "crash_articulated.png"
 		crash_event["headline"] = "Newly made stock flushed in truck accident"
 		crash_event["subheading"] = "A modern tragedy"
+		spillage_scene = articulated_crash_scene
 	#TODO: Move crash headline/subheadings out to file. Use a random pool like newspaper names?
 	destination.get_parent().add_event(crash_event)
 	destination.adjust_transit_time(lifetime)
+
+	#Add the image to both lanes. Since they're both clipped and should align, it'll look like one image spanning both lanes
+	# (a larger scale refactor could migrate everything to sprites and take advantage of z-index, or create separate "overlays" for vehicles, crash detritus, etc.)
+	var crash_location = Vector2(0, get_position().y)
+	var spillage = spillage_scene.instance()
+	destination.get_node("RightLane/CrashAnchor").add_child(spillage)
+	spillage.set_position(crash_location)
+	spillage = spillage_scene.instance()
+	destination.upstream.get_node("LeftLane/CrashAnchor").add_child(spillage)
+	spillage.set_position(crash_location)
+
 	queue_free()
 
 # Constructor for TransitVehicle. Default vehicle starts empty with space for 10 units
@@ -137,6 +156,8 @@ func set_speed_multiplier(value : float):
 
 	#Speed is actually travel duration, so increasing velocity should mean smaller speed
 	speed = base_speed / value
+	if speed <= 0:
+		print("Oh noes", print(speed <= 0))
 
 	if is_instance_valid(travel_tween):
 		start_travel(get_parent(), crash)

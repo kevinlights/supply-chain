@@ -25,7 +25,7 @@ func _ready():
 	get_node("PanelContainer/VBoxContainer/HBoxContainer2/PreviewButton").connect("pressed", self, "preview_event")
 	get_node("PanelContainer/VBoxContainer/HBoxContainer2/ActivateButton").connect("pressed", self, "activate_event")
 
-	game_node = get_parent().get_node("Game")
+	game_node = get_parent().get_node("Menu").game_node
 	populate_selectors()
 	generate_editor_ui(0)
 	get_tree().paused = true

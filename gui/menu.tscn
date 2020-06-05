@@ -5,7 +5,7 @@
 [ext_resource path="res://music/MusicPlayer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gui/Settings.tscn" type="PackedScene" id=4]
 
-[node name="Control" type="CenterContainer"]
+[node name="Menu" type="CenterContainer"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0

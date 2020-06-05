@@ -23,24 +23,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LeftLines" type="VBoxContainer" parent="."]
+[node name="RightLane" type="ColorRect" parent="."]
+margin_right = 39.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 39, 720 )
+rect_clip_content = true
+color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+
+[node name="LeftLines" type="VBoxContainer" parent="RightLane"]
 margin_right = 1.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 1, 0 )
 size_flags_horizontal = 3
 custom_constants/separation = 0
-
-[node name="Dark" type="ColorRect" parent="LeftLines"]
-margin_right = 1.0
-margin_bottom = 31.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light" type="ColorRect" parent="LeftLines"]
+[node name="Dark" type="ColorRect" parent="RightLane/LeftLines"]
+margin_right = 1.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 31.0
 margin_right = 1.0
 margin_bottom = 62.0
@@ -48,18 +58,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark2" type="ColorRect" parent="LeftLines"]
+[node name="Dark2" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 62.0
 margin_right = 1.0
 margin_bottom = 93.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light2" type="ColorRect" parent="LeftLines"]
+[node name="Light2" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 93.0
 margin_right = 1.0
 margin_bottom = 124.0
@@ -67,18 +77,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark3" type="ColorRect" parent="LeftLines"]
+[node name="Dark3" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 124.0
 margin_right = 1.0
 margin_bottom = 155.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light3" type="ColorRect" parent="LeftLines"]
+[node name="Light3" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 155.0
 margin_right = 1.0
 margin_bottom = 186.0
@@ -86,18 +96,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark4" type="ColorRect" parent="LeftLines"]
+[node name="Dark4" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 186.0
 margin_right = 1.0
 margin_bottom = 217.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light4" type="ColorRect" parent="LeftLines"]
+[node name="Light4" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 217.0
 margin_right = 1.0
 margin_bottom = 248.0
@@ -105,18 +115,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark5" type="ColorRect" parent="LeftLines"]
+[node name="Dark5" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 248.0
 margin_right = 1.0
 margin_bottom = 279.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light5" type="ColorRect" parent="LeftLines"]
+[node name="Light5" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 279.0
 margin_right = 1.0
 margin_bottom = 310.0
@@ -124,18 +134,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark6" type="ColorRect" parent="LeftLines"]
+[node name="Dark6" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 310.0
 margin_right = 1.0
 margin_bottom = 341.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light6" type="ColorRect" parent="LeftLines"]
+[node name="Light6" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 341.0
 margin_right = 1.0
 margin_bottom = 372.0
@@ -143,18 +153,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark7" type="ColorRect" parent="LeftLines"]
+[node name="Dark7" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 372.0
 margin_right = 1.0
 margin_bottom = 403.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light7" type="ColorRect" parent="LeftLines"]
+[node name="Light7" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 403.0
 margin_right = 1.0
 margin_bottom = 434.0
@@ -162,18 +172,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark8" type="ColorRect" parent="LeftLines"]
+[node name="Dark8" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 434.0
 margin_right = 1.0
 margin_bottom = 465.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light8" type="ColorRect" parent="LeftLines"]
+[node name="Light8" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 465.0
 margin_right = 1.0
 margin_bottom = 496.0
@@ -181,18 +191,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark9" type="ColorRect" parent="LeftLines"]
+[node name="Dark9" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 496.0
 margin_right = 1.0
 margin_bottom = 527.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light9" type="ColorRect" parent="LeftLines"]
+[node name="Light9" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 527.0
 margin_right = 1.0
 margin_bottom = 558.0
@@ -200,18 +210,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark10" type="ColorRect" parent="LeftLines"]
+[node name="Dark10" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 558.0
 margin_right = 1.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light10" type="ColorRect" parent="LeftLines"]
+[node name="Light10" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 589.0
 margin_right = 1.0
 margin_bottom = 620.0
@@ -219,18 +229,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark11" type="ColorRect" parent="LeftLines"]
+[node name="Dark11" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 620.0
 margin_right = 1.0
 margin_bottom = 651.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light11" type="ColorRect" parent="LeftLines"]
+[node name="Light11" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 651.0
 margin_right = 1.0
 margin_bottom = 682.0
@@ -238,24 +248,19 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark12" type="ColorRect" parent="LeftLines"]
+[node name="Dark12" type="ColorRect" parent="RightLane/LeftLines"]
 margin_top = 682.0
 margin_right = 1.0
 margin_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RightLane" type="ColorRect" parent="."]
-margin_left = 1.0
-margin_right = 39.0
-margin_bottom = 720.0
-rect_min_size = Vector2( 38, 720 )
-rect_clip_content = true
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+[node name="CrashAnchor" type="Node2D" parent="RightLane"]
+position = Vector2( -39, 0 )
 
 [node name="Origin" type="Node2D" parent="RightLane"]
 position = Vector2( 19, 0 )
@@ -388,37 +393,31 @@ align = 1
 
 [node name="LeftLane" type="ColorRect" parent="."]
 margin_left = 281.0
-margin_right = 319.0
+margin_right = 320.0
 margin_bottom = 720.0
-rect_min_size = Vector2( 38, 720 )
+rect_min_size = Vector2( 39, 720 )
 rect_clip_content = true
 color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
 
-[node name="Destination" type="Node2D" parent="LeftLane"]
-position = Vector2( 19, 0 )
-
-[node name="Origin" type="Node2D" parent="LeftLane"]
-position = Vector2( 19, 720 )
-
-[node name="RightLines" type="VBoxContainer" parent="."]
-margin_left = 319.0
-margin_right = 320.0
+[node name="RightLines" type="VBoxContainer" parent="LeftLane"]
+margin_left = 38.0
+margin_right = 39.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 1, 0 )
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
-[node name="Dark" type="ColorRect" parent="RightLines"]
+[node name="Dark" type="ColorRect" parent="LeftLane/RightLines"]
 margin_right = 1.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light" type="ColorRect" parent="RightLines"]
+[node name="Light" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 31.0
 margin_right = 1.0
 margin_bottom = 62.0
@@ -426,18 +425,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark2" type="ColorRect" parent="RightLines"]
+[node name="Dark2" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 62.0
 margin_right = 1.0
 margin_bottom = 93.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light2" type="ColorRect" parent="RightLines"]
+[node name="Light2" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 93.0
 margin_right = 1.0
 margin_bottom = 124.0
@@ -445,18 +444,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark3" type="ColorRect" parent="RightLines"]
+[node name="Dark3" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 124.0
 margin_right = 1.0
 margin_bottom = 155.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light3" type="ColorRect" parent="RightLines"]
+[node name="Light3" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 155.0
 margin_right = 1.0
 margin_bottom = 186.0
@@ -464,18 +463,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark4" type="ColorRect" parent="RightLines"]
+[node name="Dark4" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 186.0
 margin_right = 1.0
 margin_bottom = 217.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light4" type="ColorRect" parent="RightLines"]
+[node name="Light4" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 217.0
 margin_right = 1.0
 margin_bottom = 248.0
@@ -483,18 +482,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark5" type="ColorRect" parent="RightLines"]
+[node name="Dark5" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 248.0
 margin_right = 1.0
 margin_bottom = 279.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light5" type="ColorRect" parent="RightLines"]
+[node name="Light5" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 279.0
 margin_right = 1.0
 margin_bottom = 310.0
@@ -502,18 +501,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark6" type="ColorRect" parent="RightLines"]
+[node name="Dark6" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 310.0
 margin_right = 1.0
 margin_bottom = 341.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light6" type="ColorRect" parent="RightLines"]
+[node name="Light6" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 341.0
 margin_right = 1.0
 margin_bottom = 372.0
@@ -521,18 +520,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark7" type="ColorRect" parent="RightLines"]
+[node name="Dark7" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 372.0
 margin_right = 1.0
 margin_bottom = 403.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light7" type="ColorRect" parent="RightLines"]
+[node name="Light7" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 403.0
 margin_right = 1.0
 margin_bottom = 434.0
@@ -540,18 +539,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark8" type="ColorRect" parent="RightLines"]
+[node name="Dark8" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 434.0
 margin_right = 1.0
 margin_bottom = 465.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light8" type="ColorRect" parent="RightLines"]
+[node name="Light8" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 465.0
 margin_right = 1.0
 margin_bottom = 496.0
@@ -559,18 +558,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark9" type="ColorRect" parent="RightLines"]
+[node name="Dark9" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 496.0
 margin_right = 1.0
 margin_bottom = 527.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light9" type="ColorRect" parent="RightLines"]
+[node name="Light9" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 527.0
 margin_right = 1.0
 margin_bottom = 558.0
@@ -578,18 +577,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark10" type="ColorRect" parent="RightLines"]
+[node name="Dark10" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 558.0
 margin_right = 1.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light10" type="ColorRect" parent="RightLines"]
+[node name="Light10" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 589.0
 margin_right = 1.0
 margin_bottom = 620.0
@@ -597,18 +596,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark11" type="ColorRect" parent="RightLines"]
+[node name="Dark11" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 620.0
 margin_right = 1.0
 margin_bottom = 651.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Light11" type="ColorRect" parent="RightLines"]
+[node name="Light11" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 651.0
 margin_right = 1.0
 margin_bottom = 682.0
@@ -616,13 +615,21 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.6, 0.6, 0.6, 1 )
 
-[node name="Dark12" type="ColorRect" parent="RightLines"]
+[node name="Dark12" type="ColorRect" parent="LeftLane/RightLines"]
 margin_top = 682.0
 margin_right = 1.0
 margin_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+color = Color( 0.0862745, 0.0862745, 0.101961, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CrashAnchor" type="Node2D" parent="LeftLane"]
+
+[node name="Destination" type="Node2D" parent="LeftLane"]
+position = Vector2( 19, 0 )
+
+[node name="Origin" type="Node2D" parent="LeftLane"]
+position = Vector2( 19, 720 )
