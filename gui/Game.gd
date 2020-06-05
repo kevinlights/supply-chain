@@ -22,7 +22,7 @@ var supply_point_list := {
 							"manufacturer": {"max_level": 100, "initial_demand": 85},
 							"warehouse": {"transit_size": 100, "initial_demand": 50},
 							"store": {"transit_size": 40, "initial_demand": 50},
-							"home": {"max_level": 50, "initial_level": 0, "initial_demand": 60}
+							"home": {"max_level": 50, "initial_level": 0, "initial_demand": 40}
 						}
 
 #TODO: Add more event effects
