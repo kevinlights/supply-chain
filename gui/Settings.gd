@@ -41,6 +41,12 @@ var settings := {
 				"default": false,
 				"description": "Automatically stops production when producing supply points are full.",
 			},
+			"prevent_transit_waste":
+			{
+				"type": TYPE_BOOL,
+				"default": false,
+				"description": "Prevents vehicles from picking up more stock than there is room to deliver.",
+			},
 			#TODO: Maybe events and reports should be frequency ranges in minutes with 0 being never?
 			"skip_events":
 			{
@@ -145,7 +151,7 @@ func close() -> void:
 func get_setting(category, setting):
 	return retrieve_config_value(category, setting)
 
-func set_skip_events(value) -> void:
+func set_skip_events(value : bool) -> void:
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.skip_events = value
 
@@ -153,10 +159,15 @@ func set_skip_reports(value) -> void:
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.skip_reports = value
 
-func set_start_stocked(value) -> void:
+func set_start_stocked(value : bool) -> void:
 	get_parent().start_stocked = value
 
-func set_auto_stop_production(value) -> void:
+func set_auto_stop_production(value : bool) -> void:
 	get_parent().auto_stop_production = value
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.set_auto_stop_production(value)
+
+func set_prevent_transit_waste(value : bool) -> void:
+	get_parent().prevent_transit_waste = value
+	if is_instance_valid(get_parent().game_node):
+		get_parent().game_node.set_prevent_transit_waste(value)

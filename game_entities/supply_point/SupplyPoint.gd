@@ -44,6 +44,7 @@ var transit_speed_multiplier : float = 1.0
 var transit_vehicles_paused : bool = false
 var next_vehicle_crash : bool = false
 var auto_stop_production : bool = false
+var prevent_transit_waste : bool = false
 
 var demand_marker_min : TextureRect
 var demand_marker_max : TextureRect
@@ -108,7 +109,10 @@ func request_stock(amount : int):
 		vehicle.set_cargo_limit()
 	vehicle.set_speed_multiplier(transit_speed_multiplier)
 	# Vehicle checks for how much is needed then collects and delivers
-	vehicle.order(int(min(amount, max_stock_level - stock_level)), upstream)
+	if prevent_transit_waste:
+		vehicle.order(int(min(amount, max_stock_level - stock_level)), upstream)
+	else:
+		vehicle.order(amount, upstream)
 
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
@@ -181,6 +185,9 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 
 func set_auto_stop_production(value : bool) -> void:
 	auto_stop_production = value
+
+func set_prevent_transit_waste(value : bool) -> void:
+	prevent_transit_waste = value
 
 # Set max stock level to a given value
 func set_max_stock_level(value : int) -> void:

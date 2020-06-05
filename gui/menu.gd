@@ -16,6 +16,7 @@ var music_player : AudioStreamPlayer
 var settings : Control
 var start_stocked = false
 var auto_stop_production = false
+var prevent_transit_waste = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -102,6 +103,7 @@ func new_game() -> void:
 	game_node.menu_node = self
 	game_node.start_stocked = start_stocked
 	game_node.auto_stop_production = auto_stop_production
+	game_node.prevent_transit_waste = prevent_transit_waste
 	game_node.skip_events = settings.get_setting("gameplay", "skip_events")
 	game_node.skip_reports = settings.get_setting("gameplay", "skip_reports")
 	get_parent().add_child(game_node)

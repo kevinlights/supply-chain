@@ -13,6 +13,7 @@ var menu_node : CenterContainer
 # defined as supply points
 var start_stocked = false
 var auto_stop_production = false
+var prevent_transit_waste = false
 var sp_list := []
 var event_list := {}
 var paper_list := {}
@@ -183,6 +184,7 @@ func _ready():
 	load_events(events_file)
 	load_papers(papers_file)
 	set_auto_stop_production(auto_stop_production)
+	set_prevent_transit_waste(prevent_transit_waste)
 
 # Iterates over each supply point and connects it to the destination for its cargo and sets first entry as producer and final entry as consumer
 func setup_downstreams(list : Array) -> void:
@@ -200,11 +202,16 @@ func add_supply_points(list: Array) -> void:
 	for sp in list:
 		add_child(sp)
 
-func set_auto_stop_production(value):
+func set_auto_stop_production(value : bool) -> void:
 	auto_stop_production = value
 	for sp in sp_list:
 		if sp.is_producing:
 			sp.set_auto_stop_production(auto_stop_production)
+
+func set_prevent_transit_waste(value : bool) -> void:
+	prevent_transit_waste = value
+	for sp in sp_list:
+		sp.set_prevent_transit_waste(prevent_transit_waste)
 
 # A helper function to read in json files for the event list
 func read_json(path):
