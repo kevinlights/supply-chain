@@ -360,7 +360,8 @@ func _process(delta : float):
 	next_report_time -= delta
 	if next_report_time <= 0 && !displaying_event:
 		next_report_time += report_frequency
-		generate_report()
+		if !skip_reports:
+			generate_report()
 		#Process historic data outside of showing reports so that report generation is non-destructive
 		for sp in sp_list:
 			sp.make_report()

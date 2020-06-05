@@ -38,7 +38,7 @@ func make_section(supply_point) -> void:
 	sections.push_back(section)
 
 func clear_charts():
-	get_node("ChartsSheet/HBoxContainer/VBoxContainer/Title").set_text("Mouse over a supply point name to\nsee historic data")
+	get_node("ChartsSheet/HBoxContainer/VBoxContainer/Title").set_bbcode("Historic Data")
 	var old_charts = []
 	var chart_page = get_node("ChartsSheet/HBoxContainer/VBoxContainer")
 	for child in chart_page.get_children():
@@ -49,7 +49,7 @@ func clear_charts():
 
 func setup_charts(supply_point):
 	clear_charts()
-	get_node("ChartsSheet/HBoxContainer/VBoxContainer/Title").set_text("Historic Data for " + supply_point.sp_name.capitalize())
+	get_node("ChartsSheet/HBoxContainer/VBoxContainer/Title").set_bbcode("Historic Data for [u]" + supply_point.sp_name.capitalize() + "[/u]")
 	setup_chart(supply_point.historic_stock, supply_point.historic_datum_count, supply_point.is_producing, supply_point.is_consuming)
 	setup_chart(supply_point.historic_time, supply_point.historic_datum_count, supply_point.is_producing, supply_point.is_consuming)
 	if !supply_point.is_producing:

@@ -160,14 +160,13 @@ func set_skip_reports(value) -> void:
 		get_parent().game_node.skip_reports = value
 
 func set_start_stocked(value : bool) -> void:
-	get_parent().start_stocked = value
+	if is_instance_valid(get_parent().game_node):
+		get_parent().game_node.start_stocked = value
 
 func set_auto_stop_production(value : bool) -> void:
-	get_parent().auto_stop_production = value
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.set_auto_stop_production(value)
 
 func set_prevent_transit_waste(value : bool) -> void:
-	get_parent().prevent_transit_waste = value
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.set_prevent_transit_waste(value)

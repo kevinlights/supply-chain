@@ -278,18 +278,21 @@ margin_bottom = 12.0
 rect_min_size = Vector2( 0, 12 )
 mouse_filter = 2
 
-[node name="Title" type="Label" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
 margin_top = 16.0
 margin_right = 492.0
-margin_bottom = 49.0
-custom_fonts/font = ExtResource( 1 )
-custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+margin_bottom = 51.0
+rect_min_size = Vector2( 0, 35 )
+custom_fonts/normal_font = ExtResource( 1 )
+custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+bbcode_enabled = true
+bbcode_text = "Historic Data"
 text = "Historic Data"
 
 [node name="Instructions" type="RichTextLabel" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
-margin_top = 53.0
+margin_top = 55.0
 margin_right = 492.0
-margin_bottom = 83.0
+margin_bottom = 85.0
 rect_min_size = Vector2( 0, 30 )
 custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
@@ -298,9 +301,9 @@ bbcode_text = "Click a supply point's chart icon [img]res://game_entities/report
 text = "Click a supply point's chart icon  to see historic values over time."
 
 [node name="MarginContainer3" type="MarginContainer" parent="ChartsSheet/HBoxContainer/VBoxContainer"]
-margin_top = 87.0
+margin_top = 89.0
 margin_right = 492.0
-margin_bottom = 107.0
+margin_bottom = 109.0
 rect_min_size = Vector2( 0, 20 )
 mouse_filter = 2
 
