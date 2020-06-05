@@ -29,6 +29,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ConsumptionAnimator" type="AnimationPlayer" parent="."]
+anims/no_consume = SubResource( 1 )
+
 [node name="StockItem00" type="TextureRect" parent="."]
 margin_left = 18.0
 margin_top = 251.0
@@ -288,6 +291,3 @@ texture = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/no_consume = SubResource( 1 )

@@ -91,15 +91,17 @@ func set_crash(val := true) -> void:
 func handle_crash(_obj, _key) -> void:
 	destination.adjust_pending_stock(-desired_cargo)
 	destination.adjust_waste(desired_cargo)
-	var crash_event = {"headline": "Roll toll on toll road", "time": 0}
+	var crash_event = {"headline": "Roll toll on toll road", "time": 0, "target": destination}
 	if type == VehicleType.CAR:
 		crash_event["image"] = "crash_car.png"
+		crash_event["headline"] = "Car rolled close to home"
 		crash_event["subheading"] = "None injured, egos bruised"
 	elif type == VehicleType.TRUCK:
 		crash_event["image"] = "crash_truck.png"
-		crash_event["subheading"] = "Wiped out"
+		crash_event["subheading"] = "Wiped out stock doesn't reach shops"
 	else: #type == VehicleType.ARTICULATED
 		crash_event["image"] = "crash_articulated.png"
+		crash_event["headline"] = "Newly made stock flushed in truck accident"
 		crash_event["subheading"] = "A modern tragedy"
 	#TODO: Move crash headline/subheadings out to file. Use a random pool like newspaper names?
 	destination.get_parent().add_event(crash_event)

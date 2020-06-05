@@ -50,7 +50,7 @@ func write_values(supply_point : HBoxContainer) -> void:
 		ticks_wo_prod.set_bbcode("[right]" + get_value_string(sp.ticks_no_produce, check, sp.historic_time["unable_to_produce"], BadChange.UP))
 		get_node("Row1/StockIn/Title").set_text("Stock\nProduced")
 	else:
-		efficiency.set_bbcode("[right]" + get_value_string(0 if sp.stock_in == 0 else sp.transit_time / sp.stock_in, check, sp.historic_misc["transit_efficiency"], BadChange.DOWN))
+		efficiency.set_bbcode("[right]" + get_value_string(0.0 if sp.stock_in == 0 else sp.transit_time / sp.stock_in, check, sp.historic_misc["transit_efficiency"], BadChange.DOWN))
 
 	if sp.is_consuming:
 		get_node("Row1/StockOut/Title").set_text("Stock\nConsumed")
@@ -61,7 +61,11 @@ func get_value_string(value, check, history, bad = BadChange.NONE):
 	return get_formatted_value(value, bad) + get_rise_fall(check, value, history, bad)
 
 func get_formatted_value(value, bad):
-	var return_string = str(value)
+	var return_string
+	if value is int:
+		return_string = str(value)
+	else:
+		return_string = "%.2f" % value
 	if value > 0:
 		if bad == BadChange.UP:
 			return_string = bad_prefix + return_string + bad_suffix
