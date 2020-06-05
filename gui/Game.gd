@@ -268,13 +268,6 @@ func add_event(event : Dictionary) -> void:
 		print("Adding unnamed event ", event)
 	event = event.duplicate()
 	
-	if "headline" in event:
-		var newspaper = newspaper_scene.instance()
-		newspaper.set_event(event)
-		newspaper.set_title(paper_list["titles"][randi() % paper_list["titles"].size()])
-		newspaper.set_date(paper_list["dates"][randi() % paper_list["dates"].size()])
-		get_parent().add_child(newspaper)
-
 	if event["time"] > 0:
 		current_event_list.push_back(event)
 
@@ -308,6 +301,18 @@ func add_event(event : Dictionary) -> void:
 		if effect in event:
 			if "func" in event_prop_list[effect]:
 				event["target"].call(event_prop_list[effect]["func"], event[effect])
+
+	if "headline" in event:
+		event["headline"] = event["headline"].replace("{supply_point}", target.sp_name)
+		if "subheading" in event:
+			event["subheading"] = event["subheading"].replace("{supply_point}", target.sp_name)
+
+		var newspaper = newspaper_scene.instance()
+		newspaper.set_event(event)
+		newspaper.set_title(paper_list["titles"][randi() % paper_list["titles"].size()])
+		newspaper.set_date(paper_list["dates"][randi() % paper_list["dates"].size()])
+		get_parent().add_child(newspaper)
+
 
 # Removes the effects of the given event
 func remove_event(event : Dictionary) -> void:
