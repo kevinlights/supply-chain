@@ -19,10 +19,10 @@ var event_list := {}
 var paper_list := {}
 var current_event_list := []
 var supply_point_list := {
-							"manufacturer": {"max_level": 50},
-							"warehouse": {"transit_size": 100},
-							"store": {"transit_size": 40},
-							"home": {"max_level": 50, "initial_level": 0, "initial_demand": 40}
+							"manufacturer": {"max_level": 100, "initial_demand": 170},
+							"warehouse": {"transit_size": 100, "initial_demand": 50},
+							"store": {"transit_size": 40, "initial_demand": 50},
+							"home": {"max_level": 50, "initial_level": 0, "initial_demand": 60}
 						}
 
 #TODO: Add more event effects
