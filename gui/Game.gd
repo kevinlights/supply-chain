@@ -4,8 +4,8 @@ var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.t
 var newspaper_scene = preload("res://game_entities/newspaper/Newspaper.tscn")
 var report_scene = preload("res://game_entities/report/Report.tscn")
 var event_editor_scene = preload("res://gui/EventEditor.tscn")
-var events_file = "res://json/events.json"
-var papers_file = "res://json/newspapers.json"
+var events_file = "json/events.json"
+var papers_file = "json/newspapers.json"
 
 var menu_node : CenterContainer
 
@@ -222,10 +222,14 @@ func set_prevent_transit_waste(value : bool) -> void:
 
 # A helper function to read in json files for the event list
 func read_json(path):
+	var prefix = "res://"
 	var file = File.new()
-	if not file.file_exists(path):
+	if file.file_exists("user://" + path):
+		printerr("Using user-edited file for ", path)
+		prefix = "user://"
+	if not file.file_exists(prefix + path):
 		printerr("ERROR: Unable to open resource ", path)
-	file.open(path, file.READ)
+	file.open(prefix + path, file.READ)
 	var text = file.get_as_text()
 	file.close()
 	var parse = JSON.parse(text)
