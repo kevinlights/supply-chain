@@ -249,7 +249,7 @@ func pause_transit_vehicles(value : bool) -> void:
 	transit_vehicles_paused = value
 
 func adjust_transit_speed_multiplier(value : float) -> void:
-	transit_speed_multiplier += value
+	transit_speed_multiplier = max(0.25, transit_speed_multiplier + value)
 
 	#TODO: Set caps/limits?
 	for child in get_node("RightLane").get_children():

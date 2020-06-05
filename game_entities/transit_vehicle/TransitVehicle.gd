@@ -79,6 +79,9 @@ func start_travel(lane: Node, will_crash: bool = false):
 		travel_tween.connect("tween_completed", self, "handle_crash")
 
 	# Move from start to end
+	if speed < 0:
+		printerr("Uh oh! Speed is negative (", speed, "). Resetting to default.")
+		speed = base_speed
 	travel_tween.interpolate_method(self, "set_position", startPosition, endPosition, speed / 2.0 if will_crash else speed, Tween.TRANS_LINEAR, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
 	travel_tween.start()
 
