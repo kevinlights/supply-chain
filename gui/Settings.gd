@@ -5,7 +5,7 @@ var ui_font = preload("res://fonts/small_font.tres")
 var settings_container : VBoxContainer
 var user_config : ConfigFile
 var config_file := "user://config.cfg"
-var gap_space : int = 10
+var gap_space : int = 2
 
 var settings := {
 	"audio": {
@@ -61,6 +61,14 @@ var settings := {
 				"description": "Prevents reports from triggering in-game.",
 			},
 		},
+	"system": {
+			"debug_shortcuts":
+			{
+				"type": TYPE_BOOL,
+				"default": false,
+				"description": "Allows debug keys to function."
+			}
+		}
 	}
 
 func _ready():
@@ -111,6 +119,12 @@ func _ready():
 		var gap := MarginContainer.new()
 		gap.set_custom_minimum_size(Vector2(gap_space, gap_space))
 		settings_container.add_child(gap)
+	var user_folder_button = Button.new()
+	user_folder_button.set_text("Open User Folder")
+	user_folder_button.set_h_size_flags(0)
+	user_folder_button.connect("pressed", self, "open_user_folder")
+	user_folder_button.add_font_override("font", ui_font)
+	settings_container.add_child(user_folder_button)
 
 func update_setting_bool(state, category, setting):
 	if has_method("set_" + setting):
@@ -170,3 +184,8 @@ func set_auto_stop_production(value : bool) -> void:
 func set_prevent_transit_waste(value : bool) -> void:
 	if is_instance_valid(get_parent().game_node):
 		get_parent().game_node.set_prevent_transit_waste(value)
+
+func open_user_folder():
+	print("Opening user folder")
+	if OS.shell_open("file:///" + OS.get_user_data_dir()) != OK:
+		print("Error opening user folder")

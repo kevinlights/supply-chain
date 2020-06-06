@@ -1,0 +1,6 @@
+{
+	"event_delay": 60.0,
+	"first_event_delay": 90.0,
+	"report_delay": 240.0,
+	"first_report_delay": 120.0,
+}

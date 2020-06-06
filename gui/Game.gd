@@ -4,26 +4,23 @@ var supply_point_scene = preload("res://game_entities/supply_point/SupplyPoint.t
 var newspaper_scene = preload("res://game_entities/newspaper/Newspaper.tscn")
 var report_scene = preload("res://game_entities/report/Report.tscn")
 var event_editor_scene = preload("res://gui/EventEditor.tscn")
-var events_file = "json/events.json"
-var papers_file = "json/newspapers.json"
+var supply_points_file := "json/supply_points.json"
+var events_file := "json/events.json"
+var papers_file := "json/newspapers.json"
+var timings_file := "json/timings.json"
 
 var menu_node : CenterContainer
 
 # Simulation requires a manufacturer, a warehouse, and a consumer which are
 # defined as supply points
-var start_stocked = false
-var auto_stop_production = false
-var prevent_transit_waste = false
+var start_stocked := false
+var auto_stop_production := false
+var prevent_transit_waste := false
 var sp_list := []
 var event_list := {}
 var paper_list := {}
 var current_event_list := []
-var supply_point_list := {
-							"manufacturer": {"max_level": 100, "initial_demand": 85},
-							"warehouse": {"transit_size": 100, "initial_demand": 50},
-							"store": {"transit_size": 40, "initial_demand": 50},
-							"home": {"max_level": 50, "initial_level": 0, "initial_demand": 40}
-						}
+var supply_point_list := {}
 
 #TODO: Event todo placeholder
 # Higher consumption events consume equilibrium stock faster than surplus can be achieved (working as intended? Probably)
@@ -33,6 +30,7 @@ var supply_point_list := {
 
 
 #TODO: Add more event effects
+#TODO: Can we reasonably externalise this to json without running significant risk re: calling specified functions?
 var event_prop_list := {
 					"internal_name":
 						{
@@ -143,10 +141,12 @@ var event_prop_list := {
 						},
 					}
 
-var event_frequency := 60.0 * 1.0
-var next_event_time := event_frequency + 30.0 #Plus 30 sec to move us off the minute boundary and avoid clashes with reports
-var report_frequency := 60.0 * 4.0
-var next_report_time := report_frequency / 2
+#Note that these values are overridden by timings.json
+var event_delay := 60.0 * 1.0
+var next_event_time := event_delay + 30.0 #Plus 30 sec to move us off the minute boundary and avoid clashes with reports
+var report_delay := 60.0 * 4.0
+var next_report_time := report_delay / 2
+
 var skip_events := false
 var skip_reports := false
 
@@ -163,15 +163,22 @@ func _input(event: InputEvent) -> void:
 				get_tree().set_input_as_handled()
 				get_tree().quit()
 		elif event.scancode == KEY_E:
-			get_parent().add_child(event_editor_scene.instance())
+			if menu_node.settings.get_setting("system", "debug_shortcuts"):
+				get_parent().add_child(event_editor_scene.instance())
 		elif event.scancode == KEY_R:
-			if Input.is_key_pressed(KEY_SHIFT):
-				for sp in sp_list:
-					sp.make_report()
-			generate_report()
+			if menu_node.settings.get_setting("system", "debug_shortcuts"):
+				if Input.is_key_pressed(KEY_SHIFT):
+					for sp in sp_list:
+						sp.make_report()
+				generate_report()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	load_supply_points(supply_points_file)
+	load_timings(timings_file)
+	load_events(events_file)
+	load_papers(papers_file)
+
 	for sp in supply_point_list:
 		sp_list.push_back(supply_point_scene.instance())
 		sp_list.back().init(sp)
@@ -188,8 +195,6 @@ func _ready():
 
 	setup_downstreams(sp_list)
 	add_supply_points(sp_list)
-	load_events(events_file)
-	load_papers(papers_file)
 	set_auto_stop_production(auto_stop_production)
 	set_prevent_transit_waste(prevent_transit_waste)
 
@@ -240,9 +245,21 @@ func read_json(path):
 		return null
 
 func write_json(path, data):
+	var prefix = "user://"
+	if OS.is_debug_build():
+		prefix = "res://"
+
+	print(OS.is_debug_build())
+
+	var json_folder = Directory.new()
+	if !json_folder.dir_exists(prefix + "json"):
+		print("Making save folder since it doesn't already exist")
+		if json_folder.make_dir_recursive(prefix + "json") != OK:
+			printerr("Unable to make json folder? " + prefix + "json")
+
 	var file = File.new()
-	if file.open(path, File.WRITE) != OK:
-		printerr("Unable to open ", path, " for writing")
+	if file.open(prefix + path, File.WRITE) != OK:
+		printerr("Unable to open ", prefix + path, " for writing")
 		return false
 	file.store_string(to_json(data))
 	file.close()
@@ -253,6 +270,21 @@ func load_events(path):
 
 func load_papers(path):
 	paper_list = read_json(path)
+
+func load_supply_points(path):
+	supply_point_list = read_json(path)
+
+func load_timings(path):
+	var timing_data = read_json(path)
+	if timing_data is Dictionary:
+		if "event_delay" in timing_data:
+			event_delay = timing_data["event_delay"]
+		if "first_event_delay" in timing_data:
+			next_event_time = timing_data["first_event_delay"]
+		if "report_delay" in timing_data:
+			report_delay = timing_data["report_delay"]
+		if "first_report_delay" in timing_data:
+			next_report_time = timing_data["first_report_delay"]
 
 # Draws first event from a shuffled list of events in event_list
 func get_random_event():
@@ -355,7 +387,7 @@ func _process(delta : float):
 	var displaying_event = false
 	next_event_time -= delta
 	if next_event_time <= 0:
-		next_event_time += event_frequency
+		next_event_time += event_delay
 		if !skip_events:
 			add_event(get_random_event())
 			displaying_event = true
@@ -370,7 +402,7 @@ func _process(delta : float):
 	
 	next_report_time -= delta
 	if next_report_time <= 0 && !displaying_event:
-		next_report_time += report_frequency
+		next_report_time += report_delay
 		if !skip_reports:
 			generate_report()
 		#Process historic data outside of showing reports so that report generation is non-destructive
