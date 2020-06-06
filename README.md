@@ -39,9 +39,9 @@ If you have downloaded [the game's source](https://gitlab.com/Cheeseness/supply-
 ## Running The Game With Modified Json Files
 Modified versions of the Supply Chain's data files can be used without using the Godot editor. The game will prioritise json files stored in the following locations (which can also be opened by clicking the "Open User Folder" button in the settings menu):
 
-  Linux: ~/.local/share/supplychain/json/ (note that this respects XDG_DATA_HOME)
-  Mac: ~/Library/Application Support/supplychain/json/
-  Windows: %APPDATA%/supplychain/json/
+  Linux: ~/.local/share/supplychain/json/ (note that this respects XDG_DATA_HOME)  
+  Mac: ~/Library/Application Support/supplychain/json/  
+  Windows: %APPDATA%/supplychain/json/  
 
 A template json folder is included with prebuilt versions of the game from the Supply Chain [Itch.io page](http://cheeseness.itch.io/supply-chain), and can be copied to the custom json folder manually.
 
