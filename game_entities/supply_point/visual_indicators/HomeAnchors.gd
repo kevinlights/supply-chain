@@ -11,7 +11,6 @@ func _ready() -> void:
 		stock_indicator_pool.append(load("res://game_entities/supply_point/visual_indicators/unit_stock_sprites/stock_item_%02d.png" % i))
 	consumption_animator = get_node("ConsumptionAnimator")
 
-
 func update_stock_indicators(stock_level : int) -> void:
 	var current_stock_level := stock_level / stock_indicator_value
 	if stock_indicators.size() == 0:

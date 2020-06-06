@@ -17,3 +17,6 @@ func update_stock_indicators(stock_level : int):
 				get_child(i).visible = true
 		else:
 			get_child(i).visible = false
+
+func get_particle_value() -> float:
+	return stock_indicator_value / 2.0

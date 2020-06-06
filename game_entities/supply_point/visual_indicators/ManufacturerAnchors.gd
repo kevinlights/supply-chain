@@ -36,6 +36,10 @@ func _ready():
 			var temp = get_node("Conveyor" + str(i + 1) + "/PathFollow2D").duplicate()
 			get_node("Conveyor" + str(i + 1)).add_child(temp)
 			conveyor_tweens.back().interpolate_property(temp, "unit_offset", start, end, conveyor_time, Tween.TRANS_LINEAR, Tween.EASE_IN, conveyor_gap * i + item_gap * j)
+	get_parent().get_parent().get_node("PickupParticles").set_texture(box_particle)
+
+func get_particle_value() -> float:
+	return stock_indicator_value * 2.5
 
 func update_stock_indicators(stock_level : int):
 	var current_stock_level := stock_level / stock_indicator_value

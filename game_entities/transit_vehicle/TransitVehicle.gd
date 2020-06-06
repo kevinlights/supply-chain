@@ -34,10 +34,11 @@ func order(amount : int, sp : Node) -> void:
 func pick_up():
 	cargo = int(min(desired_cargo, destination.stock_level))
 	destination.adjust_stock(-cargo)
+	var delay = destination.play_pickup_animation(cargo)
 	has_picked_up = true
 	destination = destination.downstream
 	destination.adjust_enroute_stock(cargo)
-	start_travel(destination.get_node("RightLane"), crash)
+	start_travel(destination.get_node("RightLane"), crash, delay)
 
 # Vehicle delivers its cargo to the given supply point. Any surplus to the
 # supply point's capacity is thrown away
@@ -50,7 +51,7 @@ func deliver() -> void:
 	queue_free()
 
 # Move to destination for the given lane (animation)
-func start_travel(lane: Node, will_crash: bool = false):
+func start_travel(lane: Node, will_crash: bool = false, delay = 0):
 	# Add vehicle to lane
 	if get_parent() != lane:
 		if is_instance_valid(get_parent()):
@@ -87,8 +88,9 @@ func start_travel(lane: Node, will_crash: bool = false):
 	if speed <= 0:
 		printerr("Uh oh! Speed is negative (", speed, "). Resetting to default.")
 		speed = base_speed
-	travel_tween.interpolate_method(self, "set_position", startPosition, endPosition, speed / 2.0 if will_crash else speed, Tween.TRANS_LINEAR, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT)
+	travel_tween.interpolate_method(self, "set_position", startPosition, endPosition, speed / 2.0 if will_crash else speed, Tween.TRANS_LINEAR, Tween.EASE_IN if will_crash else Tween.EASE_IN_OUT, delay)
 	travel_tween.start()
+	trip_duration = -delay
 
 func set_crash(val := true) -> void:
 	crash = val
@@ -147,7 +149,6 @@ func _process(delta):
 				pick_up()
 			else:
 				deliver()
-			trip_duration = 0
 	get_node("ColorRect/Cargo").set_text(str(cargo)) # Helper to display cargo when debugging. Not always visible
 
 func set_speed_multiplier(value : float):

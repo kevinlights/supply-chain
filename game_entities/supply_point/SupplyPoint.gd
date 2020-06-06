@@ -36,6 +36,7 @@ var demand_slider : HSlider
 var should_update_indicators : bool
 var stock_indicator_anchor : TextureRect
 var stock_indicator_value : float
+var pickup_particles : Particles2D
 var consumption_rate : int
 var production_rate : int
 var consume_produce_frequency : float
@@ -149,6 +150,12 @@ func consume_stock(amount: int) -> void:
 	else:
 		stock_indicator_anchor.set_animation_paused(true)
 
+func play_pickup_animation(amount : int) -> float:
+	amount = int(amount / stock_indicator_anchor.get_particle_value())
+	pickup_particles.set_amount(amount)
+	pickup_particles.get_process_material().set_trail_divisor(amount)
+	pickup_particles.set_emitting(true)
+	return pickup_particles.get_lifetime()
 
 # Constructor for SupplyPoint. Default supply points start without stock and
 # demand 50 units of toilet paper. Default constraints are [0, 100]
@@ -455,6 +462,7 @@ func _process(delta):
 
 # Initialize values for sliders
 func _ready() -> void:
+	pickup_particles = get_node("PickupParticles")
 	demand_slider = get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/Demand")
 	demand_slider.connect("value_changed", self, "update_demand")
 	demand_marker_min = get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/MarkerAnchor/MarkerL")

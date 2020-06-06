@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game_entities/supply_point/SupplyPoint.gd" type="Script" id=1]
 [ext_resource path="res://game_entities/supply_point/SupplyPoint.theme" type="Theme" id=2]
@@ -6,8 +6,26 @@
 [ext_resource path="res://game_entities/supply_point/marker_l.png" type="Texture" id=4]
 [ext_resource path="res://game_entities/supply_point/marker_r.png" type="Texture" id=5]
 [ext_resource path="res://fonts/tiny_font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://game_entities/supply_point/visual_indicators/roll_particle.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.982544 ), 0.0, -1.75374, 0, 0, Vector2( 1, 0.103725 ), -0.338701, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+trail_divisor = 8
+flag_disable_z = true
+direction = Vector3( 1.5, -3, 0 )
+spread = 0.0
+gravity = Vector3( 0, 300, 0 )
+initial_velocity = 300.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 4 )
 
 [node name="SupplyPoint" type="HBoxContainer"]
 anchor_right = 1.0
@@ -633,3 +651,12 @@ position = Vector2( 19, 0 )
 
 [node name="Origin" type="Node2D" parent="LeftLane"]
 position = Vector2( 19, 720 )
+
+[node name="PickupParticles" type="Particles2D" parent="."]
+position = Vector2( 216.713, 76.7879 )
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource( 2 )
+texture = ExtResource( 7 )
