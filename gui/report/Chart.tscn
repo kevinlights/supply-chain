@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gui/report/Chart.gd" type="Script" id=1]
+[ext_resource path="res://fonts/small_font.tres" type="DynamicFont" id=2]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 492, 100 )
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 492.0
+margin_bottom = 170.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 492.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+visible = false
+margin_top = 4.0
+margin_right = 492.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.0862745, 0.0862745, 0.101961, 1 )
+autowrap = true
+
+[node name="ChartArea" type="ColorRect" parent="VBoxContainer"]
+margin_top = 4.0
+margin_right = 492.0
+margin_bottom = 134.0
+rect_min_size = Vector2( 0, 130 )
+color = Color( 1, 1, 1, 0 )
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 138.0
+margin_right = 492.0
+margin_bottom = 148.0
+rect_min_size = Vector2( 0, 10 )
+mouse_filter = 2

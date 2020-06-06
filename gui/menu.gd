@@ -1,8 +1,8 @@
 extends CenterContainer
 
-var game_scene = preload("res://gui/Game.tscn")
+var game_scene = preload("res://game_entities/Game.tscn")
 var credits_scene = preload("res://gui/Credits.tscn")
-var howtoplay_scene = preload("res://gui/HowToPlay.tscn")
+var howtoplay_scene = preload("res://gui/how_to_play/HowToPlay.tscn")
 
 var version_number : String = "Unknown"
 var new_button : Button
