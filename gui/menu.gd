@@ -2,10 +2,12 @@ extends CenterContainer
 
 var game_scene = preload("res://gui/Game.tscn")
 var credits_scene = preload("res://gui/Credits.tscn")
+var howtoplay_scene = preload("res://gui/HowToPlay.tscn")
 
 var version_number : String = "Unknown"
 var new_button : Button
 var settings_button : Button
+var howtoplay_button : Button
 var credits_button : Button
 var website_button : Button
 var quit_button : Button
@@ -24,6 +26,7 @@ func _ready():
 	resume_button = get_node("VBoxContainer/Resume")
 	new_button = get_node("VBoxContainer/New")
 	settings_button = get_node("VBoxContainer/Settings")
+	howtoplay_button = get_node("VBoxContainer/HowToPlay")
 	credits_button = get_node("VBoxContainer/Credits")
 	website_button = get_node("VBoxContainer/Website")
 	quit_button = get_node("VBoxContainer/Quit")
@@ -35,6 +38,8 @@ func _ready():
 		printerr("Error while connecting signal to new game button")
 	if settings_button.connect("pressed", self, "show_settings") != OK:
 		printerr("Error while connecting signal to settings button")
+	if howtoplay_button.connect("pressed", self, "show_howtoplay") != OK:
+		printerr("Error while connecting signal to how to play button")
 	if credits_button.connect("pressed", self, "show_credits") != OK:
 		printerr("Error while connecting signal to credits button")
 	if website_button.connect("pressed", self, "open_url", ["cheeseness.itch.io/supply-chain"]) != OK:
@@ -105,6 +110,10 @@ func new_game() -> void:
 	game_node.skip_reports = settings.get_setting("gameplay", "skip_reports")
 	get_parent().add_child(game_node)
 	hide_menu()
+
+func show_howtoplay() -> void:
+	add_child(howtoplay_scene.instance())
+	fake_hide_menu()
 
 # Shows settings menu, currently a stub
 func show_settings() -> void:
