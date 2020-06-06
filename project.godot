@@ -21,6 +21,8 @@ config/use_custom_user_dir=true
 config/custom_user_dir_name="supplychain"
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
 config/icon="res://icon.png"
+config/macos_native_icon="res://icon.icns"
+config/windows_native_icon="res://icon.ico"
 
 [debug]
 

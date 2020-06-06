@@ -9,24 +9,24 @@ var gap_space : int = 2
 
 var settings := {
 	"audio": {
-			"master_volume":
-			{
-				"type": TYPE_REAL,
-				"default": 0.75,
-				"description": "Adjusts the master volume for all game audio.",
-			},
+#			"master_volume":
+#			{
+#				"type": TYPE_REAL,
+#				"default": 0.75,
+#				"description": "Adjusts the master volume for all game audio.",
+#			},
 			"music_volume":
 			{
 				"type": TYPE_REAL,
 				"default": 0.5,
 				"description": "Adjusts the volume of in-game music.",
 			},
-			"sfx_volume":
-			{
-				"type": TYPE_REAL,
-				"default": 0.75,
-				"description": "Adjusts the volume of in-game sounds.",
-			}
+#			"sfx_volume":
+#			{
+#				"type": TYPE_REAL,
+#				"default": 0.75,
+#				"description": "Adjusts the volume of in-game sounds.",
+#			}
 		},
 	"gameplay": {
 			"start_stocked":
