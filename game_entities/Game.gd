@@ -22,14 +22,6 @@ var paper_list := {}
 var current_event_list := []
 var supply_point_list := {}
 
-#TODO: Event todo placeholder
-# Higher consumption events consume equilibrium stock faster than surplus can be achieved (working as intended? Probably)
-# Events that increase lower bound of consumption don't have much teeth. All equilibrium values are at or above 50
-# Store shortages are very rare in this game, but are the thing everyone thinks about
-# Warehouse and store have very little reason to move beyond 50% resupply
-
-
-#TODO: Add more event effects
 #TODO: Can we reasonably externalise this to json without running significant risk re: calling specified functions?
 var event_prop_list := {
 					"internal_name":
