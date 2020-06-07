@@ -79,9 +79,9 @@ var event_prop_list := {
 							"type": TYPE_INT,
 							"default": -10
 						},
-					"consume_produce_frequency_multiplier":
+					"consume_produce_delay_multiplier":
 						{
-							"func": "adjust_consume_produce_frequency_multiplier",
+							"func": "adjust_consume_produce_delay_multiplier",
 							"type": TYPE_REAL,
 							"default": 0.5
 						},

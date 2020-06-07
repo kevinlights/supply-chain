@@ -39,8 +39,8 @@ var stock_indicator_value : float
 var pickup_particles : Particles2D
 var consumption_rate : int
 var production_rate : int
-var consume_produce_frequency : float
-var consume_produce_frequency_multiplier : float = 1.0
+var consume_produce_delay : float
+var consume_produce_delay_multiplier : float = 1.0
 var consume_produce_paused : bool = false
 var transit_speed_multiplier : float = 1.0
 var transit_vehicles_paused : bool = false
@@ -164,7 +164,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	pending_stock = 0
 	enroute_stock = 0
 	tick_rate = 1.0
-	consume_produce_frequency = 0.50
+	consume_produce_delay = 0.50
 	production_rate = 2
 	consumption_rate = 1
 	counter = 0.0
@@ -246,10 +246,10 @@ func adjust_max_stock_level_offset(value: int) -> void:
 	update_stock_comfort_band()
 
 # Adjust the frequency for production and consumption. Keeps track of changes resulting from events
-func adjust_consume_produce_frequency_multiplier(value: float) -> void:
-	var counter_fraction := consume_counter / max(0.1, consume_produce_frequency * consume_produce_frequency_multiplier)
-	consume_produce_frequency_multiplier += value
-	consume_counter = counter_fraction * consume_produce_frequency_multiplier * consume_produce_frequency
+func adjust_consume_produce_delay_multiplier(value: float) -> void:
+	var counter_fraction := consume_counter / max(0.1, consume_produce_delay * consume_produce_delay_multiplier)
+	consume_produce_delay_multiplier += value
+	consume_counter = counter_fraction * consume_produce_delay_multiplier * consume_produce_delay
 
 func pause_consume_produce(value : bool) -> void:
 	consume_produce_paused = value
@@ -351,9 +351,9 @@ func update_demand(value : float) -> void:
 	if is_instance_valid(demand_slider):
 		correct_demand_level()
 	if is_producing:
-		#Note that consume_produce_frequency_multiplier as messed with by events will shape resulting values
-		consume_produce_frequency = (105.0 - demand_level) / 20.0
-		#print(consume_produce_frequency)
+		#Note that consume_produce_delay_multiplier as messed with by events will shape resulting values
+		consume_produce_delay = (105.0 - demand_level) / 20.0
+		#print(consume_produce_delay)
 		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(max(1, demand_level * 2)) + "%")
 	else:
 		get_node("SupplyPointVisual/VBoxContainer/Panel/VBoxContainer/DemandValue").set_text(str(demand_level) + "%")
@@ -413,8 +413,8 @@ func _process(delta):
 		should_update_indicators = false
 	counter += delta
 	consume_counter += delta
-	if consume_counter >= consume_produce_frequency * consume_produce_frequency_multiplier:
-		consume_counter -= consume_produce_frequency * consume_produce_frequency_multiplier
+	if consume_counter >= consume_produce_delay * consume_produce_delay_multiplier:
+		consume_counter -= consume_produce_delay * consume_produce_delay_multiplier
 		if !consume_produce_paused:
 			if is_producing:
 				produce_stock(production_rate)
