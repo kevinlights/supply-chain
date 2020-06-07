@@ -86,7 +86,7 @@ var max_datum_count = 20 #Note, this corresponds to max_datum_count in Chart.gd,
 var historic_datum_count = -1 #Start at -1 so that we can be at 0 for the first period
 
 # Can the supply point receive the amount of toilet paper?
-func request_stock(amount : int):
+func request_stock():
 	if !is_instance_valid(upstream):
 		print("Something terrible has happened!")
 		return
@@ -146,7 +146,7 @@ func consume_stock(amount: int) -> void:
 
 func play_pickup_animation(amount : int) -> float:
 	amount = int(amount / stock_indicator_anchor.get_particle_value())
-	pickup_particles.set_amount(max(1, amount))
+	pickup_particles.set_amount(int(max(1, amount)))
 	pickup_particles.get_process_material().set_trail_divisor(amount)
 	pickup_particles.set_emitting(true)
 	return pickup_particles.get_lifetime()
@@ -449,7 +449,7 @@ func _process(delta):
 			pass
 		else:
 			if stock_level + pending_stock < max_stock_level * (demand_level / 100.0):
-				request_stock(transit_size)
+				request_stock()
 
 # Initialize values for sliders
 func _ready() -> void:
