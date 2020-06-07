@@ -117,22 +117,18 @@ func request_stock(amount : int):
 
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
-	if (stock_level < max_stock_level + max_stock_level_offset):
-		if auto_stop_production:
-			#Only produce the amount needed to fill storage
-			amount = int(min(amount, max_stock_level + max_stock_level_offset - stock_level))
-	else:
-		ticks_no_produce += 1
-		if auto_stop_production:
-			#Produce nothing so that there will be no wastage
-			amount = 0
-
-	if (stock_level < max_stock_level + max_stock_level_offset):
-		stock_indicator_anchor.set_animation_paused(false)
-	else:
-		if auto_stop_production:
+	var has_room := stock_level < max_stock_level + max_stock_level_offset
+	
+	if auto_stop_production:
+		# Only produce the amount needed to fill storage
+		amount = int(min(amount, max_stock_level + max_stock_level_offset - stock_level))
+		if has_room:
+			stock_indicator_anchor.set_animation_paused(false)
+		else:
 			stock_indicator_anchor.set_animation_paused(true)
 
+	if amount == 0:
+		ticks_no_produce += 1
 	adjust_stock(amount)
 
 # Draw from the existing stockpile (no toilet paper debt yet)
