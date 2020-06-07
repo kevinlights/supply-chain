@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/flushed.ogg-fa8c35afa8e1078eb8fa66111d4336b8.oggstr"
+
+[deps]
+
+source_file="res://music/tracks/flushed.ogg"
+dest_files=[ "res://.import/flushed.ogg-fa8c35afa8e1078eb8fa66111d4336b8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
