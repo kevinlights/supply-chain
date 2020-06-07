@@ -122,11 +122,11 @@ func produce_stock(amount: int) -> void:
 	if auto_stop_production:
 		# Only produce the amount needed to fill storage
 		amount = int(min(amount, max_stock_level + max_stock_level_offset - stock_level))
-		if has_room:
-			stock_indicator_anchor.set_animation_paused(false)
-		else:
+		if !has_room:
 			stock_indicator_anchor.set_animation_paused(true)
 
+	if has_room:
+		stock_indicator_anchor.set_animation_paused(false)
 	if amount == 0:
 		ticks_no_produce += 1
 	adjust_stock(amount)
