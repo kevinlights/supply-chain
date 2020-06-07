@@ -7,12 +7,12 @@
 [ext_resource path="res://game_entities/supply_point/visual_indicators/factory_stock_sprites/box_empty.png" type="Texture" id=5]
 [ext_resource path="res://game_entities/supply_point/visual_indicators/factory_stock_sprites/box_full.png" type="Texture" id=6]
 
-[sub_resource type="Curve2D" id=5]
+[sub_resource type="Curve2D" id=1]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -48, 414, 0, 0, 0, 0, 23, 414, 0, 0, 0, 0, 55, 414, 0, 0, 0, 0, 103, 414, 0, 0, 0, 0, 145, 414, 0, 0, 0, 0, 186, 414, 0, 0, 0, 0, 227, 414, 0, 0, 0, 0, 292, 414 )
 }
 
-[sub_resource type="Curve2D" id=6]
+[sub_resource type="Curve2D" id=2]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -48, 414, 0, 0, 0, 0, 23, 414, 0, 0, 0, 0, 55, 414, 0, 0, 0, 0, 103, 414, 0, 0, 0, 0, 145, 414, 0, 0, 0, 0, 186, 414, 0, 0, 0, 0, 227, 414, 0, 0, 0, 0, 292, 414 )
 }
@@ -439,7 +439,7 @@ __meta__ = {
 
 [node name="Conveyor4" type="Path2D" parent="."]
 position = Vector2( 0, -133 )
-curve = SubResource( 5 )
+curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Conveyor4"]
 position = Vector2( -48, 414 )
@@ -450,7 +450,7 @@ texture = ExtResource( 6 )
 
 [node name="Conveyor3" type="Path2D" parent="."]
 position = Vector2( 0, -79 )
-curve = SubResource( 6 )
+curve = SubResource( 2 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Conveyor3"]
 position = Vector2( -48, 414 )

@@ -51,8 +51,6 @@ var prevent_transit_waste : bool = false
 var demand_marker_min : TextureRect
 var demand_marker_max : TextureRect
 
-# Temporary
-var demand_factor : float
 var transit_size : int
 
 # Quarterly performance indicators
@@ -113,9 +111,9 @@ func request_stock(amount : int):
 	vehicle.set_speed_multiplier(transit_speed_multiplier)
 	# Vehicle checks for how much is needed then collects and delivers
 	if prevent_transit_waste:
-		vehicle.order(int(min(amount, max_stock_level - stock_level)), upstream)
+		vehicle.order(int(min(vehicle.cargo_limit, max_stock_level - stock_level)), upstream)
 	else:
-		vehicle.order(amount, upstream)
+		vehicle.order(vehicle.cargo_limit, upstream)
 
 # Add stock to stock_level, limited by the max
 func produce_stock(amount: int) -> void:
@@ -152,7 +150,7 @@ func consume_stock(amount: int) -> void:
 
 func play_pickup_animation(amount : int) -> float:
 	amount = int(amount / stock_indicator_anchor.get_particle_value())
-	pickup_particles.set_amount(amount)
+	pickup_particles.set_amount(max(1, amount))
 	pickup_particles.get_process_material().set_trail_divisor(amount)
 	pickup_particles.set_emitting(true)
 	return pickup_particles.get_lifetime()
@@ -177,8 +175,7 @@ func init(new_name := "New Supply Point", new_max_level := 100, new_level := 0, 
 	consume_counter = 0.0
 	is_producing = false
 	is_consuming = false
-	demand_factor = 1.0
-	transit_size = -1
+	transit_size = 10
 	sp_name = new_name
 	stock_indicator_value = 1.0
 	should_update_indicators = false
@@ -300,10 +297,6 @@ func update_stock_indicators():
 	get_node("SupplyPointVisual/VBoxContainer/Stock").set_text(str(stock_level))
 	stock_indicator_anchor.update_stock_indicators(stock_level)
 
-# Set demand factor (no longer used?)
-func set_demand_factor(value : float) -> void:
-	demand_factor = value
-
 # Set transit size to a given value
 func set_transit_size(value : int) -> void:
 	transit_size = value
@@ -346,7 +339,9 @@ func adjust_stock(value : int, dostats := true) -> void:
 	stock_level = int(clamp(stock_level + value, 0, max_stock_level + max_stock_level_offset))
 	var diff = stock_level - previous_stock
 	if diff != value:
-		adjust_waste(int(abs(diff - value)))
+		var lost_stock = int(abs(diff - value))
+		adjust_waste(lost_stock)
+		stock_indicator_anchor.play_waste_animation(lost_stock * 2)
 	should_update_indicators = true
 	if dostats:
 		if diff > 0:
@@ -458,7 +453,7 @@ func _process(delta):
 			pass
 		else:
 			if stock_level + pending_stock < max_stock_level * (demand_level / 100.0):
-				request_stock(int(demand_level * demand_factor))
+				request_stock(transit_size)
 
 # Initialize values for sliders
 func _ready() -> void:

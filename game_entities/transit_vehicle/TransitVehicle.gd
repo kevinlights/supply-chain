@@ -134,7 +134,6 @@ func handle_crash(_obj, _key) -> void:
 
 # Constructor for TransitVehicle. Default vehicle starts empty with space for 10 units
 func _ready():
-	cargo_limit = 10
 	cargo = 0
 	trip_duration = 0.0
 	has_picked_up = false
